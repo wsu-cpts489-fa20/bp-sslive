@@ -337,6 +337,7 @@ text-align: center;
   background-color: #fefefe;
   margin: 15% auto; /* 15% from the top and centered */
   padding: 20px;
+  border: 1px solid #888;
   width: 80%; /* Could be more or less, depending on screen size */
 }
 
@@ -346,24 +347,19 @@ text-align: center;
     color: white;
   }
   
-  .modal-body {padding-top: 12px;
-               padding-bottom: 12px;
-               text-align: center;
-              }
+  .modal-body {padding: 2px 16px;}
   
   .modal-footer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: 8px;
-    padding-bottom: 8px;
+    padding: 2px 16px;
+    background-color: black;
+    color: white;
   }
 
-.modal-close {
-  border: none;
+.close {
+  color: white;
   float: right;
-  height:100%;
-  background-color: lightgray;
+  font-size: 28px;
+  font-weight: bold;
 }
 
 .close:hover,
@@ -378,9 +374,58 @@ text-align: center;
   font-size: 24px;
   }
 
-  .status-msg {
-    padding-top: 6px;
-    padding-bottom: 6px;
+  .emphasis {
     color: black;
     background-color: lightgray;
+  }
+
+
+  /* Styling for mode bar at the bottom of the page */
+.tabbar {
+  background-color: #e6e5df;
+  overflow: hidden;
+  position: relative;
+  bottom: 5px;
+  width: 95%;
+  z-index: 100;
+  }
+  
+  /* Style the links inside the bottom nav bar */
+  .tabbar a {
+  display: block;
+  float: left;
+  width: 8%;
+  color: white;
+  text-align: center;
+  padding: 2px 2px;
+  text-decoration: none;
+  font-size: 17px;
+  }
+  
+  /* Add a gray background color to the button when it is selected */
+  .tabbar a:active {
+  background-color: #F0F0F0;
+  color: #c7b185;
+  }
+  
+  /* Add a gray background color to button when it is hovered */
+  .tabbar a:hover {
+    color: #F0F0F0;
+  }
+  
+  /* Hide the link that should open and close the navbar on small screens */
+  .tabbar .icon {
+  display: none;
+  } 
+  
+  /* Style the icons in the bottom bar */
+  .tabbar-icon {
+  display:block; 
+  padding-top:3px;
+  }
+  
+  /* Style the text in the bottom bar */
+  .tabbar-text {
+  display:block;
+  font-size: small;
   }
