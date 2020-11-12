@@ -1,5 +1,5 @@
 {
-  "name": "code-ch23Eb",
+  "name": "bp-sslive",
   "version": "1.0.0",
   "description": "Testing instructions for deployment to EB",
   "main": "server.compiled.js",
