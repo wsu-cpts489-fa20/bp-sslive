@@ -16,6 +16,10 @@ class ConfigCourses extends React.Component {
         }
     }
 
+    setStateCallback = (stateName, stateVal) => {
+        this.setState({[stateName]: stateVal});
+    }
+
     handleChangeCoursesMode = (newMode) => {
         this.setState({coursesMode: newMode})
     }
@@ -26,6 +30,9 @@ class ConfigCourses extends React.Component {
             <CoursesModePage 
                 courses={this.props.userObj.courses}
                 handleChangeCoursesMode={this.handleChangeCoursesMode}
+                setStateCallback={this.setStateCallback}
+                courseName={this.state.courseName}
+                locationName={this.state.locationName}
             />
         );
     }   

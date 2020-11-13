@@ -1,5 +1,10 @@
 import React from 'react';
 import Courses from './../Courses.js';
+import CoursesAppMode from './../CoursesAppMode.js';
+
+const reservedStrings = [
+    "Women's", "Men's", "Sprintgolf", "Yellow", "Blue", "Red", "White", "Womens", "Mens", "Gray", "Men", "Women", "Ladies", "Back"
+];
 
 class CourseSearch extends React.Component {
     constructor(props) {
@@ -9,6 +14,10 @@ class CourseSearch extends React.Component {
             search: "",
             dropdown: undefined
         }
+        this.handleChange = this.handleChange.bind(this);
+        this.autoCompleteCourses = this.autoCompleteCourses.bind(this);
+        this.splitSearchVal = this.splitSearchVal.bind(this);
+        this.handleSelect = this.handleSelect.bind(this);
     }
 
     componentDidMount() {
@@ -31,13 +40,45 @@ class CourseSearch extends React.Component {
                 );
             }
         }
-        this.setState({dropdown: dropdown});
+        this.setState({ dropdown: dropdown });
+    }
+
+    splitSearchVal = () => {
+        var searchVal = this.state.search;
+        var splitSearchVal;
+        var location;
+        var coursePreSplit;
+        var splitCourse;
+        var course = "";
+        if (searchVal[searchVal.length - 1] == ")") {
+            searchVal = searchVal.substring(0, searchVal.length - 1);
+        }
+        splitSearchVal = searchVal.split('(');
+        location = splitSearchVal[1];
+        coursePreSplit = splitSearchVal[0];
+        splitCourse = coursePreSplit.split(' ');
+        for (var i = 0; i < splitCourse.length; i++) {
+            if (reservedStrings.includes(splitCourse[i])) {
+                delete splitCourse[i];
+                continue;
+            }
+            course += splitCourse[i] + " ";
+        }
+        this.props.setStateCallback("courseName", course);
+        this.props.setStateCallback("locationName", location);
+    }
+
+    handleSelect = () => {
+        var searchVal = this.state.search;
+        if (Courses.includes(searchVal)) {
+            this.splitSearchVal();
+        }
     }
 
     render() {
         return (
             <div style={{ fontSize: "x-large", fontWeight: "bold", textAlign: "left" }}>
-                <span className="fa fa-search" style={{ position: "absolute", float: "left", paddingTop: "41px", marginLeft: "7px" }}></span>
+                <span className="fa fa-search" style={{ position: "relative", float: "left", paddingTop: "41px", marginLeft: "7px", top: "5px", left: "40px" }}></span>
                 Find a Course:
                 <ul>
 
@@ -49,9 +90,16 @@ class CourseSearch extends React.Component {
                         {this.state.dropdown}
                     </datalist>
                     &nbsp;
-                    <button className="btn-color-theme btn btn-primary btn-block" style={{ display: "inline-block", width: "75px" }}>Select</button>
+                    <div style={this.state.search <= 0 ? { width: "75px", height: "40px", zIndex: "10", display: "inline-block", cursor: "not-allowed"} : {width: "75px", height: "40px", zIndex: "10", display: "inline-block"}}>
+                        <button id="selectCourseBtn" className="btn-color-theme btn btn-primary btn-block" style={this.state.search.length > 0 ?
+                            { display: "inline-block", width: "75px" } : { display: "inline-block", width: "75px", pointerEvents: "none" }}
+                            onClick={this.handleSelect}>
+                            Select
+                    </button>
+                    </div>
                     &nbsp;
-                    <button className="btn btn-danger btn-block" style={{ display: "inline-block", width: "75px", position: "relative", bottom: "4px" }}>Cancel</button>
+                    <button id="cancelCourseBtn" className="btn btn-danger btn-block" style={{ display: "inline-block", width: "75px", position: "relative" }}
+                        onClick={(newMode) => this.props.handleChangeCoursesMode(CoursesAppMode.COURSELIST)}>Cancel</button>
                 </ul>
             </div>
         );
