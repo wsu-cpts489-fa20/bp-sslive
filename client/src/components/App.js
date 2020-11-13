@@ -2,21 +2,21 @@ import React from 'react';
 import NavBar from './NavBar.js';
 import SideMenu from './SideMenu.js';
 import ModeBar from './ModeBar.js';
-import CreateEditAccountDialog from './CreateEditAccountDialog.js'
+import FloatingButton from './FloatingButton.js';
 import LoginPage from './LoginPage.js';
 import AppMode from "./../AppMode.js"
 import FeedPage from './FeedPage.js';
 import Rounds from './Rounds.js';
-import CoursesPage from './CoursesPage.js';
-import AboutBox from './AboutBox.js';
+import DirectorMainPage from './DirectorMainPage.js';
+import LeaderBoard from './Leaderboard.js'
 
 const modeTitle = {};
 modeTitle[AppMode.LOGIN] = "Welcome to SpeedScore";
-modeTitle[AppMode.FEED] = "Activity Feed";
+modeTitle[AppMode.FEED] = "";
 modeTitle[AppMode.ROUNDS] = "My Rounds";
 modeTitle[AppMode.ROUNDS_LOGROUND] = "Log New Round";
 modeTitle[AppMode.ROUNDS_EDITROUND] = "Edit Round";
-modeTitle[AppMode.COURSES] = "Courses";
+modeTitle[AppMode.MAIN] = "Director Main Page"
 
 const modeToPage = {};
 modeToPage[AppMode.LOGIN] = LoginPage;
@@ -24,21 +24,18 @@ modeToPage[AppMode.FEED] = FeedPage;
 modeToPage[AppMode.ROUNDS] = Rounds;
 modeToPage[AppMode.ROUNDS_LOGROUND] = Rounds;
 modeToPage[AppMode.ROUNDS_EDITROUND] = Rounds;
-modeToPage[AppMode.COURSES] = CoursesPage;
+modeToPage[AppMode.MAIN] = DirectorMainPage;
+modeToPage[AppMode.LEADERBOARD] = LeaderBoard;
 
 
 class App extends React.Component {
 
   constructor() {
     super();
-    this.state = {mode: AppMode.LOGIN,
+    this.state = {mode: AppMode.LOGIN,  //Usually will be MAIN
                   menuOpen: false,
                   authenticated: false,
                   userObj: {displayName: "", profilePicURL: ""},
-                  editAccount: false,
-                  showEditAccountDialog: false,
-                  statusMsg: "",
-                  showAboutDialog: false
                  };
   }
 
@@ -53,7 +50,7 @@ class App extends React.Component {
             this.setState({
               userObj: obj.user,
               authenticated: true,
-              mode: AppMode.FEED //We're authenticated so can get into the app.
+              mode: AppMode.MAIN //We're authenticated so can get into the app.
             });
           }
         }
@@ -79,6 +76,9 @@ class App extends React.Component {
 
 
   handleChangeMode = (newMode) => {
+    if (newMode == "LOGIN") {
+      window.open(`/auth/logout`,"_self");
+    }
     this.setState({mode: newMode});
   }
 
@@ -99,50 +99,11 @@ class App extends React.Component {
                    authenticated: true});
   }
 
-  showEditAccount = () => {
-    this.setState({showEditAccountDialog: true});
-
-  }
-
-  cancelEditAccount = () => {
-    this.setState({showEditAccountDialog: false});
-  }
-
-  //editAccountDone -- called after successful edit or
-  //deletion of user account. msg contains the status
-  //message and deleted indicates whether an account was
-  //edited (deleted == false) or deleted (deleted == true)
-  editAccountDone = (msg, deleted) => {
-    if (deleted) {
-      this.setState({showEditAccountDialog: false,
-                     statusMsg: msg,
-                     mode: AppMode.LOGIN});
-      } else {
-        this.setState({showEditAccountDialog: false,
-          statusMsg: msg});
-      }
-  }
-
-  closeStatusMsg = () => {
-    this.setState({statusMsg: ""});
-  }
 
   render() {
     const ModePage = modeToPage[this.state.mode];
     return (
-      <div className="padded-page">
-        {this.state.showAboutDialog ? 
-          <AboutBox close={() => this.setState({showAboutDialog: false})}/> : null}
-        {this.state.statusMsg != "" ? <div className="status-msg">
-              <span>{this.state.statusMsg}</span>
-              <button className="modal-close" onClick={this.closeStatusMsg}>
-                  <span className="fa fa-times"></span></button></div> : null}
-        {this.state.showEditAccountDialog ? 
-            <CreateEditAccountDialog 
-              create={false} 
-              userId={this.state.userObj.id} 
-              done={this.editAccountDone} 
-              cancel={this.cancelEditAccount}/> : null}
+      <div>
         <NavBar 
           title={modeTitle[this.state.mode]} 
           mode={this.state.mode}
@@ -155,14 +116,7 @@ class App extends React.Component {
             toggleMenuOpen={this.toggleMenuOpen}
             displayName={this.state.userObj.displayName}
             profilePicURL={this.state.userObj.profilePicURL}
-            localAccount={this.state.userObj.authStrategy === "local"}
-            editAccount={this.showEditAccount}
-            logOut={() => this.handleChangeMode(AppMode.LOGIN)}
-            showAbout={() => {this.setState({showAboutDialog: true})}}/>
-          <ModeBar 
-            mode={this.state.mode} 
-            changeMode={this.handleChangeMode}
-            menuOpen={this.state.menuOpen}/>
+            logOut={() => this.handleChangeMode(AppMode.LOGIN)}/>
           <ModePage 
             menuOpen={this.state.menuOpen}
             mode={this.state.mode}

@@ -1,5 +1,5 @@
 {
-  "name": "code-ch18-eb",
+  "name": "code-ch23Eb",
   "version": "1.0.0",
   "description": "Testing instructions for deployment to EB",
   "main": "server.compiled.js",
@@ -13,10 +13,9 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
-    "mongoose": "^5.10.9",
+    "mongoose": "^5.10.11",
     "passport": "^0.4.1",
     "passport-github": "^1.1.0",
     "passport-local": "^1.0.0",

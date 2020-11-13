@@ -10,7 +10,6 @@ import session from 'express-session';
 import regeneratorRuntime from "regenerator-runtime";
 import path from 'path';
 import express from 'express';
-require('dotenv').config();
 
 const LOCAL_PORT = 8081;
 const DEPLOY_URL = "http://localhost:8081";
@@ -25,8 +24,9 @@ const app = express();
 //using the mongoose library.
 //////////////////////////////////////////////////////////////////////////
 import mongoose from 'mongoose';
-
-const connectStr = process.env.MONGO_STR;
+import { profileEnd } from 'console';
+//const connectStr = 'mongodb://localhost:27017/appdb';
+const connectStr = 'mongodb+srv://dbAdmin:T4lyaFLcAOk3kPt7@clusterwazzu.mpvis.mongodb.net/appdb?retryWrites=true&w=majority'
 mongoose.connect(connectStr, {useNewUrlParser: true, useUnifiedTopology: true})
   .then(
     () =>  {console.log(`Connected to ${connectStr}.`)},
@@ -78,8 +78,8 @@ const User = mongoose.model("User",userSchema);
 //the 'github' strategy in passport.js.
 //////////////////////////////////////////////////////////////////////////
 passport.use(new GithubStrategy({
-    clientID: process.env.GH_CLIENT_ID,
-    clientSecret: process.env.GH_CLIENT_SECRET,
+    clientID: "a075012c4b08543f42a8",
+    clientSecret: "8dde6978090028aee37c72df9ea7ce268678b6d3",
     callbackURL: DEPLOY_URL + "/auth/github/callback"
   },
   //The following function is called after user authenticates with github
