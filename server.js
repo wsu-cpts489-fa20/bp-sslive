@@ -34,15 +34,28 @@ mongoose.connect(connectStr, {useNewUrlParser: true, useUnifiedTopology: true})
   );
 
 const Schema = mongoose.Schema;
-const roundSchema = new Schema({
-  date: {type: Date, required: true},
-  course: {type: String, required: true},
-  type: {type: String, required: true, enum: ['practice','tournament']},
-  holes: {type: Number, required: true, min: 1, max: 18},
-  strokes: {type: Number, required: true, min: 1, max: 300},
-  minutes: {type: Number, required: true, min: 1, max: 240},
-  seconds: {type: Number, required: true, min: 0, max: 60},
-  notes: {type: String, required: true}
+const courseSchema = new Schema({
+  name: {type: Date, required: true},
+  location: {type: String, required: true},
+  tees: {type: String, required: true, enum: ['practice','tournament']},
+  hole1: {type: Number, required: true},
+  hole2: {type: Number, required: true},
+  hole3: {type: Number, required: true},
+  hole4: {type: Number, required: true},
+  hole5: {type: Number, required: true},
+  hole6: {type: Number, required: true},
+  hole7: {type: Number, required: true},
+  hole8: {type: Number, required: true},
+  hole9: {type: Number, required: true},
+  hole10: {type: Number, required: false},
+  hole11: {type: Number, required: false},
+  hole12: {type: Number, required: false},
+  hole13: {type: Number, required: false},
+  hole14: {type: Number, required: false},
+  hole15: {type: Number, required: false},
+  hole16: {type: Number, required: false},
+  hole17: {type: Number, required: false},
+  hole18: {type: Number, required: false}
 },
 {
   toObject: {
@@ -51,10 +64,6 @@ const roundSchema = new Schema({
   toJSON: {
   virtuals: true 
   }
-});
-
-roundSchema.virtual('SGS').get(function() {
-  return (this.strokes * 60) + (this.minutes * 60) + this.seconds;
 });
 
 //Define schema that maps to a document in the Users collection in the appdb
@@ -68,7 +77,7 @@ const userSchema = new Schema({
   securityQuestion: String,
   securityAnswer: {type: String, required: function() 
     {return this.securityQuestion ? true: false}},
-  rounds: [roundSchema]
+  courses: [courseSchema]
 });
 const User = mongoose.model("User",userSchema); 
 
