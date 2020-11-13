@@ -61,10 +61,10 @@ class CoursesForm extends React.Component {
                 <tr key={i}>
                     <td>{i + 1}</td>
                     <td>
-                        <input name={"s" + i} className="form-control form-center" type="number" min="3" max="6" value={this.state[sName]} required={i < 9 ? true : false} style={{ width: "7%", textAlign: "center" }} onChange={(event) => this.handleChange(event)}></input>
+                        <input id={"s" + i} name={"s" + i} className="form-control form-center" type="number" min="3" max="6" value={this.state[sName]} required={i < 9 ? true : false} style={{ width: "7%", textAlign: "center" }} onChange={(event) => this.handleChange(event)}></input>
                     </td>
                     <td>
-                        <input name={"t" + i} class="form-control form-center" type="text" pattern="0:[0-9]:[0-5][0-9]" required={i < 9 ? true : false} style={{ width: "15%" }} value={this.state[tName]} onChange={(event) => this.handleChange(event)}></input>
+                        <input id={"t" + i} name={"t" + i} class="form-control form-center" type="text" pattern="0:[0-9]:[0-5][0-9]" required={i < 9 ? true : false} style={{ width: "15%" }} value={this.state[tName]} onChange={(event) => this.handleChange(event)}></input>
                     </td>
                 </tr>
             );
@@ -81,19 +81,19 @@ class CoursesForm extends React.Component {
                         <div style={{ display: "inline-block", fontWeight: "bold", fontSize: "large", float: "left" }}>
                             Course Name: &nbsp;
                         </div>
-                        <input name="name" class="form-control form-center" style={{ display: "inline-block", width: "30%", float: "left" }} size="30" disabled={this.props.courseInList ? true : false} value={this.props.courseInList ? this.props.courseName : this.state.name} onChange={this.handleChange}></input>
+                        <input id="courseInput" name="name" class="form-control form-center" style={{ display: "inline-block", width: "30%", float: "left" }} size="30" disabled={this.props.courseInList ? true : false} value={this.props.courseInList ? this.props.courseName : this.state.name} onChange={this.handleChange}></input>
                     </ul>
                     <ul style={{ paddingBottom: "50px" }}>
                         <div style={{ display: "inline-block", fontWeight: "bold", fontSize: "large", float: "left" }}>
                             Location: &nbsp;
                         </div>
-                        <input name="location" class="form-control form-center" style={{ display: "inline-block", width: "30%", float: "left" }} size="30" disabled={this.props.courseInList ? true : false} value={this.props.courseInList ? this.props.locationName : this.state.location} onChange={this.handleChange}></input>
+                        <input id="locationInput" name="location" class="form-control form-center" style={{ display: "inline-block", width: "30%", float: "left" }} size="30" disabled={this.props.courseInList ? true : false} value={this.props.courseInList ? this.props.locationName : this.state.location} onChange={this.handleChange}></input>
                     </ul>
                     <ul style={{ paddingBottom: "50px" }}>
                         <div style={{ display: "inline-block", fontWeight: "bold", fontSize: "large", float: "left" }}>
                             Tees: &nbsp;
                         </div>
-                        <input name="tees" class="form-control form-center" style={{ display: "inline-block", width: "30%", float: "left" }} size="30" disabled={this.props.courseInList ? true : false} value={this.props.courseInList ? this.props.tees : this.state.tees} onChange={this.handleChange}></input>
+                        <input id="teesInput" name="tees" class="form-control form-center" style={{ display: "inline-block", width: "30%", float: "left" }} size="30" disabled={this.props.courseInList ? true : false} value={this.props.courseInList ? this.props.tees : this.state.tees} onChange={this.handleChange}></input>
                     </ul>
                     <ul style={{ paddingBottom: "50px" }}>
                         <div style={{ display: "inline-block", fontWeight: "bold", fontSize: "large", float: "left" }}>
@@ -122,7 +122,7 @@ class CoursesForm extends React.Component {
                     </table>
                     <p></p>
                     <p></p>
-                    <button type="submit" style={{ width: "70%", fontSize: "36px", marginBottom: "10px" }}
+                    <button id="submitCourseBtn" type="submit" style={{ width: "70%", fontSize: "36px", marginBottom: "10px" }}
                         className="btn btn-primary btn-color-theme">
                         <span className={this.state.faIcon} />&nbsp;{this.state.btnLabel}
                     </button>

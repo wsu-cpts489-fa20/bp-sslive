@@ -91,7 +91,7 @@ class CourseSearch extends React.Component {
                 Find a Course:
                 <ul>
 
-                    <input ref={this.courseSearchRef} autoComplete="off" list="coursesList" name="search" className="form-control form-center" type="text" value={this.state.search}
+                    <input id="searchInput" ref={this.courseSearchRef} autoComplete="off" list="coursesList" name="search" className="form-control form-center" type="text" value={this.state.search}
                         placeholder="Search for course..." size="50" maxLength="50" style={{ display: "inline-block", width: "80%" }}
                         onChange={this.handleChange} onKeyUp={this.autoCompleteCourses} onClick={this.autoCompleteCourses}>
                     </input>
