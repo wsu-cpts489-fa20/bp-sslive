@@ -49,7 +49,11 @@ class FeedPage extends React.Component {
                 userObj={this.props.userObj}
                 menuOpen={this.state.menuOpen}
                 mode={this.state.mode}
-                changeMode={this.handleChangeMode}/>
+                changeMode={this.handleChangeMode}
+                refreshOnUpdate={this.props.refreshOnUpdate}
+                coursesMode={this.props.coursesMode}
+                setCoursesMode={this.props.setCoursesMode}
+                />
             </center>
         </div>
         );

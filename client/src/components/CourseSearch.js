@@ -78,6 +78,7 @@ class CourseSearch extends React.Component {
             this.props.setStateCallback("courseInList", true);
         }
         else {
+            this.props.setStateCallback("courseInList", false);
             this.props.setStateCallback("courseName", searchVal);
         }
         this.props.handleChangeCoursesMode(CoursesAppMode.COURSESFORM);

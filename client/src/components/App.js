@@ -5,6 +5,7 @@ import ModeBar from './ModeBar.js';
 import FloatingButton from './FloatingButton.js';
 import LoginPage from './LoginPage.js';
 import AppMode from "./../AppMode.js"
+import CoursesAppMode from './../CoursesAppMode'
 import FeedPage from './FeedPage.js';
 import Rounds from './Rounds.js';
 import DirectorMainPage from './DirectorMainPage.js';
@@ -36,12 +37,12 @@ class App extends React.Component {
                   menuOpen: false,
                   authenticated: false,
                   userObj: {displayName: "", profilePicURL: ""},
+                  coursesMode: CoursesAppMode.COURSELIST
                  };
   }
 
   //componentDidMount
   componentDidMount() {
-    this.setState({mode: AppMode.FEED}); //Used for Courses testing purposed. Rember to REMOVE once done
     if (!this.state.authenticated) { 
       //Use /auth/test route to (re)-test authentication and obtain user data
       fetch("/auth/test")
@@ -73,6 +74,10 @@ class App extends React.Component {
       userObj: obj,
       mode: newMode
     });
+  }
+
+  setCoursesMode = (newMode) => {
+    this.setState({coursesMode: newMode});
   }
 
 
@@ -123,7 +128,10 @@ class App extends React.Component {
             mode={this.state.mode}
             changeMode={this.handleChangeMode}
             userObj={this.state.userObj}
-            refreshOnUpdate={this.refreshOnUpdate}/>
+            refreshOnUpdate={this.refreshOnUpdate}
+            coursesMode={this.state.coursesMode}
+            setCoursesMode={this.setCoursesMode}
+            />
       </div>
     );  
   }

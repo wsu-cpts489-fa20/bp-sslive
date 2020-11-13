@@ -35,27 +35,45 @@ mongoose.connect(connectStr, {useNewUrlParser: true, useUnifiedTopology: true})
 
 const Schema = mongoose.Schema;
 const courseSchema = new Schema({
-  name: {type: Date, required: true},
+  name: {type: String, required: true},
   location: {type: String, required: true},
   tees: {type: String, required: true, enum: ['practice','tournament']},
-  hole1: {type: Number, required: true},
-  hole2: {type: Number, required: true},
-  hole3: {type: Number, required: true},
-  hole4: {type: Number, required: true},
-  hole5: {type: Number, required: true},
-  hole6: {type: Number, required: true},
-  hole7: {type: Number, required: true},
-  hole8: {type: Number, required: true},
-  hole9: {type: Number, required: true},
-  hole10: {type: Number, required: false},
-  hole11: {type: Number, required: false},
-  hole12: {type: Number, required: false},
-  hole13: {type: Number, required: false},
-  hole14: {type: Number, required: false},
-  hole15: {type: Number, required: false},
-  hole16: {type: Number, required: false},
-  hole17: {type: Number, required: false},
-  hole18: {type: Number, required: false}
+  s1: {type: Number, required: true},
+  s2: {type: Number, required: true},
+  s3: {type: Number, required: true},
+  s4: {type: Number, required: true},
+  s5: {type: Number, required: true},
+  s6: {type: Number, required: true},
+  s7: {type: Number, required: true},
+  s8: {type: Number, required: true},
+  s9: {type: Number, required: true},
+  s10: {type: Number, required: false},
+  s11: {type: Number, required: false},
+  s12: {type: Number, required: false},
+  s13: {type: Number, required: false},
+  s14: {type: Number, required: false},
+  s15: {type: Number, required: false},
+  s16: {type: Number, required: false},
+  s17: {type: Number, required: false},
+  s18: {type: Number, required: false},
+  t1: {type: String, required: true},
+  t2: {type: String, required: true},
+  t3: {type: String, required: true},
+  t4: {type: String, required: true},
+  t5: {type: String, required: true},
+  t6: {type: String, required: true},
+  t7: {type: String, required: true},
+  t8: {type: String, required: true},
+  t9: {type: String, required: true},
+  t10: {type: String, required: false},
+  t11: {type: String, required: false},
+  t12: {type: String, required: false},
+  t13: {type: String, required: false},
+  t14: {type: String, required: false},
+  t15: {type: String, required: false},
+  t16: {type: String, required: false},
+  t17: {type: String, required: false},
+  t18: {type: String, required: false}
 },
 {
   toObject: {
@@ -360,37 +378,68 @@ app.delete('/users/:userId', async(req, res, next) => {
 //ROUNDS ROUTES
 ////////////////////////////////
 
-//CREATE round route: Adds a new round as a subdocument to 
+//CREATE course route: Adds a new course as a subdocument to 
 //a document in the users collection (POST)
-app.post('/rounds/:userId', async (req, res, next) => {
-  console.log("in /rounds (POST) route with params = " + 
+app.post('/courses/:userId', async (req, res, next) => {
+  console.log("in /courses (POST) route with params = " + 
               JSON.stringify(req.params) + " and body = " + 
               JSON.stringify(req.body));
-  if (!req.body.hasOwnProperty("date") || 
-      !req.body.hasOwnProperty("course") || 
-      !req.body.hasOwnProperty("type") ||
-      !req.body.hasOwnProperty("holes") || 
-      !req.body.hasOwnProperty("strokes") ||
-      !req.body.hasOwnProperty("minutes") ||
-      !req.body.hasOwnProperty("seconds") || 
-      !req.body.hasOwnProperty("notes")) {
+  if (!req.body.hasOwnProperty("name") || 
+      !req.body.hasOwnProperty("location") || 
+      !req.body.hasOwnProperty("s0") || 
+      !req.body.hasOwnProperty("s1") || 
+      !req.body.hasOwnProperty("s2") ||
+      !req.body.hasOwnProperty("s3") || 
+      !req.body.hasOwnProperty("s4") ||
+      !req.body.hasOwnProperty("s5") ||
+      !req.body.hasOwnProperty("s6") || 
+      !req.body.hasOwnProperty("s7") ||
+      !req.body.hasOwnProperty("s8") ||
+      !req.body.hasOwnProperty("s9") ||
+      !req.body.hasOwnProperty("s10") ||
+      !req.body.hasOwnProperty("s11") ||
+      !req.body.hasOwnProperty("s12") ||
+      !req.body.hasOwnProperty("s13") ||
+      !req.body.hasOwnProperty("s14") ||
+      !req.body.hasOwnProperty("s15") ||
+      !req.body.hasOwnProperty("s16") ||
+      !req.body.hasOwnProperty("s17") ||
+      !req.body.hasOwnProperty("t0") || 
+      !req.body.hasOwnProperty("t1") || 
+      !req.body.hasOwnProperty("t2") ||
+      !req.body.hasOwnProperty("t3") || 
+      !req.body.hasOwnProperty("t4") ||
+      !req.body.hasOwnProperty("t5") ||
+      !req.body.hasOwnProperty("t6") || 
+      !req.body.hasOwnProperty("t7") ||
+      !req.body.hasOwnProperty("t8") ||
+      !req.body.hasOwnProperty("t9") ||
+      !req.body.hasOwnProperty("t10") ||
+      !req.body.hasOwnProperty("t11") ||
+      !req.body.hasOwnProperty("t12") ||
+      !req.body.hasOwnProperty("t13") ||
+      !req.body.hasOwnProperty("t14") ||
+      !req.body.hasOwnProperty("t15") ||
+      !req.body.hasOwnProperty("t16") ||
+      !req.body.hasOwnProperty("t17")
+      ) {
     //Body does not contain correct properties
-    return res.status(400).send("POST request on /rounds formulated incorrectly." +
-      "Body must contain all 8 required fields: date, course, type, holes, strokes, "       +  "minutes, seconds, notes.");
+    return res.status(400).send("POST request on /courses formulated incorrectly." +
+      "Body must contain all 36 required fields");
   }
   try {
     let status = await User.updateOne(
     {id: req.params.userId},
-    {$push: {rounds: req.body}});
+    {$push: {courses: req.body}});
     if (status.nModified != 1) { //Should never happen!
-      res.status(400).send("Unexpected error occurred when adding round to"+
-        " database. Round was not added.");
+      res.status(400).send("Unexpected error occurred when adding course to"+
+        " database. Course was not added.");
     } else {
-      res.status(200).send("Round successfully added to database.");
+      res.status(200).send("Course successfully added to database.");
     }
   } catch (err) {
     console.log(err);
-    return res.status(400).send("Unexpected error occurred when adding round" +
+    return res.status(400).send("Unexpected error occurred when adding course" +
      " to database: " + err);
   } 
 });
