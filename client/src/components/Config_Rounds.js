@@ -8,8 +8,8 @@ class Config_Rounds extends React.Component {
         <div className="padded-page">
              <div> 
                 <h1>Number of Rounds in Tournamnet</h1>                
-          <select name="type" value={this.state.type} 
-            className="form-control form-center" onChange={this.handleChange}>
+          <select name="type" 
+            className="form-control form-center" >
             <option value="1">1</option>
             <option value="2">2</option>
           </select> 
@@ -19,37 +19,35 @@ class Config_Rounds extends React.Component {
             <label>
               Date:
               <input name="date" className="form-control form-center" 
-                type="date" value={this.state.date} onChange={this.handleChange} />
+                type="date" />
             </label>
             <p></p>
             <label>Time: <br></br>
           <input name="minutes" type="number" size="3"
-            min="10" max="400" value={this.state.minutes}
-            onChange={this.handleChange} />:  
+            min="10" max="400"  />:  
           <input name="seconds" type="number" size="2"
-            min="0" max="60" value={this.state.seconds} 
-            onChange={this.handleChange} />
+            min="0" max="60" />
           </label>
           <p></p>
           <label>Format:
-          <select name="type" value={this.state.type} 
-            className="form-control form-center" onChange={this.handleChange}>
+          <select name="type"  
+            className="form-control form-center" >
             <option value="practice">speedgolf</option>
             <option value="tournament">Tournament</option>
           </select> 
           </label>
           <p></p>
           <label>Live Scoring method:
-          <select name="type" value={this.state.type} 
-            className="form-control form-center" onChange={this.handleChange}>
+          <select name="type"  
+            className="form-control form-center" >
             <option value="practice">player</option>
             <option value="tournament">Tournament</option>
           </select> 
           </label>
           <p></p>
           <label>Scoring data:
-          <select name="type" value={this.state.type} 
-            className="form-control form-center" onChange={this.handleChange}>
+          <select name="type"
+            className="form-control form-center" >
             <option value="practice">strockes and time</option>
             <option value="tournament">Tournament</option>
           </select> 

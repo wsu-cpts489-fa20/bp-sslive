@@ -4,16 +4,7 @@ class Config_Divions extends React.Component {
 
     renderTable = () => {
         let table = [];
-        for (const r in this.props.rounds) {
-          table.push(
-            <tr key={r}>
-              <td>{this.props.rounds[r].Name}</td>
-              <td>{this.props.rounds[r].Rounds}</td>
-              <td>{this.props.rounds[r].Hole}</td>
-              <td>{this.props.rounds[r].Course}</td>
-            </tr> 
-          );
-        }
+        
         return table;
         }
 
@@ -37,11 +28,7 @@ class Config_Divions extends React.Component {
         </tr>
         </thead>
         <tbody>
-          {Object.keys(this.props.rounds).length === 0 ? 
-          <tr>
-          <td colSpan="5" style={{fontStyle: "italic"}}>No Divisions Defiend</td>
-          </tr> : this.renderTable()
-          }
+          
         </tbody>
       </table>
 
