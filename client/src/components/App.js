@@ -41,6 +41,7 @@ class App extends React.Component {
 
   //componentDidMount
   componentDidMount() {
+    this.setState({mode: AppMode.MAIN});
     if (!this.state.authenticated) { 
       //Use /auth/test route to (re)-test authentication and obtain user data
       fetch("/auth/test")

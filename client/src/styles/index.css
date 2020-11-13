@@ -382,7 +382,7 @@ text-align: center;
 
   /* Styling for mode bar at the bottom of the page */
 .tabbar {
-  background-color: #e6e5df;
+  background-color: #13294E;
   overflow: hidden;
   position: relative;
   bottom: 5px;
@@ -405,7 +405,7 @@ text-align: center;
   /* Add a gray background color to the button when it is selected */
   .tabbar a:active {
   background-color: #F0F0F0;
-  color: #c7b185;
+  color: white;
   }
   
   /* Add a gray background color to button when it is hovered */
@@ -427,5 +427,5 @@ text-align: center;
   /* Style the text in the bottom bar */
   .tabbar-text {
   display:block;
-  font-size: small;
+  font-size: medium;
   }
