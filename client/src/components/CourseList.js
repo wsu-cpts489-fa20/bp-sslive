@@ -27,6 +27,7 @@ class CourseList extends React.Component {
                 </tr>
             );
         }
+        return table;
     }
 
     //render -- renders the entire courses table along with a header for the table

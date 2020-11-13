@@ -50,6 +50,7 @@ class CourseSearch extends React.Component {
         var coursePreSplit;
         var splitCourse;
         var course = "";
+        var tees;
         if (searchVal[searchVal.length - 1] == ")") {
             searchVal = searchVal.substring(0, searchVal.length - 1);
         }
@@ -59,6 +60,7 @@ class CourseSearch extends React.Component {
         splitCourse = coursePreSplit.split(' ');
         for (var i = 0; i < splitCourse.length; i++) {
             if (reservedStrings.includes(splitCourse[i])) {
+                tees = splitCourse[i];
                 delete splitCourse[i];
                 continue;
             }
@@ -66,18 +68,24 @@ class CourseSearch extends React.Component {
         }
         this.props.setStateCallback("courseName", course);
         this.props.setStateCallback("locationName", location);
+        this.props.setStateCallback("tees", tees);
     }
 
     handleSelect = () => {
         var searchVal = this.state.search;
         if (Courses.includes(searchVal)) {
             this.splitSearchVal();
+            this.props.setStateCallback("courseInList", true);
         }
+        else {
+            this.props.setStateCallback("courseName", searchVal);
+        }
+        this.props.handleChangeCoursesMode(CoursesAppMode.COURSESFORM);
     }
 
     render() {
         return (
-            <div style={{ fontSize: "x-large", fontWeight: "bold", textAlign: "left" }}>
+            <div style={{ fontSize: "x-large", fontWeight: "bold", textAlign: "left", }}>
                 <span className="fa fa-search" style={{ position: "relative", float: "left", paddingTop: "41px", marginLeft: "7px", top: "5px", left: "40px" }}></span>
                 Find a Course:
                 <ul>

@@ -2,7 +2,8 @@
 
 const CoursesMode = {
     COURSELIST: "CourseListMode",
-    SEARCH: "SearchMode"
+    SEARCH: "SearchMode",
+    COURSESFORM: "CoursesForm"
 }
 
 Object.freeze(CoursesMode);
