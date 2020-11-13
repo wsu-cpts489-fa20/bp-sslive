@@ -5,7 +5,7 @@ class DirectorMainPage extends React.Component {
 
     render() {
         return (
-        <div className="padded-page">
+        <div className="padded-page" id="directorMainPage" name="directorMainPage">
             <center>
             <h1 >Director Main Page</h1>
             <h2>This page is under construction.</h2>
