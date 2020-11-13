@@ -102,7 +102,7 @@ class TableList extends React.Component {
     render() {
         return ( 
         <tbody>
-            { 
+            {
                 Object.keys(this.props.rounds).length === 0 ?
                 <tr>
                  <td colSpan="5" style={{fontStyle: "italic"}}>No rounds logged</td>
