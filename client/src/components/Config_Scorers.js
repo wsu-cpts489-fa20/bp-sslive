@@ -18,10 +18,21 @@ class Config_Scorers extends React.Component {
     
     handleChange = (event) => {
         const name = event.target.name;
+        console.log(name);
         if (name === "scorerFirstName") {
             this.setState({[this.state.rounds[0].scorerFirstName]: event.target.value});
             this.state.rounds[0].scorerFirstName = event.target.value;
-        } else if(name === "customize") {
+        } else if (name === "scorerLastName") {
+            this.setState({[this.state.rounds[0].scorerLastName]: event.target.value});
+            this.state.rounds[0].scorerLastName = event.target.value;
+        } else if (name === "scorerLoginCode") {
+            this.setState({[this.state.rounds[0].scorerLoginCode]: event.target.value});
+            this.state.rounds[0].scorerLoginCode = event.target.value;
+        } else if (name === "scoringAssignment") {
+            this.setState({[this.state.rounds[0].scoringAssignment]: event.target.value});
+            this.state.rounds[0].scoringAssignment = event.target.value;
+        }
+        else if(name === "customize") {
             this.setState({[name]: event.target.value});
         }
         else 
