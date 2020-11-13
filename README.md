@@ -1,8 +1,15 @@
-# Chapter 23 Code
-This code base captures the state of the speedgolf React app at the end of
-Chapter 23, in which we complete an MVP of the MERN speedgolf app 
-implementation. The main update in this chapter is to support creating,
-editing and deleting speedgolf rounds.
+# Al_week1 
+# what is implemented
+- A rough draft of the divisions and rounds. ( textboxs, buttons, dropdown selest box, tables) none of the progress have been conected to the back end mostly html rendering. 
+- simple unit tests were added 
+
+# what is missed
+- functionality of the buttons and backend 
+
+# reasons for missing 
+- underestmating load and miss managment of time (individual and as a team). 
+- as a team we were able to meet and discuss what needs to be done and always have an agend for a meeting but sometimes more than necceasry time is taken to reach a conclusion. 
+
 
 The app can be launched to http://localhost:8081 through the command
 npm run dev.
