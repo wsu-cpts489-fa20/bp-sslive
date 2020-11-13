@@ -22,13 +22,8 @@
     "passport-github": "^1.1.0",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
-<<<<<<< HEAD
     "regenerator-runtime": "^0.13.7",
     "testcafe": "^1.9.4"
-=======
-    "popper.js": "^1.16.1",
-    "regenerator-runtime": "^0.13.7"
->>>>>>> al_week1
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
