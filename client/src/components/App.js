@@ -41,7 +41,7 @@ class App extends React.Component {
 
   //componentDidMount
   componentDidMount() {
-    this.setState({mode: AppMode.MAIN});
+    this.setState({mode: AppMode.FEED}); //Used for Courses testing purposed. Rember to REMOVE once done
     if (!this.state.authenticated) { 
       //Use /auth/test route to (re)-test authentication and obtain user data
       fetch("/auth/test")

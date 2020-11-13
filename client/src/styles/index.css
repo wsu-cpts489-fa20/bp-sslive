@@ -429,3 +429,24 @@ text-align: center;
   display:block;
   font-size: medium;
   }
+
+  #coursesListDiv {
+    border: solid rgba(156, 156, 156, 0.4);
+    border-width: thin;
+  }
+
+  #addCourseBtn {
+    width: 8%;
+    float: left;
+  }
+
+  .coursesListLabel {
+    text-align: left;
+    width: 100%;
+    font-size: x-large;
+    font-weight: bold;
+  }
+
+  .coursesListDiv {
+    padding: 8px 8px 8px 8px;
+  }
