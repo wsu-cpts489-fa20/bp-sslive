@@ -1,4 +1,5 @@
 import React from 'react';
+import CoursesAppMode from './../CoursesAppMode.js';
 
 class CoursesForm extends React.Component {
     constructor(props) {
@@ -73,7 +74,7 @@ class CoursesForm extends React.Component {
 
     render() {
         return (
-            <div style={{paddingBottom: "20px"}}>
+            <div style={{ paddingBottom: "20px" }}>
                 <h3>Add Existing Course to Tournament</h3>
                 <form onSubmit={this.handleSubmit}>
                     <ul style={{ paddingBottom: "50px" }}>
@@ -121,9 +122,12 @@ class CoursesForm extends React.Component {
                     </table>
                     <p></p>
                     <p></p>
-                    <button type="submit" style={{ width: "70%", fontSize: "36px" }}
+                    <button type="submit" style={{ width: "70%", fontSize: "36px", marginBottom: "10px" }}
                         className="btn btn-primary btn-color-theme">
                         <span className={this.state.faIcon} />&nbsp;{this.state.btnLabel}
+                    </button>
+                    <button id="cancelCourseBtn" className="btn btn-danger btn-block" style={{width: "70%"}} onClick={(newMode) => this.props.handleChangeCoursesMode(CoursesAppMode.SEARCH)}>
+                        Cancel
                     </button>
                 </form>
             </div>
