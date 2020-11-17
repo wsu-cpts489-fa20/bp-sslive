@@ -54,47 +54,163 @@ _mongoose["default"].connect(connectStr, {
 });
 
 var Schema = _mongoose["default"].Schema;
-var roundSchema = new Schema({
-  date: {
-    type: Date,
-    required: true
-  },
-  course: {
+var courseSchema = new Schema({
+  name: {
     type: String,
     required: true
   },
-  type: {
+  location: {
+    type: String,
+    required: true
+  },
+  tees: {
     type: String,
     required: true,
     "enum": ['practice', 'tournament']
   },
-  holes: {
+  s1: {
     type: Number,
-    required: true,
-    min: 1,
-    max: 18
+    required: true
   },
-  strokes: {
+  s2: {
     type: Number,
-    required: true,
-    min: 1,
-    max: 300
+    required: true
   },
-  minutes: {
+  s3: {
     type: Number,
-    required: true,
-    min: 1,
-    max: 240
+    required: true
   },
-  seconds: {
+  s4: {
     type: Number,
-    required: true,
-    min: 0,
-    max: 60
+    required: true
   },
-  notes: {
+  s5: {
+    type: Number,
+    required: true
+  },
+  s6: {
+    type: Number,
+    required: true
+  },
+  s7: {
+    type: Number,
+    required: true
+  },
+  s8: {
+    type: Number,
+    required: true
+  },
+  s9: {
+    type: Number,
+    required: true
+  },
+  s10: {
+    type: Number,
+    required: false
+  },
+  s11: {
+    type: Number,
+    required: false
+  },
+  s12: {
+    type: Number,
+    required: false
+  },
+  s13: {
+    type: Number,
+    required: false
+  },
+  s14: {
+    type: Number,
+    required: false
+  },
+  s15: {
+    type: Number,
+    required: false
+  },
+  s16: {
+    type: Number,
+    required: false
+  },
+  s17: {
+    type: Number,
+    required: false
+  },
+  s18: {
+    type: Number,
+    required: false
+  },
+  t1: {
     type: String,
     required: true
+  },
+  t2: {
+    type: String,
+    required: true
+  },
+  t3: {
+    type: String,
+    required: true
+  },
+  t4: {
+    type: String,
+    required: true
+  },
+  t5: {
+    type: String,
+    required: true
+  },
+  t6: {
+    type: String,
+    required: true
+  },
+  t7: {
+    type: String,
+    required: true
+  },
+  t8: {
+    type: String,
+    required: true
+  },
+  t9: {
+    type: String,
+    required: true
+  },
+  t10: {
+    type: String,
+    required: false
+  },
+  t11: {
+    type: String,
+    required: false
+  },
+  t12: {
+    type: String,
+    required: false
+  },
+  t13: {
+    type: String,
+    required: false
+  },
+  t14: {
+    type: String,
+    required: false
+  },
+  t15: {
+    type: String,
+    required: false
+  },
+  t16: {
+    type: String,
+    required: false
+  },
+  t17: {
+    type: String,
+    required: false
+  },
+  t18: {
+    type: String,
+    required: false
   }
 }, {
   toObject: {
@@ -103,9 +219,6 @@ var roundSchema = new Schema({
   toJSON: {
     virtuals: true
   }
-});
-roundSchema.virtual('SGS').get(function () {
-  return this.strokes * 60 + this.minutes * 60 + this.seconds;
 }); //Define schema that maps to a document in the Users collection in the appdb
 //database.
 
@@ -126,7 +239,7 @@ var userSchema = new Schema({
       return this.securityQuestion ? true : false;
     }
   },
-  rounds: [roundSchema]
+  courses: [courseSchema]
 });
 
 var User = _mongoose["default"].model("User", userSchema); //////////////////////////////////////////////////////////////////////////
@@ -656,24 +769,24 @@ app["delete"]('/users/:userId', /*#__PURE__*/function () {
 }()); /////////////////////////////////
 //ROUNDS ROUTES
 ////////////////////////////////
-//CREATE round route: Adds a new round as a subdocument to 
+//CREATE course route: Adds a new course as a subdocument to 
 //a document in the users collection (POST)
 
-app.post('/rounds/:userId', /*#__PURE__*/function () {
+app.post('/courses/:userId', /*#__PURE__*/function () {
   var _ref8 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime["default"].mark(function _callee8(req, res, next) {
     var status;
     return _regeneratorRuntime["default"].wrap(function _callee8$(_context8) {
       while (1) {
         switch (_context8.prev = _context8.next) {
           case 0:
-            console.log("in /rounds (POST) route with params = " + JSON.stringify(req.params) + " and body = " + JSON.stringify(req.body));
+            console.log("in /courses (POST) route with params = " + JSON.stringify(req.params) + " and body = " + JSON.stringify(req.body));
 
-            if (!(!req.body.hasOwnProperty("date") || !req.body.hasOwnProperty("course") || !req.body.hasOwnProperty("type") || !req.body.hasOwnProperty("holes") || !req.body.hasOwnProperty("strokes") || !req.body.hasOwnProperty("minutes") || !req.body.hasOwnProperty("seconds") || !req.body.hasOwnProperty("notes"))) {
+            if (!(!req.body.hasOwnProperty("name") || !req.body.hasOwnProperty("location") || !req.body.hasOwnProperty("s0") || !req.body.hasOwnProperty("s1") || !req.body.hasOwnProperty("s2") || !req.body.hasOwnProperty("s3") || !req.body.hasOwnProperty("s4") || !req.body.hasOwnProperty("s5") || !req.body.hasOwnProperty("s6") || !req.body.hasOwnProperty("s7") || !req.body.hasOwnProperty("s8") || !req.body.hasOwnProperty("s9") || !req.body.hasOwnProperty("s10") || !req.body.hasOwnProperty("s11") || !req.body.hasOwnProperty("s12") || !req.body.hasOwnProperty("s13") || !req.body.hasOwnProperty("s14") || !req.body.hasOwnProperty("s15") || !req.body.hasOwnProperty("s16") || !req.body.hasOwnProperty("s17") || !req.body.hasOwnProperty("t0") || !req.body.hasOwnProperty("t1") || !req.body.hasOwnProperty("t2") || !req.body.hasOwnProperty("t3") || !req.body.hasOwnProperty("t4") || !req.body.hasOwnProperty("t5") || !req.body.hasOwnProperty("t6") || !req.body.hasOwnProperty("t7") || !req.body.hasOwnProperty("t8") || !req.body.hasOwnProperty("t9") || !req.body.hasOwnProperty("t10") || !req.body.hasOwnProperty("t11") || !req.body.hasOwnProperty("t12") || !req.body.hasOwnProperty("t13") || !req.body.hasOwnProperty("t14") || !req.body.hasOwnProperty("t15") || !req.body.hasOwnProperty("t16") || !req.body.hasOwnProperty("t17"))) {
               _context8.next = 3;
               break;
             }
 
-            return _context8.abrupt("return", res.status(400).send("POST request on /rounds formulated incorrectly." + "Body must contain all 8 required fields: date, course, type, holes, strokes, " + "minutes, seconds, notes."));
+            return _context8.abrupt("return", res.status(400).send("POST request on /courses formulated incorrectly." + "Body must contain all 36 required fields"));
 
           case 3:
             _context8.prev = 3;
@@ -682,7 +795,7 @@ app.post('/rounds/:userId', /*#__PURE__*/function () {
               id: req.params.userId
             }, {
               $push: {
-                rounds: req.body
+                courses: req.body
               }
             });
 
@@ -691,9 +804,9 @@ app.post('/rounds/:userId', /*#__PURE__*/function () {
 
             if (status.nModified != 1) {
               //Should never happen!
-              res.status(400).send("Unexpected error occurred when adding round to" + " database. Round was not added.");
+              res.status(400).send("Unexpected error occurred when adding course to" + " database. Course was not added.");
             } else {
-              res.status(200).send("Round successfully added to database.");
+              res.status(200).send("Course successfully added to database.");
             }
 
             _context8.next = 14;
@@ -703,7 +816,7 @@ app.post('/rounds/:userId', /*#__PURE__*/function () {
             _context8.prev = 10;
             _context8.t0 = _context8["catch"](3);
             console.log(_context8.t0);
-            return _context8.abrupt("return", res.status(400).send("Unexpected error occurred when adding round" + " to database: " + _context8.t0));
+            return _context8.abrupt("return", res.status(400).send("Unexpected error occurred when adding course" + " to database: " + _context8.t0));
 
           case 14:
           case "end":

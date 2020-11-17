@@ -94,6 +94,7 @@ handleOAuthLoginClick = (provider) => {
             <label htmlFor="emailInput" style={{ padding: 0, fontSize: 24 }}>
                 Name:
                 <input
+                name='emailInput'
                 ref={this.emailInputRef}
                 className="form-control login-text"
                 placeholder="Enter Director Name"
@@ -105,6 +106,8 @@ handleOAuthLoginClick = (provider) => {
             <p />
             <p className="bg-danger" id="feedback" style={{ fontSize: 16 }} />
             <button
+                name="loginBtn"
+                id="loginBtn"
                 type="submit"
                 className="btn-color-theme btn btn-primary btn-block login-btn">
                 <span id="login-btn-icon" className={this.state.loginBtnIcon}/>
