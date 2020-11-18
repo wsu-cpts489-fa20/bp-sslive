@@ -781,7 +781,7 @@ app.post('/courses/:userId', /*#__PURE__*/function () {
           case 0:
             console.log("in /courses (POST) route with params = " + JSON.stringify(req.params) + " and body = " + JSON.stringify(req.body));
 
-            if (!(!req.body.hasOwnProperty("name") || !req.body.hasOwnProperty("location") || !req.body.hasOwnProperty("s0") || !req.body.hasOwnProperty("s1") || !req.body.hasOwnProperty("s2") || !req.body.hasOwnProperty("s3") || !req.body.hasOwnProperty("s4") || !req.body.hasOwnProperty("s5") || !req.body.hasOwnProperty("s6") || !req.body.hasOwnProperty("s7") || !req.body.hasOwnProperty("s8") || !req.body.hasOwnProperty("s9") || !req.body.hasOwnProperty("s10") || !req.body.hasOwnProperty("s11") || !req.body.hasOwnProperty("s12") || !req.body.hasOwnProperty("s13") || !req.body.hasOwnProperty("s14") || !req.body.hasOwnProperty("s15") || !req.body.hasOwnProperty("s16") || !req.body.hasOwnProperty("s17") || !req.body.hasOwnProperty("t0") || !req.body.hasOwnProperty("t1") || !req.body.hasOwnProperty("t2") || !req.body.hasOwnProperty("t3") || !req.body.hasOwnProperty("t4") || !req.body.hasOwnProperty("t5") || !req.body.hasOwnProperty("t6") || !req.body.hasOwnProperty("t7") || !req.body.hasOwnProperty("t8") || !req.body.hasOwnProperty("t9") || !req.body.hasOwnProperty("t10") || !req.body.hasOwnProperty("t11") || !req.body.hasOwnProperty("t12") || !req.body.hasOwnProperty("t13") || !req.body.hasOwnProperty("t14") || !req.body.hasOwnProperty("t15") || !req.body.hasOwnProperty("t16") || !req.body.hasOwnProperty("t17"))) {
+            if (!(!req.body.hasOwnProperty("name") || !req.body.hasOwnProperty("location") || !req.body.hasOwnProperty("s1") || !req.body.hasOwnProperty("s2") || !req.body.hasOwnProperty("s3") || !req.body.hasOwnProperty("s4") || !req.body.hasOwnProperty("s5") || !req.body.hasOwnProperty("s6") || !req.body.hasOwnProperty("s7") || !req.body.hasOwnProperty("s8") || !req.body.hasOwnProperty("s9") || !req.body.hasOwnProperty("s10") || !req.body.hasOwnProperty("s11") || !req.body.hasOwnProperty("s12") || !req.body.hasOwnProperty("s13") || !req.body.hasOwnProperty("s14") || !req.body.hasOwnProperty("s15") || !req.body.hasOwnProperty("s16") || !req.body.hasOwnProperty("s17") || !req.body.hasOwnProperty("s18") || !req.body.hasOwnProperty("t1") || !req.body.hasOwnProperty("t2") || !req.body.hasOwnProperty("t3") || !req.body.hasOwnProperty("t4") || !req.body.hasOwnProperty("t5") || !req.body.hasOwnProperty("t6") || !req.body.hasOwnProperty("t7") || !req.body.hasOwnProperty("t8") || !req.body.hasOwnProperty("t9") || !req.body.hasOwnProperty("t10") || !req.body.hasOwnProperty("t11") || !req.body.hasOwnProperty("t12") || !req.body.hasOwnProperty("t13") || !req.body.hasOwnProperty("t14") || !req.body.hasOwnProperty("t15") || !req.body.hasOwnProperty("t16") || !req.body.hasOwnProperty("t17") || !req.body.hasOwnProperty("t18"))) {
               _context8.next = 3;
               break;
             }
@@ -883,7 +883,7 @@ app.get('/rounds/:userId', /*#__PURE__*/function () {
 }()); //UPDATE round route: Updates a specific round 
 //for a given user in the users collection (PUT)
 
-app.put('/rounds/:userId/:roundId', /*#__PURE__*/function () {
+app.put('/courses/:userId/:courseId', /*#__PURE__*/function () {
   var _ref10 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime["default"].mark(function _callee10(req, res, next) {
     var validProps, bodyObj, bodyProp, status;
     return _regeneratorRuntime["default"].wrap(function _callee10$(_context10) {
@@ -891,48 +891,46 @@ app.put('/rounds/:userId/:roundId', /*#__PURE__*/function () {
         switch (_context10.prev = _context10.next) {
           case 0:
             console.log("in /rounds (PUT) route with params = " + JSON.stringify(req.params) + " and body = " + JSON.stringify(req.body));
-            validProps = ['date', 'course', 'type', 'holes', 'strokes', 'minutes', 'seconds', 'notes'];
+            validProps = ['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10', 's11', 's12', 's13', 's14', 's15', 's16', 's17', 's18', 't1', 't2', 't3', 't4', 't5', 't6', 't7', 't8', 't9', 't10', 't11', 't12', 't13', 't14', 't15', 't16', 't17', 't18'];
             bodyObj = _objectSpread({}, req.body);
             delete bodyObj._id; //Not needed for update
 
-            delete bodyObj.SGS; //We'll compute this below in seconds.
-
             _context10.t0 = _regeneratorRuntime["default"].keys(bodyObj);
 
-          case 6:
+          case 5:
             if ((_context10.t1 = _context10.t0()).done) {
-              _context10.next = 16;
+              _context10.next = 15;
               break;
             }
 
             bodyProp = _context10.t1.value;
 
             if (validProps.includes(bodyProp)) {
-              _context10.next = 12;
+              _context10.next = 11;
               break;
             }
 
-            return _context10.abrupt("return", res.status(400).send("rounds/ PUT request formulated incorrectly." + "It includes " + bodyProp + ". However, only the following props are allowed: " + "'date', 'course', 'type', 'holes', 'strokes', " + "'minutes', 'seconds', 'notes'"));
+            return _context10.abrupt("return", res.status(400).send("rounds/ PUT request formulated incorrectly." + "It includes " + bodyProp + ". However, only the following props are allowed: " + "'name', 'location', 's0', 's1', 's2'," + " 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10', 's11', 's12', 's13', 's14', 's15', 's16', 's17', 't0', 't1'," + " 't2', 't3', 't4', 't5', 't6', 't7', 't8', 't9', 't10', 't11', 't12', 't13', 't14', 't15', 't16', 't17'"));
 
-          case 12:
-            bodyObj["rounds.$." + bodyProp] = bodyObj[bodyProp];
+          case 11:
+            bodyObj["courses.$." + bodyProp] = bodyObj[bodyProp];
             delete bodyObj[bodyProp];
 
-          case 14:
-            _context10.next = 6;
+          case 13:
+            _context10.next = 5;
             break;
 
-          case 16:
-            _context10.prev = 16;
-            _context10.next = 19;
+          case 15:
+            _context10.prev = 15;
+            _context10.next = 18;
             return User.updateOne({
               "id": req.params.userId,
-              "rounds._id": _mongoose["default"].Types.ObjectId(req.params.roundId)
+              "courses._id": _mongoose["default"].Types.ObjectId(req.params.courseId)
             }, {
               "$set": bodyObj
             });
 
-          case 19:
+          case 18:
             status = _context10.sent;
 
             if (status.nModified != 1) {
@@ -941,21 +939,21 @@ app.put('/rounds/:userId/:roundId', /*#__PURE__*/function () {
               res.status(200).send("Round successfully updated in database.");
             }
 
-            _context10.next = 27;
+            _context10.next = 26;
             break;
 
-          case 23:
-            _context10.prev = 23;
-            _context10.t2 = _context10["catch"](16);
+          case 22:
+            _context10.prev = 22;
+            _context10.t2 = _context10["catch"](15);
             console.log(_context10.t2);
             return _context10.abrupt("return", res.status(400).send("Unexpected error occurred when updating round in database: " + _context10.t2));
 
-          case 27:
+          case 26:
           case "end":
             return _context10.stop();
         }
       }
-    }, _callee10, null, [[16, 23]]);
+    }, _callee10, null, [[15, 22]]);
   }));
 
   return function (_x28, _x29, _x30) {
