@@ -102,6 +102,7 @@ class ConfigCourses extends React.Component {
                 editCourse={this.editCourse}
                 editCourseFlag={this.state.editCourseFlag}
                 startData={thisCourse}
+                tees={this.state.tees}
             />
         );
     }

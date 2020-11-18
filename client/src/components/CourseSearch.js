@@ -2,10 +2,6 @@ import React from 'react';
 import Courses from './../Courses.js';
 import CoursesAppMode from './../CoursesAppMode.js';
 
-const reservedStrings = [
-    "Women's", "Men's", "Sprintgolf", "Yellow", "Blue", "Red", "White", "Womens", "Mens", "Gray", "Men", "Women", "Ladies", "Back"
-];
-
 class CourseSearch extends React.Component {
     constructor(props) {
         super();
@@ -14,10 +10,6 @@ class CourseSearch extends React.Component {
             search: "",
             dropdown: undefined
         }
-        this.handleChange = this.handleChange.bind(this);
-        this.autoCompleteCourses = this.autoCompleteCourses.bind(this);
-        this.splitSearchVal = this.splitSearchVal.bind(this);
-        this.handleSelect = this.handleSelect.bind(this);
     }
 
     componentDidMount() {
@@ -44,6 +36,9 @@ class CourseSearch extends React.Component {
     }
 
     splitSearchVal = () => {
+        const reservedStrings = [
+            "Women's", "Men's", "Sprintgolf", "Yellow", "Blue", "Red", "White", "Womens", "Mens", "Gray", "Men", "Women", "Ladies", "Back"
+        ];
         var searchVal = this.state.search;
         var splitSearchVal;
         var location;
@@ -61,10 +56,10 @@ class CourseSearch extends React.Component {
         for (var i = 0; i < splitCourse.length; i++) {
             if (reservedStrings.includes(splitCourse[i])) {
                 tees = splitCourse[i];
-                delete splitCourse[i];
-                continue;
             }
-            course += splitCourse[i] + " ";
+            else {
+                course += splitCourse[i] + " ";
+            }
         }
         this.props.setStateCallback("courseName", course);
         this.props.setStateCallback("locationName", location);
