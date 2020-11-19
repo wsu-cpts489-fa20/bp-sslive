@@ -1,11 +1,13 @@
 import React from 'react';
 import DivisionsAppMode from './../DivisionsAppMode.js';
 import DivisionList from './DivisionList.js';
+import DivisionsForm from './DivisionsForm.js';
 
 const divisionsModeToPage = {};
 divisionsModeToPage[DivisionsAppMode.DIVISIONLIST] = DivisionList;
+divisionsModeToPage[DivisionsAppMode.DIVISIONSFORM] = DivisionsForm;
 
-class ConfigDivions extends React.Component {
+class ConfigDivisions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,9 +24,10 @@ class ConfigDivions extends React.Component {
     return (
       <DivisionsModePage
         divisions={this.props.userObj.divisions}
+        handleChangeDivisionsMode={this.handleChangeDivisionsMode}
       />
     );
   }
 }
 
-export default ConfigDivions;
+export default ConfigDivisions;

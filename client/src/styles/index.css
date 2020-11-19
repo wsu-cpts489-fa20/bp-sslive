@@ -514,3 +514,9 @@ body {
   font-size: x-large;
   font-weight: bold;
 }
+
+.divisionsFormDiv {
+  padding: 8px 8px 8px 8px;
+  border: solid rgba(156, 156, 156, .4);
+  border-width: thin;
+}
