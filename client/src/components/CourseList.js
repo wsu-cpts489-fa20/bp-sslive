@@ -8,7 +8,7 @@ class CourseList extends React.Component {
         super();
     }
 
-    //editRound -- Triggered when the user clicks the edit button for a given course. The id param
+    //editCourse -- Triggered when the user clicks the edit button for a given course. The id param
     //is the unique property that identifies the round. Set the state variable representing the id 
     //of the round to be edited and then switch the flag editCourse to true so the PUT route will be
     //used rather than the POST route.

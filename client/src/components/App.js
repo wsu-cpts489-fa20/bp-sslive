@@ -5,7 +5,8 @@ import ModeBar from './ModeBar.js';
 import FloatingButton from './FloatingButton.js';
 import LoginPage from './LoginPage.js';
 import AppMode from "./../AppMode.js"
-import CoursesAppMode from './../CoursesAppMode'
+import CoursesAppMode from './../CoursesAppMode.js';
+import DivisionsAppMode from './../DivisionsAppMode.js';
 import FeedPage from './FeedPage.js';
 import Rounds from './Rounds.js';
 import DirectorMainPage from './DirectorMainPage.js';
@@ -37,7 +38,9 @@ class App extends React.Component {
                   menuOpen: false,
                   authenticated: false,
                   userObj: {displayName: "", profilePicURL: ""},
-                  coursesMode: CoursesAppMode.COURSELIST
+                  coursesMode: CoursesAppMode.COURSELIST,
+                  divisionsMode: DivisionsAppMode.DIVISIONLIST,
+                  mode: AppMode.FEED
                  };
   }
 
@@ -80,6 +83,9 @@ class App extends React.Component {
     this.setState({coursesMode: newMode});
   }
 
+  setDivisionsMode = (newMode) => {
+    this.setState({divisionsMode: newMode});
+  }
 
   handleChangeMode = (newMode) => {
     if (newMode == "LOGIN") {
@@ -131,6 +137,8 @@ class App extends React.Component {
             refreshOnUpdate={this.refreshOnUpdate}
             coursesMode={this.state.coursesMode}
             setCoursesMode={this.setCoursesMode}
+            divisionsMode={this.state.divisionsMode}
+            setDivisionsMode={this.setDivisionsMode}
             />
       </div>
     );  
