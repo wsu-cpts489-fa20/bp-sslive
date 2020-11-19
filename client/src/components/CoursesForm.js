@@ -15,9 +15,9 @@ class CoursesForm extends React.Component {
         }
         else {
             let thisCourse = {...this.props.startData}
-            delete thisCourse.id;
             thisCourse.faIcon = "fa fa-edit";
             thisCourse.btnLabel = "Update Course Data";
+            delete thisCourse.id;
             this.state = thisCourse;
         }
         this.renderTable = this.renderTable.bind(this);
@@ -74,6 +74,12 @@ class CoursesForm extends React.Component {
         event.preventDefault();
     }
 
+    handleCancel = (event) => {
+        event.preventDefault();
+        this.props.setStateCallback("editCourseFlag", false);
+        this.props.handleChangeCoursesMode(CoursesAppMode.COURSELIST);
+    }
+
     renderTable = () => {
         var sName;
         var tName;
@@ -107,19 +113,19 @@ class CoursesForm extends React.Component {
                         <div style={{ display: "inline-block", fontWeight: "bold", fontSize: "large", float: "left" }}>
                             Course Name: &nbsp;
                         </div>
-                        <input id="courseInput" name="name" class="form-control form-center" style={{ display: "inline-block", width: "30%", float: "left" }} size="30" disabled={this.props.courseInList ? true : false} value={this.props.courseInList ? this.props.courseName : this.state.name} onChange={this.handleChange}></input>
+                        <input id="courseInput" name="name" class="form-control form-center" style={{ display: "inline-block", width: "30%", float: "left" }} size="30" disabled={this.props.courseInList ? true : this.props.disabled ? true : false} value={this.props.courseInList ? this.props.courseName : this.state.name} onChange={this.handleChange}></input>
                     </ul>
                     <ul style={{ paddingBottom: "50px" }}>
                         <div style={{ display: "inline-block", fontWeight: "bold", fontSize: "large", float: "left" }}>
                             Location: &nbsp;
                         </div>
-                        <input id="locationInput" name="location" class="form-control form-center" style={{ display: "inline-block", width: "30%", float: "left" }} size="30" disabled={this.props.courseInList ? true : false} value={this.props.courseInList ? this.props.locationName : this.state.location} onChange={this.handleChange}></input>
+                        <input id="locationInput" name="location" class="form-control form-center" style={{ display: "inline-block", width: "30%", float: "left" }} size="30" disabled={this.props.courseInList ? true : this.props.disabled ? true : false} value={this.props.courseInList ? this.props.locationName : this.state.location} onChange={this.handleChange}></input>
                     </ul>
                     <ul style={{ paddingBottom: "50px" }}>
                         <div style={{ display: "inline-block", fontWeight: "bold", fontSize: "large", float: "left" }}>
                             Tees: &nbsp;
                         </div>
-                        <input id="teesInput" name="tees" class="form-control form-center" style={{ display: "inline-block", width: "30%", float: "left" }} size="30" disabled={this.props.courseInList ? true : false} value={this.props.courseInList ? this.props.tees : this.state.tees} onChange={this.handleChange}></input>
+                        <input id="teesInput" name="tees" class="form-control form-center" style={{ display: "inline-block", width: "30%", float: "left" }} size="30" disabled={this.props.courseInList ? true : this.props.disabled ? true : false} value={this.props.courseInList ? this.props.tees : this.state.tees} onChange={this.handleChange}></input>
                     </ul>
                     <ul style={{ paddingBottom: "50px" }}>
                         <div style={{ display: "inline-block", fontWeight: "bold", fontSize: "large", float: "left" }}>
@@ -152,7 +158,7 @@ class CoursesForm extends React.Component {
                         className="btn btn-primary btn-color-theme">
                         <span className={this.state.faIcon} />&nbsp;{this.state.btnLabel}
                     </button>
-                    <button id="cancelCourseBtn" className="btn btn-danger btn-block" style={{ width: "70%" }} onClick={(newMode) => this.props.handleChangeCoursesMode(CoursesAppMode.SEARCH)}>
+                    <button id="cancelCourseBtn" className="btn btn-danger btn-block" style={{ width: "70%" }} onClick={this.props.editCourseFlag ? (event) => this.handleCancel(event)  : (newMode) => this.props.handleChangeCoursesMode(CoursesAppMode.SEARCH)}>
                         Cancel
                     </button>
                 </form>

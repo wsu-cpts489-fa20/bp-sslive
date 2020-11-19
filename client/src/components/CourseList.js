@@ -13,7 +13,8 @@ class CourseList extends React.Component {
     //of the round to be edited and then switch the flag editCourse to true so the PUT route will be
     //used rather than the POST route.
     editCourse = (id) => {
-        this.props.setStateCallback("courseInList", true);
+        this.props.setStateCallback("disabled", true);
+        this.props.setStateCallback("courseInList", false);
         this.props.setStateCallback("editId", id);
         this.props.setStateCallback("editCourseFlag", true);
         this.props.handleChangeCoursesMode(CoursesAppMode.COURSESFORM);
