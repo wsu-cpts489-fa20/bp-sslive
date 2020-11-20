@@ -17,7 +17,7 @@ class TabBar extends React.Component {
           onClick={()=>this.props.changeMode(ConfigTab.COURSES)}>
           <span className="tabbar-text">Courses</span>
         </a> 
-        <a className={(this.props.mode === ConfigTab.ROUNDS ? " item-selected" : null)}
+        <a id="roundsTab" className={(this.props.mode === ConfigTab.ROUNDS ? " item-selected" : null)}
           onClick={()=>this.props.changeMode(ConfigTab.ROUNDS)}>
           <span className="tabbar-text">Rounds</span>
         </a> 

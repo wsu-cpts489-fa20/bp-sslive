@@ -370,7 +370,7 @@ class Config_Rounds extends React.Component {
         return (
          
           <div className="page">
-            <form> 
+            <form > 
             <div style={{ display: "inline-block", fontWeight: "bold", fontSize: "large", float: "left" }}>
           Number of Rounds in Tournamnet: &nbsp;</div> 
           <select id="numOfRounds" name="type" 
