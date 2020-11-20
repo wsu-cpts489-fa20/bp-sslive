@@ -544,3 +544,20 @@ body {
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
+
+#RoundsListDiv {
+  border: solid rgba(156, 156, 156, 0.4);
+  border-width: thin;
+}
+.RoundsListDiv{
+  padding: 8px 8px 8px 8px;
+  
+}
+.roundsListLabel{
+  text-align: left;
+  width: 100%;
+  font-size: large;
+}
+.page{
+  padding: 8px 8px 8px 8px;
+}
