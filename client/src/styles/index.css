@@ -2,13 +2,16 @@
   in index.css for the entire app. */
 
 /* Styling of the fixed top bar in the app */
-
+html, body {
+  height: 100%;
+  background-color: #F5F5F5;
+}
 .navbar {
   overflow: hidden;
   /* Don't allow scrolling */
   display: block;
   /* Occupies its own horizontal space */
-  background-color: #13294E;
+  background-color: 	#383838;
   position: fixed;
   /* Doesn't move */
   top: 0;
@@ -51,7 +54,7 @@
   /* Position menu 48 px from top of screen; accomodates top navbar */
   left: 0;
   /* Position the menu on the left hand side */
-  background-color: #13294E;
+  background-color: #2E8B57;
   /* Background color is dark blue */
   overflow-x: hidden;
   /* Don't allow horizontal scroll */
@@ -131,7 +134,7 @@
 .sidemenu-item:hover {
   cursor: default;
   text-decoration: none;
-  color: #13294E !important;
+  color: #2E8B57 !important;
   background-color: #F0F0F0;
 }
 
@@ -141,7 +144,7 @@
   pointer-events: none;
   cursor: default;
   text-decoration: none;
-  color: #13294E !important;
+  color: #2E8B57 !important;
   background-color: #F0F0F0;
 }
 
@@ -160,7 +163,7 @@
 /* The SpeedScore dark blue color theme  */
 
 .btn-color-theme {
-  background-color: #13294E;
+  background-color: 	#2E8B57;
   color: white;
 }
 
@@ -168,7 +171,7 @@
 
 .btn-alt-color-theme {
   background-color: #F0F0F0;
-  color: #13294E;
+  color: 	#2E8B57;
 }
 
 /* change items to gray when disabled class is applied  */
@@ -179,14 +182,15 @@
 
 .btn-color-theme-outline {
   border: 2px;
-  border-color: #13294E;
-  color: #13294E;
+  border-color: 	#2E8B57;
+  color: 	#2E8B57;
 }
 
 /* Styling for the divs in the app. Ensures that the content at top isn't obscured by top bar */
 
 .padded-page {
   padding: 56px 8px 0px 8px;
+  background-color: #F5F5F5;
 }
 
 .hide {
@@ -426,7 +430,7 @@ body {
 /* Styling for mode bar at the bottom of the page */
 
 .tabbar {
-  background-color: #13294E;
+  background-color: #505050;
   overflow: hidden;
   position: relative;
   bottom: 5px;
@@ -449,7 +453,7 @@ body {
 /* Add a gray background color to the button when it is selected */
 
 .tabbar a:active {
-  background-color: #F0F0F0;
+  background-color: #2E8B57;
   color: white;
 }
 
@@ -500,4 +504,13 @@ body {
 
 .coursesListDiv {
   padding: 8px 8px 8px 8px;
+}
+.loginContainer {
+  width: 100%;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }

@@ -14,13 +14,17 @@ constructor() {
                   showResetPasswordDialog: false,
                   githubIcon: "fa fa-github",
                   githubLabel: "Sign in with GitHub",
-                  loginMsg: ""
+                  loginMsg: "",
+                  checkbox: false,
+                  newTournament: false,
+                  tournamentAccessCode: false,
+                  scorerAccessCode: false
                   };
 } 
     
 //Focus cursor in email input field when mounted
 componentDidMount() {
-    this.emailInputRef.current.focus();
+    //this.emailInputRef.current.focus();
 }  
 
 //handleLogin -- Callback function that sets up initial app state upon login.
@@ -37,6 +41,7 @@ componentDidMount() {
 
 //handleLoginSubmit -- Called when user clicks on login button.
 handleLoginSubmit = async (event) => {
+
     event.preventDefault();
     this.setState({loginBtnIcon: "fa fa-spin fa-spinner",
                    loginBtnLabel: "Logging In..."});
@@ -81,8 +86,32 @@ handleOAuthLoginClick = (provider) => {
                   [provider + "Label"] : "Connecting..."});
    setTimeout(() => this.handleOAuthLogin(provider),1000);
 }
-
-
+handleCheckboxChange = (value) => {
+    this.setState({checkbox: !this.state.checkbox});
+}
+handleSelect = (event) => {
+    let name = event.target.name;
+    if (name === "newTournament") {
+        console.log("new tournament.")
+        this.props.newTournament();
+        this.setState({newTournament: !this.state.newTournament});
+        this.setState({tournamentAccessCode: false});
+        this.setState({scorerAccessCode: false});
+    } 
+    else if (name === "tournamentAccessCode") {
+        this.setState({newTournament: false});
+        this.setState({tournamentAccessCode: !this.state.tournamentAccessCode});
+        this.setState({scorerAccessCode: false});
+    }
+    else if (name === "scorerAccessCode") {
+        this.setState({newTournament: false});
+        this.setState({tournamentAccessCode: false});
+        this.setState({scorerAccessCode: !this.state.scorerAccessCode});
+    }
+}
+// newTournament: false,
+// tournamentAccessCode: false,
+// scorerAccessCode: false
   render() {
     return(
         <div id="login-mode-div" className="padded-page">
@@ -90,35 +119,51 @@ handleOAuthLoginClick = (provider) => {
             <h1 />
             {this.state.accountCreateMsg != "" ? <p className="emphasis">{this.state.accountCreateMsg}</p> : null}
             {this.state.loginMsg != "" ? <p className="emphasis">{this.state.loginMsg}</p> : null}
-            <form id="loginInterface" onSubmit={this.handleLoginSubmit}>
-            <label htmlFor="emailInput" style={{ padding: 0, fontSize: 24 }}>
-                Name:
-                <input
-                name='emailInput'
-                ref={this.emailInputRef}
-                className="form-control login-text"
-                placeholder="Enter Director Name"
-                id="emailInput"
-                pattern="[A-Za-z0-9._%+-]{2,}"
-                required={true}
-                />
-            </label>
-            <p />
-            <p className="bg-danger" id="feedback" style={{ fontSize: 16 }} />
-            <button
-                name="loginBtn"
-                id="loginBtn"
-                type="submit"
-                className="btn-color-theme btn btn-primary btn-block login-btn">
-                <span id="login-btn-icon" className={this.state.loginBtnIcon}/>
-                &nbsp;{this.state.loginBtnLabel}
-            </button>
-            <p>
-            </p>  
-            <p>
-                <i>Version CptS 489</i>
-            </p>
-            </form>
+            <div className="loginContainer">
+                <button id="newTournament" name="newTournament" onClick={this.handleSelect.bind(this)} className="btn-color-theme btn btn-block login-btn"  style={{width : "21%"}}>
+                <span id="login-btn-icon"/>
+                    &nbsp;Create Tournament:
+                </button>
+                <br></br>
+                <p/>
+                <button id="tournamentAccessCode" name="tournamentAccessCode" onClick={this.handleSelect.bind(this)} className="btn-color-theme btn btn-block login-btn"  style={{width : "21%"}}>
+                <span id="login-btn-icon"/>
+                    &nbsp;Director Access Code:
+                </button>
+                <p/>
+                {this.state.tournamentAccessCode ?                 
+                    <form id="loginInterface" onSubmit={this.handleLoginSubmit}>
+                        <label htmlFor="emailInput" style={{ padding: 0, fontSize: 24 }}>
+                            <input name='emailInput' ref={this.emailInputRef} className="form-control login-text"
+                            placeholder="Enter Director Name"id="emailInput" pattern="[A-Za-z0-9._%+-]{2,}" required={true} />
+                        </label>
+                        <button name="loginBtn" id="loginBtn" type="submit" style={{width : "5%"}}>
+                            <span id="login-btn-icon" className={this.state.loginBtnIcon}/>
+                                &nbsp;{"Submit"}
+                        </button>
+                        
+                    </form>
+                    : null}
+                <br></br>
+                <button id="scorerAccessCode" name="scorerAccessCode" onClick={this.handleSelect.bind(this)} className="btn-color-theme btn btn-block login-btn" style={{width : "21%"}}>
+                <span id="login-btn-icon"/>
+                    &nbsp;Scorer Access Code:
+                </button>
+                <p/>
+                {this.state.scorerAccessCode ?                 
+                    <form id="loginInterface" onSubmit={this.handleLoginSubmit}>
+                        <label htmlFor="emailInput" style={{ padding: 0, fontSize: 24 }}>
+                            <input name='emailInput' ref={this.emailInputRef} className="form-control login-text"
+                            placeholder="Enter Scorer Name"id="emailInput" pattern="[A-Za-z0-9._%+-]{2,}" required={true} />
+                        </label>
+                        <button name="loginBtn" id="loginBtn" type="submit" style={{width : "5%"}}>
+                            <span id="login-btn-icon" className={this.state.loginBtnIcon}/>
+                                &nbsp;{"Submit"}
+                        </button>
+                        <p/>
+                    </form>
+                    : null}
+            </div>
         </center>
         </div>
         )

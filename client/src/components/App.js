@@ -59,6 +59,22 @@ class App extends React.Component {
       )
     } 
   }
+  handleNewTournament = () => {
+    let obj = {
+      id: "director@email.com",
+      password: "Password1!",
+      displayName: "Director",
+      authStrategy : "local",
+      profile : "https://icon-library.net//images/default-profile-icon/default-profile-icon-24.jpg",
+      securityQuestion : "Director?",
+      securityAnswer : "Yes",
+      courses : []
+    }
+    this.setState({
+      authenticated: true,
+      mode: AppMode.MAIN
+    });
+  }
 
   //refreshOnUpdate(newMode) -- Called by child components when user data changes in 
   //the database. The function calls the users/:userid (GET) route to update 
@@ -109,7 +125,7 @@ class App extends React.Component {
   render() {
     const ModePage = modeToPage[this.state.mode];
     return (
-      <div>
+      <div className="layout">
         <NavBar 
           title={modeTitle[this.state.mode]} 
           mode={this.state.mode}
@@ -124,6 +140,7 @@ class App extends React.Component {
             profilePicURL={this.state.userObj.profilePicURL}
             logOut={() => this.handleChangeMode(AppMode.LOGIN)}/>
           <ModePage 
+            newTournament={this.handleNewTournament}
             menuOpen={this.state.menuOpen}
             mode={this.state.mode}
             changeMode={this.handleChangeMode}
