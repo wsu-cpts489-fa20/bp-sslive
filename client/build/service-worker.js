@@ -14,7 +14,11 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
+<<<<<<< HEAD
   "/precache-manifest.3c86e9ae11818c535c1dbda4dcf31a6e.js"
+=======
+  "/precache-manifest.c94291a066a22be32778f5a917fb288f.js"
+>>>>>>> Dallas_week2
 );
 
 self.addEventListener('message', (event) => {

@@ -2,15 +2,23 @@ import React from 'react';
 
 class Config_Publish extends React.Component {
 
+    handleSubmit = (event) => {
+        console.log("Publish");
+        // localStorage.setItem("scorers", JSON.stringify(this.state.rounds));
+        // let data = JSON.parse(localStorage.getItem("scorers"));
+        // console.log(data);
+
+        }
     render() {
         return (
         <div className="padded-page">
             <center>
-            <h1 > Publish</h1>
-            <h2>This page is under construction.</h2>
-            <img src="https://dl.dropboxusercontent.com/s/qpjhy9x9gwdxpob/SpeedScoreLogo64Trans.png" 
-             height="200" width="200"/>
-            <p style={{fontStyle: "italic"}}>Version CptS 489 React Demo</p>
+            <h1 > Tournament Settings</h1>
+            
+            <button type="submit" style={{width: "70%",fontSize: "36px"}} onClick={this.handleSubmit} 
+                className="btn btn-primary btn-color-theme login-btn">
+              <span className="fa fa-edit"/>&nbsp;Save Scorers
+          </button>
             </center>
         </div>
         );

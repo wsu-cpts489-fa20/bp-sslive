@@ -6,13 +6,7 @@ class Config_Scorers extends React.Component {
 
           this.state = {
             customize: false,
-            rounds : [ 
-                {
-                    "scorerFirstName" : "Dallas",
-                    "scorerLastName" : "Padilla",
-                    "scorerLoginCode" : "password",
-                    "scoringAssignment" : "Starter for Round 1"
-                }]
+            rounds : [ ]
           };
     }
     
@@ -40,6 +34,24 @@ class Config_Scorers extends React.Component {
             this.setState({[event.target.name]: event.target.value});
         }
     }
+
+    handleSubmit = (event) => {
+        console.log("Submit");
+        localStorage.setItem("scorers", JSON.stringify(this.state.rounds));
+        let data = JSON.parse(localStorage.getItem("scorers"));
+        console.log(data);
+        //start spinner
+        // this.setState({faIcon: "fa fa-spin fa-spinner",
+                        // btnLabel: (this.props.mode === AppMode.ROUNDS_LOGROUND ? 
+                        //             "Saving..." : "Updating...")});
+        //Prepare current round data to be saved
+        // let roundData = this.state;
+        // delete roundData.faIcon;
+        // delete roundData.btnLabel;
+        //call saveRound on 1 second delay to show spinning icon
+        // setTimeout(this.props.saveRound,1000,roundData); 
+        // event.preventDefault(); 
+        }
 
     render() {
         return (
@@ -70,6 +82,10 @@ class Config_Scorers extends React.Component {
                 handleChange={this.handleChange}
                 />
             </table>
+            <button type="submit" style={{width: "70%",fontSize: "36px"}} onClick={this.handleSubmit} 
+                className="btn btn-primary btn-color-theme login-btn">
+              <span className="fa fa-edit"/>&nbsp;Save Scorers
+          </button>
             </center>
         </div>
         );
