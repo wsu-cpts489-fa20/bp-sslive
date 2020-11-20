@@ -39,8 +39,7 @@ class App extends React.Component {
                   authenticated: false,
                   userObj: {displayName: "", profilePicURL: ""},
                   coursesMode: CoursesAppMode.COURSELIST,
-                  divisionsMode: DivisionsAppMode.DIVISIONLIST,
-                  mode: AppMode.FEED
+                  divisionsMode: DivisionsAppMode.DIVISIONLIST
                  };
   }
 

@@ -5,8 +5,40 @@ class DivisionsForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            faIcon: "fa fa-save",
+            btnLabel: "Save & Add Course to Tournament"
         }
+    }
+
+    handleChange = (event) => {
+        const name = event.target.name;
+        this.setState({ [name]: event.target.value });
+    }
+
+    //handleSubmit -- When the user clicks on the button to save/update the
+    //division, start the spinner and invoke the parent component's saveDivision
+    //method to do the actual work. Note that saveCourse is set to the correct
+    //parent method based on whether the user is logging a new course or editing
+    //an existing round.
+    handleSubmit = (event) => {
+        event.preventDefault();
+        //start spinner
+        this.setState({
+            faIcon: "fa fa-spin fa-spinner",
+            btnLabel: "Saving..."
+        });
+        //Prepare current round data to be saved
+        let divisionData = this.state;
+        delete courseData.btnLabel;
+        delete courseData.faIcon;
+        //call saveCourse on 1 second delay to show spinning icon
+        setTimeout(this.props.saveDivision, 1000, divisionData);
+        event.preventDefault();
+    }
+
+    handleCancel = (event) => {
+        event.preventDefault();
+        this.props.handleChangeCoursesMode(DivisionsAppMode.DIVISIONLIST);
     }
 
     render() {
@@ -48,6 +80,13 @@ class DivisionsForm extends React.Component {
                             <option value="Placeholder">Placeholder</option>
                         </select>
                     </ul>
+                    <button id="submitDivisionBtn" type="submit" style={{ width: "70%", fontSize: "36px", marginBottom: "10px" }}
+                        className="btn btn-primary btn-color-theme">
+                        <span className={this.state.faIcon} />&nbsp;{this.state.btnLabel}
+                    </button>
+                    <button id="cancelCourseBtn" className="btn btn-danger btn-block" style={{ width: "70%" }} onClick={(event) => this.handleCancel(event)}>
+                        Cancel
+                    </button>
                 </form>
             </div>
         ); //NOTE -- Need Rounds Tab to be completed to properly implement the Divisions Tab

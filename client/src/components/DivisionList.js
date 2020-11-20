@@ -47,7 +47,7 @@ class DivisionList extends React.Component {
     render() {
         return (
             <div id="divisionsListDiv" className="divisionsListDiv">
-                <button id="addCourseBtn" className="btn-color-theme btn btn-primary btn-block" //CHANGE LATER from DIVISIONSLIST
+                <button id="addDivisionBtn" className="btn-color-theme btn btn-primary btn-block" //CHANGE LATER from DIVISIONSLIST
                     onClick={(newMode) => this.props.handleChangeDivisionsMode(DivisionsAppMode.DIVISIONSFORM)}>
                     <span className="fa fa-plus">&nbsp;</span>
                 Add Division...

@@ -520,3 +520,8 @@ body {
   border: solid rgba(156, 156, 156, .4);
   border-width: thin;
 }
+
+#addDivisionBtn {
+  width: 8%;
+  float: left;
+}

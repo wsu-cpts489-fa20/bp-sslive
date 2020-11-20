@@ -7,7 +7,7 @@ class CoursesForm extends React.Component {
         if (!this.props.editCourseFlag) {
             this.state = {
                 faIcon: "fa fa-save",
-                btnLabel: "Save Course Data",
+                btnLabel: "Save & Add Course to Tournament",
                 name: this.props.courseName,
                 location: this.props.locationName,
                 tees: this.props.tees
@@ -16,7 +16,7 @@ class CoursesForm extends React.Component {
         else {
             let thisCourse = {...this.props.startData}
             thisCourse.faIcon = "fa fa-edit";
-            thisCourse.btnLabel = "Update Course Data";
+            thisCourse.btnLabel = "Update Course";
             delete thisCourse.id;
             this.state = thisCourse;
         }
