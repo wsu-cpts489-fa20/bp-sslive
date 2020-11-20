@@ -167,6 +167,11 @@ html, body {
   color: white;
 }
 
+.btn-color-theme:hover {
+  background-color: #193566;
+  color: white;
+}
+
 /* The color theme when a bottom bar menu item is selected */
 
 .btn-alt-color-theme {
