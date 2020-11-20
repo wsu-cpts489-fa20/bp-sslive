@@ -7,8 +7,10 @@ fixture`SpeedScoreLive Interactions`
 
 test('NavigateToDivisions', async t => {
     await t
+        .click("#tournamentAccessCode")
+        .expect(Selector('#emailInput').visible).eql(true)
         .typeText('#emailInput', 'director')
-        .click('#login-btn-icon')
+        .click('#loginBtn')
         .expect(Selector('#tournamentConfigBtn').visible).eql(true)
         .click('#tournamentConfigBtn')
         .expect(Selector('#divisionsTab').visible).eql(true)
@@ -20,8 +22,10 @@ test('NavigateToDivisions', async t => {
 //DL -- NOTE cannot use testcafe to test HTML5 datalists
 test('NavigateToAddDivision', async t => {
     await t
+        .click("#tournamentAccessCode")
+        .expect(Selector('#emailInput').visible).eql(true)
         .typeText('#emailInput', 'director')
-        .click('#login-btn-icon')
+        .click('#loginBtn')
         .expect(Selector('#tournamentConfigBtn').visible).eql(true)
         .click('#tournamentConfigBtn')
         .expect(Selector('#divisionsTab').visible).eql(true)

@@ -40,7 +40,7 @@ class DivisionsForm extends React.Component {
 
     handleCancel = (event) => {
         event.preventDefault();
-        this.props.handleChangeCoursesMode(DivisionsAppMode.DIVISIONLIST);
+        this.props.handleChangeDivisionsMode(DivisionsAppMode.DIVISIONLIST);
     }
 
     render() {
