@@ -11,7 +11,7 @@ html, body {
   /* Don't allow scrolling */
   display: block;
   /* Occupies its own horizontal space */
-  background-color: 	#383838;
+  background-color: 	#13294E;
   position: fixed;
   /* Doesn't move */
   top: 0;
@@ -54,7 +54,7 @@ html, body {
   /* Position menu 48 px from top of screen; accomodates top navbar */
   left: 0;
   /* Position the menu on the left hand side */
-  background-color: #2E8B57;
+  background-color: #13294E;
   /* Background color is dark blue */
   overflow-x: hidden;
   /* Don't allow horizontal scroll */
@@ -134,7 +134,7 @@ html, body {
 .sidemenu-item:hover {
   cursor: default;
   text-decoration: none;
-  color: #2E8B57 !important;
+  color: #13294E !important;
   background-color: #F0F0F0;
 }
 
@@ -144,7 +144,7 @@ html, body {
   pointer-events: none;
   cursor: default;
   text-decoration: none;
-  color: #2E8B57 !important;
+  color: #13294E !important;
   background-color: #F0F0F0;
 }
 
@@ -163,7 +163,7 @@ html, body {
 /* The SpeedScore dark blue color theme  */
 
 .btn-color-theme {
-  background-color: 	#2E8B57;
+  background-color: 	#13294E;
   color: white;
 }
 
@@ -171,7 +171,7 @@ html, body {
 
 .btn-alt-color-theme {
   background-color: #F0F0F0;
-  color: 	#2E8B57;
+  color: 	#13294E;
 }
 
 /* change items to gray when disabled class is applied  */
@@ -182,8 +182,8 @@ html, body {
 
 .btn-color-theme-outline {
   border: 2px;
-  border-color: 	#2E8B57;
-  color: 	#2E8B57;
+  border-color: 	#13294E;
+  color: 	#13294E;
 }
 
 /* Styling for the divs in the app. Ensures that the content at top isn't obscured by top bar */
@@ -453,7 +453,7 @@ body {
 /* Add a gray background color to the button when it is selected */
 
 .tabbar a:active {
-  background-color: #2E8B57;
+  background-color: #13294E;
   color: white;
 }
 
@@ -505,7 +505,6 @@ body {
 .coursesListDiv {
   padding: 8px 8px 8px 8px;
 }
-<<<<<<< HEAD
 
 .divisionsListDiv {
   padding: 8px 8px 8px 8px;
@@ -530,7 +529,7 @@ body {
   width: 8%;
   float: left;
 }
-=======
+
 .loginContainer {
   width: 100%;
   margin: 0;
@@ -540,4 +539,3 @@ body {
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
->>>>>>> Dallas_week2

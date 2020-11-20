@@ -20,6 +20,7 @@ class DivisionsForm extends React.Component {
     //method to do the actual work. Note that saveCourse is set to the correct
     //parent method based on whether the user is logging a new course or editing
     //an existing round.
+    /*
     handleSubmit = (event) => {
         event.preventDefault();
         //start spinner
@@ -35,6 +36,7 @@ class DivisionsForm extends React.Component {
         setTimeout(this.props.saveDivision, 1000, divisionData);
         event.preventDefault();
     }
+    */
 
     handleCancel = (event) => {
         event.preventDefault();
