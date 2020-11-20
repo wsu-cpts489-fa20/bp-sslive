@@ -30,17 +30,21 @@ class Config_Rounds extends React.Component {
 
     render() {
       let numofrounds=null;
+      let round3=null;
+      let round4=null;
       if(this.state.one && this.state.int==2){
-        numofrounds=(  <div id="RoundsListDiv" className="RoundsListDiv">
-          <label className="coursesListLabel"> Round 2 </label>
-        
+        numofrounds=(  
+        <div id="RoundsListDiv" className="RoundsListDiv">
+         
+         <label className="coursesListLabel"> Round 2 </label>
+       
 
-        <label className="coursesListLabel" >Date:&nbsp;   </label>
+        <label className="roundsListLabel" >Date:&nbsp;   </label>
         <input name="date" className="form-control" required={true}
             type="date" style={{ width: "15%",float: "left", textAlign: "center" }} />
         <p></p>
 
-        <label className="coursesListLabel">Time: &nbsp;<br></br>
+        <label className="roundsListLabel">Time: &nbsp;<br></br>
       <input name="minutes" type="number" size="3"
         min="10" max="400" required={true} />:  
       <input name="seconds" type="number" size="2"
@@ -49,8 +53,7 @@ class Config_Rounds extends React.Component {
         min="0" max="100" />
       </label>
 
-      <p></p>
-      <label className="coursesListLabel">Format: </label>
+      <label className="roundsListLabel">Format: </label>
 
       <select name="type"  
         className="form-control form-center" style={{ width: "15%", float: "left", textAlign: "center" }}>
@@ -59,7 +62,7 @@ class Config_Rounds extends React.Component {
       </select> 
 
       <p></p>
-      <label className="coursesListLabel">Live Scoring method:            </label>
+      <label className="roundsListLabel">Live Scoring method:            </label>
 
       <select name="type"  
         className="form-control form-center"  style={{ width: "15%", height:"30%",float: "left", textAlign: "center" }}>
@@ -72,290 +75,304 @@ class Config_Rounds extends React.Component {
       </select> 
 
       <p></p>
-      <label className="coursesListLabel">Scoring data:       </label>
+      <label className="roundsListLabel">Scoring data:       </label>
 
       <select name="type"
         className="form-control form-center" style={{ width: "15%",float: "left", textAlign: "center" }}>
-        <option value="practice">Strokes and time</option>
+        <option value="practice">strockes and time</option>
         <option value="tournament">Tournament</option>
       </select> 
-
       <p></p>
-      
-    </div> )
+      <p></p>
+      <p></p>
+      <p></p>
+      <div className="page"></div>
+      </div>
+      )
 
       }
       if(this.state.one && this.state.int==3){
         numofrounds=(  <div id="RoundsListDiv" className="RoundsListDiv">
+         
         <label className="coursesListLabel"> Round 2 </label>
       
 
-      <label className="coursesListLabel" >Date:&nbsp;   </label>
-      <input name="date" className="form-control" required={true}
-          type="date" style={{ width: "15%",float: "left", textAlign: "center" }} />
-      <p></p>
+       <label className="roundsListLabel" >Date:&nbsp;   </label>
+       <input name="date" className="form-control" required={true}
+           type="date" style={{ width: "15%",float: "left", textAlign: "center" }} />
+       <p></p>
 
-      <label className="coursesListLabel">Time: &nbsp;<br></br>
-    <input name="minutes" type="number" size="3"
-      min="10" max="400" required={true} />:  
-    <input name="seconds" type="number" size="2"
-      min="0" max="60" required={true}/>
-      <input name="miliseconds" type="number" size="3"
-      min="0" max="100" />
-    </label>
+       <label className="roundsListLabel">Time: &nbsp;<br></br>
+     <input name="minutes" type="number" size="3"
+       min="10" max="400" required={true} />:  
+     <input name="seconds" type="number" size="2"
+       min="0" max="60" required={true}/>
+       <input name="miliseconds" type="number" size="3"
+       min="0" max="100" />
+     </label>
 
-    <p></p>
-    <label className="coursesListLabel">Format: </label>
+     <label className="roundsListLabel">Format: </label>
 
-    <select name="type"  
-      className="form-control form-center" style={{ width: "15%", float: "left", textAlign: "center" }}>
-      <option value="practice">speedgolf</option>
-      <option value="tournament">Tournament</option>
-    </select> 
+     <select name="type"  
+       className="form-control form-center" style={{ width: "15%", float: "left", textAlign: "center" }}>
+       <option value="practice">speedgolf</option>
+       <option value="tournament">Tournament</option>
+     </select> 
 
-    <p></p>
-    <label className="coursesListLabel">Live Scoring method:            </label>
+     <p></p>
+     <label className="roundsListLabel">Live Scoring method:            </label>
 
-    <select name="type"  
-      className="form-control form-center"  style={{ width: "15%", height:"30%",float: "left", textAlign: "center" }}>
-      <option value="practice">Player</option>
-      <option value="hole">Hole</option>
-      <option value="central">Central</option>
-      <option value="sprint">Sprint</option>
-      <option value="none">None</option>
+     <select name="type"  
+       className="form-control form-center"  style={{ width: "15%", height:"30%",float: "left", textAlign: "center" }}>
+       <option value="practice">Player</option>
+       <option value="hole">Hole</option>
+       <option value="central">Central</option>
+       <option value="sprint">Sprint</option>
+       <option value="none">None</option>
 
-    </select> 
+     </select> 
 
-    <p></p>
-    <label className="coursesListLabel">Scoring data:       </label>
+     <p></p>
+     <label className="roundsListLabel">Scoring data:       </label>
 
-    <select name="type"
-      className="form-control form-center" style={{ width: "15%",float: "left", textAlign: "center" }}>
-      <option value="practice">Strokes and time</option>
-      <option value="tournament">Tournament</option>
-    </select> 
-
-    <p></p>
-    <div id="RoundsListDiv" className="RoundsListDiv">
-        <label className="coursesListLabel"> Round 3 </label>
-      
-
-      <label className="coursesListLabel" >Date:&nbsp;   </label>
-      <input name="date" className="form-control" required={true}
-          type="date" style={{ width: "15%",float: "left", textAlign: "center" }} />
-      <p></p>
-
-      <label className="coursesListLabel">Time: &nbsp;<br></br>
-    <input name="minutes" type="number" size="3"
-      min="10" max="400" required={true} />:  
-    <input name="seconds" type="number" size="2"
-      min="0" max="60" required={true}/>
-      <input name="miliseconds" type="number" size="3"
-      min="0" max="100" />
-    </label>
-
-    <p></p>
-    <label className="coursesListLabel">Format: </label>
-
-    <select name="type"  
-      className="form-control form-center" style={{ width: "15%", float: "left", textAlign: "center" }}>
-      <option value="practice">speedgolf</option>
-      <option value="tournament">Tournament</option>
-    </select> 
-
-    <p></p>
-    <label className="coursesListLabel">Live Scoring method:            </label>
-
-    <select name="type"  
-      className="form-control form-center"  style={{ width: "15%", height:"30%",float: "left", textAlign: "center" }}>
-      <option value="practice">Player</option>
-      <option value="hole">Hole</option>
-      <option value="central">Central</option>
-      <option value="sprint">Sprint</option>
-      <option value="none">None</option>
-
-    </select> 
-
-    <p></p>
-    <label className="coursesListLabel">Scoring data:       </label>
-
-    <select name="type"
-      className="form-control form-center" style={{ width: "15%",float: "left", textAlign: "center" }}>
-      <option value="practice">Strokes and time</option>
-      <option value="tournament">Tournament</option>
-    </select> 
-
-    <p></p>
-    
-  </div> 
-  </div> 
-  
+     <select name="type"
+       className="form-control form-center" style={{ width: "15%",float: "left", textAlign: "center" }}>
+       <option value="practice">strockes and time</option>
+       <option value="tournament">Tournament</option>
+     </select> 
+     <p></p>
+     <p></p>
+     <p></p>
+     <p></p>
+     <div className="page"></div>
+     </div>
   )
+  round3=(<div id="RoundsListDiv" className="RoundsListDiv">
+         
+  <label className="coursesListLabel"> Round 3 </label>
+
+
+ <label className="roundsListLabel" >Date:&nbsp;   </label>
+ <input name="date" className="form-control" required={true}
+     type="date" style={{ width: "15%",float: "left", textAlign: "center" }} />
+ <p></p>
+
+ <label className="roundsListLabel">Time: &nbsp;<br></br>
+<input name="minutes" type="number" size="3"
+ min="10" max="400" required={true} />:  
+<input name="seconds" type="number" size="2"
+ min="0" max="60" required={true}/>
+ <input name="miliseconds" type="number" size="3"
+ min="0" max="100" />
+</label>
+
+<label className="roundsListLabel">Format: </label>
+
+<select name="type"  
+ className="form-control form-center" style={{ width: "15%", float: "left", textAlign: "center" }}>
+ <option value="practice">speedgolf</option>
+ <option value="tournament">Tournament</option>
+</select> 
+
+<p></p>
+<label className="roundsListLabel">Live Scoring method:            </label>
+
+<select name="type"  
+ className="form-control form-center"  style={{ width: "15%", height:"30%",float: "left", textAlign: "center" }}>
+ <option value="practice">Player</option>
+ <option value="hole">Hole</option>
+ <option value="central">Central</option>
+ <option value="sprint">Sprint</option>
+ <option value="none">None</option>
+
+</select> 
+
+<p></p>
+<label className="roundsListLabel">Scoring data:       </label>
+
+<select name="type"
+ className="form-control form-center" style={{ width: "15%",float: "left", textAlign: "center" }}>
+ <option value="practice">strockes and time</option>
+ <option value="tournament">Tournament</option>
+</select> 
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<div className="page"></div>
+</div>)
       }
       if(this.state.one && this.state.int==4){
-          numofrounds=(  <div id="RoundsListDiv" className="RoundsListDiv">
-          <label className="coursesListLabel"> Round 2 </label>
-        
-  
-        <label className="coursesListLabel" >Date:&nbsp;   </label>
-        <input name="date" className="form-control" required={true}
-            type="date" style={{ width: "15%",float: "left", textAlign: "center" }} />
-        <p></p>
-  
-        <label className="coursesListLabel">Time: &nbsp;<br></br>
-      <input name="minutes" type="number" size="3"
-        min="10" max="400" required={true} />:  
-      <input name="seconds" type="number" size="2"
-        min="0" max="60" required={true}/>
-        <input name="miliseconds" type="number" size="3"
-        min="0" max="100" />
-      </label>
-  
-      <p></p>
-      <label className="coursesListLabel">Format: </label>
-  
-      <select name="type"  
-        className="form-control form-center" style={{ width: "15%", float: "left", textAlign: "center" }}>
-        <option value="practice">speedgolf</option>
-        <option value="tournament">Tournament</option>
-      </select> 
-  
-      <p></p>
-      <label className="coursesListLabel">Live Scoring method:            </label>
-  
-      <select name="type"  
-        className="form-control form-center"  style={{ width: "15%", height:"30%",float: "left", textAlign: "center" }}>
-        <option value="practice">Player</option>
-        <option value="hole">Hole</option>
-        <option value="central">Central</option>
-        <option value="sprint">Sprint</option>
-        <option value="none">None</option>
-  
-      </select> 
-  
-      <p></p>
-      <label className="coursesListLabel">Scoring data:       </label>
-  
-      <select name="type"
-        className="form-control form-center" style={{ width: "15%",float: "left", textAlign: "center" }}>
-        <option value="practice">Strokes and time</option>
-        <option value="tournament">Tournament</option>
-      </select> 
-  
-      <p></p>
-      <div id="RoundsListDiv" className="RoundsListDiv">
-          <label className="coursesListLabel"> Round 3 </label>
-        
-  
-        <label className="coursesListLabel" >Date:&nbsp;   </label>
-        <input name="date" className="form-control" required={true}
-            type="date" style={{ width: "15%",float: "left", textAlign: "center" }} />
-        <p></p>
-  
-        <label className="coursesListLabel">Time: &nbsp;<br></br>
-      <input name="minutes" type="number" size="3"
-        min="10" max="400" required={true} />:  
-      <input name="seconds" type="number" size="2"
-        min="0" max="60" required={true}/>
-        <input name="miliseconds" type="number" size="3"
-        min="0" max="100" />
-      </label>
-  
-      <p></p>
-      <label className="coursesListLabel">Format: </label>
-  
-      <select name="type"  
-        className="form-control form-center" style={{ width: "15%", float: "left", textAlign: "center" }}>
-        <option value="practice">speedgolf</option>
-        <option value="tournament">Tournament</option>
-      </select> 
-  
-      <p></p>
-      <label className="coursesListLabel">Live Scoring method:            </label>
-  
-      <select name="type"  
-        className="form-control form-center"  style={{ width: "15%", height:"30%",float: "left", textAlign: "center" }}>
-        <option value="practice">Player</option>
-        <option value="hole">Hole</option>
-        <option value="central">Central</option>
-        <option value="sprint">Sprint</option>
-        <option value="none">None</option>
-  
-      </select> 
-  
-      <p></p>
-      <label className="coursesListLabel">Scoring data:       </label>
-  
-      <select name="type"
-        className="form-control form-center" style={{ width: "15%",float: "left", textAlign: "center" }}>
-        <option value="practice">Strokes and time</option>
-        <option value="tournament">Tournament</option>
-      </select> 
-  
-      <p></p>
+        numofrounds=(  <div id="RoundsListDiv" className="RoundsListDiv">
+         
+        <label className="coursesListLabel"> Round 2 </label>
       
-      <div id="RoundsListDiv" className="RoundsListDiv">
-          <label className="coursesListLabel"> Round 4 </label>
-        
-  
-        <label className="coursesListLabel" >Date:&nbsp;   </label>
-        <input name="date" className="form-control" required={true}
-            type="date" style={{ width: "15%",float: "left", textAlign: "center" }} />
-        <p></p>
-  
-        <label className="coursesListLabel">Time: &nbsp;<br></br>
-      <input name="minutes" type="number" size="3"
-        min="10" max="400" required={true} />:  
-      <input name="seconds" type="number" size="2"
-        min="0" max="60" required={true}/>
-        <input name="miliseconds" type="number" size="3"
-        min="0" max="100" />
-      </label>
-  
-      <p></p>
-      <label className="coursesListLabel">Format: </label>
-  
-      <select name="type"  
-        className="form-control form-center" style={{ width: "15%", float: "left", textAlign: "center" }}>
-        <option value="practice">speedgolf</option>
-        <option value="tournament">Tournament</option>
-      </select> 
-  
-      <p></p>
-      <label className="coursesListLabel">Live Scoring method:            </label>
-  
-      <select name="type"  
-        className="form-control form-center"  style={{ width: "15%", height:"30%",float: "left", textAlign: "center" }}>
-        <option value="practice">Player</option>
-        <option value="hole">Hole</option>
-        <option value="central">Central</option>
-        <option value="sprint">Sprint</option>
-        <option value="none">None</option>
-  
-      </select> 
-  
-      <p></p>
-      <label className="coursesListLabel">Scoring data:       </label>
-  
-      <select name="type"
-        className="form-control form-center" style={{ width: "15%",float: "left", textAlign: "center" }}>
-        <option value="practice">Strokes and time</option>
-        <option value="tournament">Tournament</option>
-      </select> 
-  
-      <p></p>
-      </div> 
 
-    </div> 
-    </div> 
-    )
+       <label className="roundsListLabel" >Date:&nbsp;   </label>
+       <input name="date" className="form-control" required={true}
+           type="date" style={{ width: "15%",float: "left", textAlign: "center" }} />
+       <p></p>
+
+       <label className="roundsListLabel">Time: &nbsp;<br></br>
+     <input name="minutes" type="number" size="3"
+       min="10" max="400" required={true} />:  
+     <input name="seconds" type="number" size="2"
+       min="0" max="60" required={true}/>
+       <input name="miliseconds" type="number" size="3"
+       min="0" max="100" />
+     </label>
+
+     <label className="roundsListLabel">Format: </label>
+
+     <select name="type"  
+       className="form-control form-center" style={{ width: "15%", float: "left", textAlign: "center" }}>
+       <option value="practice">speedgolf</option>
+       <option value="tournament">Tournament</option>
+     </select> 
+
+     <p></p>
+     <label className="roundsListLabel">Live Scoring method:            </label>
+
+     <select name="type"  
+       className="form-control form-center"  style={{ width: "15%", height:"30%",float: "left", textAlign: "center" }}>
+       <option value="practice">Player</option>
+       <option value="hole">Hole</option>
+       <option value="central">Central</option>
+       <option value="sprint">Sprint</option>
+       <option value="none">None</option>
+
+     </select> 
+
+     <p></p>
+     <label className="roundsListLabel">Scoring data:       </label>
+
+     <select name="type"
+       className="form-control form-center" style={{ width: "15%",float: "left", textAlign: "center" }}>
+       <option value="practice">strockes and time</option>
+       <option value="tournament">Tournament</option>
+     </select> 
+     <p></p>
+     <p></p>
+     <p></p>
+     <p></p>
+     <div className="page"></div>
+     </div>
+  )
+  round3=(<div id="RoundsListDiv" className="RoundsListDiv">
+         
+  <label className="coursesListLabel"> Round 3 </label>
+
+
+ <label className="roundsListLabel" >Date:&nbsp;   </label>
+ <input name="date" className="form-control" required={true}
+     type="date" style={{ width: "15%",float: "left", textAlign: "center" }} />
+ <p></p>
+
+ <label className="roundsListLabel">Time: &nbsp;<br></br>
+<input name="minutes" type="number" size="3"
+ min="10" max="400" required={true} />:  
+<input name="seconds" type="number" size="2"
+ min="0" max="60" required={true}/>
+ <input name="miliseconds" type="number" size="3"
+ min="0" max="100" />
+</label>
+
+<label className="roundsListLabel">Format: </label>
+
+<select name="type"  
+ className="form-control form-center" style={{ width: "15%", float: "left", textAlign: "center" }}>
+ <option value="practice">speedgolf</option>
+ <option value="tournament">Tournament</option>
+</select> 
+
+<p></p>
+<label className="roundsListLabel">Live Scoring method:            </label>
+
+<select name="type"  
+ className="form-control form-center"  style={{ width: "15%", height:"30%",float: "left", textAlign: "center" }}>
+ <option value="practice">Player</option>
+ <option value="hole">Hole</option>
+ <option value="central">Central</option>
+ <option value="sprint">Sprint</option>
+ <option value="none">None</option>
+
+</select> 
+
+<p></p>
+<label className="roundsListLabel">Scoring data:       </label>
+
+<select name="type"
+ className="form-control form-center" style={{ width: "15%",float: "left", textAlign: "center" }}>
+ <option value="practice">strockes and time</option>
+ <option value="tournament">Tournament</option>
+</select> 
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<div className="page"></div>
+</div>)
+    round4=( <div id="RoundsListDiv" className="RoundsListDiv">
+         
+    <label className="coursesListLabel"> Round 4 </label>
+  
+
+   <label className="roundsListLabel" >Date:&nbsp;   </label>
+   <input name="date" className="form-control" required={true}
+       type="date" style={{ width: "15%",float: "left", textAlign: "center" }} />
+   <p></p>
+
+   <label className="roundsListLabel">Time: &nbsp;<br></br>
+ <input name="minutes" type="number" size="3"
+   min="10" max="400" required={true} />:  
+ <input name="seconds" type="number" size="2"
+   min="0" max="60" required={true}/>
+   <input name="miliseconds" type="number" size="3"
+   min="0" max="100" />
+ </label>
+
+ <label className="roundsListLabel">Format: </label>
+
+ <select name="type"  
+   className="form-control form-center" style={{ width: "15%", float: "left", textAlign: "center" }}>
+   <option value="practice">speedgolf</option>
+   <option value="tournament">Tournament</option>
+ </select> 
+
+ <p></p>
+ <label className="roundsListLabel">Live Scoring method:            </label>
+
+ <select name="type"  
+   className="form-control form-center"  style={{ width: "15%", height:"30%",float: "left", textAlign: "center" }}>
+   <option value="practice">Player</option>
+   <option value="hole">Hole</option>
+   <option value="central">Central</option>
+   <option value="sprint">Sprint</option>
+   <option value="none">None</option>
+
+ </select> 
+
+ <p></p>
+ <label className="roundsListLabel">Scoring data:       </label>
+
+ <select name="type"
+   className="form-control form-center" style={{ width: "15%",float: "left", textAlign: "center" }}>
+   <option value="practice">strockes and time</option>
+   <option value="tournament">Tournament</option>
+ </select> 
+ <p></p>
+ <p></p>
+ <p></p>
+ <p></p>
+ <div className="page"></div>
+ </div>)
       }
         return (
-          <div id="RoundsListDiv" className="RoundsListDiv">
-
+         
+          <div className="page">
+            <form> 
             <div style={{ display: "inline-block", fontWeight: "bold", fontSize: "large", float: "left" }}>
-          Number of Rounds in Tournamnet: &nbsp;</div>  
-
+          Number of Rounds in Tournamnet: &nbsp;</div> 
           <select id="numOfRounds" name="type" 
           className="form-control" style={{ display: "inline-block", width: "5%",float: "left", textAlign: "center" }} onChange={this.handleChange}>
          <option value="1">1</option>
@@ -364,16 +381,18 @@ class Config_Rounds extends React.Component {
          <option value="4">4</option>
          </select> 
 
-          <p></p>
+            <div className="padded-page">
+         <div id="RoundsListDiv" className="RoundsListDiv">
+          
           <label className="coursesListLabel"> Round 1 </label>
         
 
-         <label className="coursesListLabel" >Date:&nbsp;   </label>
+         <label className="roundsListLabel" >Date:&nbsp;   </label>
          <input name="date" className="form-control" required={true}
              type="date" style={{ width: "15%",float: "left", textAlign: "center" }} />
          <p></p>
 
-         <label className="coursesListLabel">Time: &nbsp;<br></br>
+         <label className="roundsListLabel">Time: &nbsp;<br></br>
        <input name="minutes" type="number" size="3"
          min="10" max="400" required={true} />:  
        <input name="seconds" type="number" size="2"
@@ -382,8 +401,7 @@ class Config_Rounds extends React.Component {
          min="0" max="100" />
        </label>
 
-       <p></p>
-       <label className="coursesListLabel">Format: </label>
+       <label className="roundsListLabel">Format: </label>
 
        <select name="type"  
          className="form-control form-center" style={{ width: "15%", float: "left", textAlign: "center" }}>
@@ -392,7 +410,7 @@ class Config_Rounds extends React.Component {
        </select> 
 
        <p></p>
-       <label className="coursesListLabel">Live Scoring method:            </label>
+       <label className="roundsListLabel">Live Scoring method:            </label>
 
        <select name="type"  
          className="form-control form-center"  style={{ width: "15%", height:"30%",float: "left", textAlign: "center" }}>
@@ -405,21 +423,32 @@ class Config_Rounds extends React.Component {
        </select> 
 
        <p></p>
-       <label className="coursesListLabel">Scoring data:       </label>
+       <label className="roundsListLabel">Scoring data:       </label>
 
        <select name="type"
          className="form-control form-center" style={{ width: "15%",float: "left", textAlign: "center" }}>
          <option value="practice">strockes and time</option>
          <option value="tournament">Tournament</option>
        </select> 
-       {numofrounds}
        <p></p>
+       <p></p>
+       <p></p>
+       <p></p>
+       <div className="page"></div>
+       </div>
+       {numofrounds}
+       {round3}
+       {round4}
+       <p></p>
+
        <button type="submit" style={{width: "90%",fontSize: "36px"}} 
          className="btn btn-primary btn-color-theme">
           Save And next
        </button>
-       
      </div> 
+    
+     </form>
+     </div>
         );
     }   
 }

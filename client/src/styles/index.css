@@ -497,6 +497,7 @@ body {
 }
 .RoundsListDiv{
   padding: 8px 8px 8px 8px;
+  
 }
 .coursesListLabel {
   text-align: left;
@@ -505,6 +506,15 @@ body {
   font-weight: bold;
 }
 
+.roundsListLabel{
+  text-align: left;
+  width: 100%;
+  font-size: large;
+}
+.page{
+  padding: 8px 8px 8px 8px;
+}
 .coursesListDiv {
   padding: 8px 8px 8px 8px;
+
 }
