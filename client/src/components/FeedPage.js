@@ -24,7 +24,7 @@ class FeedPage extends React.Component {
   constructor() {
     super();
     this.state = {
-      mode: ConfigTab.COURSES,
+      mode: ConfigTab.LOGO,
       menuOpen: false
     };
   }

@@ -10,11 +10,11 @@ class DirectorMainPage extends React.Component {
             <h1 >Director Main Page</h1>
             <h2>This page is under construction.</h2>
             <p>
-                <button id="tournamentConfigBtn" onClick={()=>this.props.changeMode(AppMode.FEED)} style={{width: "10%", "background-color" :"#2E8B57", color: "white"}}>
+                <button id="tournamentConfigBtn" onClick={()=>this.props.changeMode(AppMode.FEED)} style={{width: "10%", backgroundColor :"#2E8B57", color: "white"}}>
                 <span>Tournament Configuration</span>
                 </button>
                 <br></br>
-                <button onClick={()=>this.props.changeMode(AppMode.LEADERBOARD)} style={{width: "10%", "background-color" :"#2E8B57", color: "white"}}>
+                <button onClick={()=>this.props.changeMode(AppMode.LEADERBOARD)} style={{width: "10%", backgroundColor :"#2E8B57", color: "white"}}>
                     <span >Leaderboard</span>
                 </button> 
             </p>

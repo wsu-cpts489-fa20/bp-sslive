@@ -561,3 +561,12 @@ body {
 .page{
   padding: 8px 8px 8px 8px;
 }
+.BoxContainer{ 
+  height:40px;
+  width:80px;
+  /*display:flex; 
+  flex-wrap:wrap; 
+  justify-content: center; 
+  align-items: center; 
+  flex:1*/
+}
