@@ -386,7 +386,6 @@ app.post('/courses/:userId', async (req, res, next) => {
               JSON.stringify(req.body));
   if (!req.body.hasOwnProperty("name") || 
       !req.body.hasOwnProperty("location") || 
-      !req.body.hasOwnProperty("s0") || 
       !req.body.hasOwnProperty("s1") || 
       !req.body.hasOwnProperty("s2") ||
       !req.body.hasOwnProperty("s3") || 
@@ -404,7 +403,7 @@ app.post('/courses/:userId', async (req, res, next) => {
       !req.body.hasOwnProperty("s15") ||
       !req.body.hasOwnProperty("s16") ||
       !req.body.hasOwnProperty("s17") ||
-      !req.body.hasOwnProperty("t0") || 
+      !req.body.hasOwnProperty("s18") || 
       !req.body.hasOwnProperty("t1") || 
       !req.body.hasOwnProperty("t2") ||
       !req.body.hasOwnProperty("t3") || 
@@ -421,7 +420,8 @@ app.post('/courses/:userId', async (req, res, next) => {
       !req.body.hasOwnProperty("t14") ||
       !req.body.hasOwnProperty("t15") ||
       !req.body.hasOwnProperty("t16") ||
-      !req.body.hasOwnProperty("t17")
+      !req.body.hasOwnProperty("t17") ||
+      !req.body.hasOwnProperty("t18")
       ) {
     //Body does not contain correct properties
     return res.status(400).send("POST request on /courses formulated incorrectly." +
@@ -464,30 +464,31 @@ app.get('/rounds/:userId', async(req, res) => {
 
 //UPDATE round route: Updates a specific round 
 //for a given user in the users collection (PUT)
-app.put('/rounds/:userId/:roundId', async (req, res, next) => {
+app.put('/courses/:userId/:courseId', async (req, res, next) => {
   console.log("in /rounds (PUT) route with params = " + 
               JSON.stringify(req.params) + " and body = " + 
               JSON.stringify(req.body));
-  const validProps = ['date', 'course', 'type', 'holes', 'strokes',
-    'minutes', 'seconds', 'notes'];
+  const validProps = ['s1', 's2',
+    's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10', 's11', 's12', 's13', 's14', 's15', 's16', 's17', 's18', 't1',
+     't2', 't3', 't4', 't5', 't6', 't7', 't8', 't9', 't10', 't11', 't12', 't13', 't14', 't15', 't16', 't17', 't18' ];
   let bodyObj = {...req.body};
   delete bodyObj._id; //Not needed for update
-  delete bodyObj.SGS; //We'll compute this below in seconds.
   for (const bodyProp in bodyObj) {
     if (!validProps.includes(bodyProp)) {
       return res.status(400).send("rounds/ PUT request formulated incorrectly." +
         "It includes " + bodyProp + ". However, only the following props are allowed: " +
-        "'date', 'course', 'type', 'holes', 'strokes', " +
-        "'minutes', 'seconds', 'notes'");
+        "'name', 'location', 's0', 's1', 's2'," + 
+        " 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10', 's11', 's12', 's13', 's14', 's15', 's16', 's17', 't0', 't1'," + 
+         " 't2', 't3', 't4', 't5', 't6', 't7', 't8', 't9', 't10', 't11', 't12', 't13', 't14', 't15', 't16', 't17'");
     } else {
-      bodyObj["rounds.$." + bodyProp] = bodyObj[bodyProp];
+      bodyObj["courses.$." + bodyProp] = bodyObj[bodyProp];
       delete bodyObj[bodyProp];
     }
   }
   try {
     let status = await User.updateOne(
       {"id": req.params.userId,
-       "rounds._id": mongoose.Types.ObjectId(req.params.roundId)}
+       "courses._id": mongoose.Types.ObjectId(req.params.courseId)}
       ,{"$set" : bodyObj}
     );
     if (status.nModified != 1) {

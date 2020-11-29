@@ -5,7 +5,8 @@ import ModeBar from './ModeBar.js';
 import FloatingButton from './FloatingButton.js';
 import LoginPage from './LoginPage.js';
 import AppMode from "./../AppMode.js"
-import CoursesAppMode from './../CoursesAppMode'
+import CoursesAppMode from './../CoursesAppMode.js';
+import DivisionsAppMode from './../DivisionsAppMode.js';
 import FeedPage from './FeedPage.js';
 import Rounds from './Rounds.js';
 import DirectorMainPage from './DirectorMainPage.js';
@@ -37,7 +38,8 @@ class App extends React.Component {
                   menuOpen: false,
                   authenticated: false,
                   userObj: {displayName: "", profilePicURL: ""},
-                  coursesMode: CoursesAppMode.COURSELIST
+                  coursesMode: CoursesAppMode.COURSELIST,
+                  divisionsMode: DivisionsAppMode.DIVISIONLIST
                  };
   }
 
@@ -52,12 +54,28 @@ class App extends React.Component {
             this.setState({
               userObj: obj.user,
               authenticated: true,
-              mode: AppMode.MAIN //We're authenticated so can get into the app.
+              mode: AppMode.FEED //We're authenticated so can get into the app. MAIN
             });
           }
         }
       )
     } 
+  }
+  handleNewTournament = () => {
+    let obj = {
+      id: "director@email.com",
+      password: "Password1!",
+      displayName: "Director",
+      authStrategy : "local",
+      profile : "https://icon-library.net//images/default-profile-icon/default-profile-icon-24.jpg",
+      securityQuestion : "Director?",
+      securityAnswer : "Yes",
+      courses : []
+    }
+    this.setState({
+      authenticated: true,
+      mode: AppMode.MAIN
+    });
   }
 
   //refreshOnUpdate(newMode) -- Called by child components when user data changes in 
@@ -80,6 +98,9 @@ class App extends React.Component {
     this.setState({coursesMode: newMode});
   }
 
+  setDivisionsMode = (newMode) => {
+    this.setState({divisionsMode: newMode});
+  }
 
   handleChangeMode = (newMode) => {
     if (newMode == "LOGIN") {
@@ -109,7 +130,7 @@ class App extends React.Component {
   render() {
     const ModePage = modeToPage[this.state.mode];
     return (
-      <div>
+      <div className="layout">
         <NavBar 
           title={modeTitle[this.state.mode]} 
           mode={this.state.mode}
@@ -124,6 +145,7 @@ class App extends React.Component {
             profilePicURL={this.state.userObj.profilePicURL}
             logOut={() => this.handleChangeMode(AppMode.LOGIN)}/>
           <ModePage 
+            newTournament={this.handleNewTournament}
             menuOpen={this.state.menuOpen}
             mode={this.state.mode}
             changeMode={this.handleChangeMode}
@@ -131,6 +153,8 @@ class App extends React.Component {
             refreshOnUpdate={this.refreshOnUpdate}
             coursesMode={this.state.coursesMode}
             setCoursesMode={this.setCoursesMode}
+            divisionsMode={this.state.divisionsMode}
+            setDivisionsMode={this.setDivisionsMode}
             />
       </div>
     );  

@@ -17,17 +17,18 @@ class ConfigCourses extends React.Component {
         super(props);
         this.state = {
             coursesMode: this.props.coursesMode,
-            courseInList: false
+            courseInList: false,
+            editCourseFlag: false
         }
         this.addCourse = this.addCourse.bind(this);
     }
 
     setStateCallback = (stateName, stateVal) => {
-        this.setState({[stateName]: stateVal});
+        this.setState({ [stateName]: stateVal });
     }
 
     handleChangeCoursesMode = (newMode) => {
-        this.setState({coursesMode: newMode})
+        this.setState({ coursesMode: newMode })
     }
 
     //addCourse -- Given an object newData containing a new course, use the 
@@ -57,10 +58,40 @@ class ConfigCourses extends React.Component {
         }
     }
 
+    //editCourse -- Given an object newData containing updated data on an
+    //existing course, update the current tournament's course in the database. 
+    //toggle the mode back to AppMode.FEED since the user is done editing the
+    //round. 
+    editCourse = async (newData) => {
+        const url = '/courses/' + this.props.userObj.id + '/' +
+            this.props.userObj.courses[this.state.editId]._id;
+        const res = await fetch(url, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'PUT',
+            body: JSON.stringify(newData)
+        });
+        const msg = await res.text();
+        if (res.status != 200) {
+            alert("An error occurred when attempting to add new round to database: "
+                + msg);
+            this.handleChangeCoursesMode(CoursesAppMode.COURSELIST);
+        } else {
+            this.handleChangeCoursesMode(CoursesAppMode.COURSELIST);
+            this.props.refreshOnUpdate(AppMode.FEED);
+        }
+    }
+
     render() {
         const CoursesModePage = courseModeToPage[this.state.coursesMode];
+        let thisCourse;
+        if (this.state.editCourseFlag) {
+            thisCourse = {...this.props.userObj.courses[this.state.editId]}
+        }
         return (
-            <CoursesModePage 
+            <CoursesModePage
                 courses={this.props.userObj.courses}
                 handleChangeCoursesMode={this.handleChangeCoursesMode}
                 setStateCallback={this.setStateCallback}
@@ -68,9 +99,14 @@ class ConfigCourses extends React.Component {
                 locationName={this.state.locationName}
                 courseInList={this.state.courseInList}
                 saveCourse={this.addCourse}
+                editCourse={this.editCourse}
+                editCourseFlag={this.state.editCourseFlag}
+                startData={thisCourse}
+                tees={this.state.tees}
+                disabled={this.state.disabled}
             />
         );
-    }   
+    }
 }
 
 export default ConfigCourses;
