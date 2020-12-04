@@ -60,6 +60,18 @@ class DivisionsForm extends React.Component {
         this.props.handleChangeDivisionsMode(DivisionsAppMode.DIVISIONLIST);
     }
 
+    //renderTable -- render an HTML5 table displaying the courses logged 
+    //by the director and updates the options of courses to pick from on the form
+    renderTable = () => {
+        let table = [];
+        for (let i = 0; i < this.props.courses.length; i++) {
+            table.push(
+                <option value={this.props.courses[i].name}>{this.props.courses[i].name}</option>
+            );
+        }
+        return table;
+    }
+
     render() {
         return (
             <div id="divisionsFormDiv" className="divisionsFormDiv">
@@ -96,7 +108,12 @@ class DivisionsForm extends React.Component {
                             Course for Round 1: &nbsp;
                         </div>
                         <select name="course" style={{ display: "inline-block", width: "15%", float: "left", textAlign: "center" }} value="18" onChange={(event) => this.handleChange(event)}>
-                            <option value="Placeholder">Placeholder</option>
+                            {
+                                this.props.courses == undefined || Object.keys(this.props.courses).length == 0 ?
+                                null
+                                :
+                                this.renderTable()
+                            }
                         </select>
                     </ul>
                     <button id="submitDivisionBtn" type="submit" style={{ width: "70%", fontSize: "36px", marginBottom: "10px" }}

@@ -94,6 +94,7 @@ class ConfigDivisions extends React.Component {
         editDivision={this.editDivision}
         editDivisionFlag={this.state.editDivisionFlag}
         startData={thisDivision}
+        courses={this.props.userObj.courses}
       />
     );
   }
