@@ -44,7 +44,7 @@ class ConfigDivisions extends React.Component {
     });
     const msg = await res.text();
     if (res.status != 200) {
-      alert("An error occurred when attempting to add new course to database: "
+      alert("An error occurred when attempting to add new division to database: "
         + msg);
       this.handleChangeDivisionsMode(DivisionsAppMode.DIVISIONLIST);
     } else {

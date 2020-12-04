@@ -34,6 +34,7 @@ mongoose.connect(connectStr, {useNewUrlParser: true, useUnifiedTopology: true})
   );
 
 const Schema = mongoose.Schema;
+//New Schema that defines how courses are stored in the DB
 const courseSchema = new Schema({
   name: {type: String, required: true},
   location: {type: String, required: true},
@@ -84,6 +85,22 @@ const courseSchema = new Schema({
   }
 });
 
+//New Schema that defines how divisions are stored in the DB
+const divisionsSchema = new Schema({
+  name: {type: String, required: true},
+  numRounds: {type: Number, required: true, enum: [1, 2, 3, 4]},
+  numHoles: {type: String, required: true, enum: ["18","Front 9", "Back 9"]},
+  course: {type: String, required: true}
+},
+{
+  toObject: {
+  virtuals: true
+  },
+  toJSON: {
+  virtuals: true 
+  }
+});
+
 //Define schema that maps to a document in the Users collection in the appdb
 //database.
 const userSchema = new Schema({
@@ -95,7 +112,8 @@ const userSchema = new Schema({
   securityQuestion: String,
   securityAnswer: {type: String, required: function() 
     {return this.securityQuestion ? true: false}},
-  courses: [courseSchema]
+  courses: [courseSchema],
+  divisions: [divisionsSchema]
 });
 const User = mongoose.model("User",userSchema); 
 
@@ -375,7 +393,7 @@ app.delete('/users/:userId', async(req, res, next) => {
 });
 
 /////////////////////////////////
-//ROUNDS ROUTES
+//COURSES ROUTES
 ////////////////////////////////
 
 //CREATE course route: Adds a new course as a subdocument to 
@@ -444,7 +462,7 @@ app.post('/courses/:userId', async (req, res, next) => {
   } 
 });
 
-//READ round route: Returns all rounds associated 
+//READ course route: Returns all courses associated 
 //with a given user in the users collection (GET)
 app.get('/rounds/:userId', async(req, res) => {
   console.log("in /rounds route (GET) with userId = " + 
@@ -462,7 +480,7 @@ app.get('/rounds/:userId', async(req, res) => {
   }
 });
 
-//UPDATE round route: Updates a specific round 
+//UPDATE course route: Updates a specific course 
 //for a given user in the users collection (PUT)
 app.put('/courses/:userId/:courseId', async (req, res, next) => {
   console.log("in /rounds (PUT) route with params = " + 
@@ -475,7 +493,7 @@ app.put('/courses/:userId/:courseId', async (req, res, next) => {
   delete bodyObj._id; //Not needed for update
   for (const bodyProp in bodyObj) {
     if (!validProps.includes(bodyProp)) {
-      return res.status(400).send("rounds/ PUT request formulated incorrectly." +
+      return res.status(400).send("courses/ PUT request formulated incorrectly." +
         "It includes " + bodyProp + ". However, only the following props are allowed: " +
         "'name', 'location', 's0', 's1', 's2'," + 
         " 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10', 's11', 's12', 's13', 's14', 's15', 's16', 's17', 't0', 't1'," + 
@@ -519,6 +537,41 @@ app.delete('/rounds/:userId/:roundId', async (req, res, next) => {
   } catch (err) {
     console.log(err);
     return res.status(400).send("Unexpected error occurred when deleting round from database: " + err);
+  } 
+});
+
+///////////////////////
+////DIVISIONS ROUTES///
+///////////////////////
+//CREATE course route: Adds a new course as a subdocument to 
+//a document in the users collection (POST)
+app.post('/divisions/:userId', async (req, res, next) => {
+  console.log("in /divisions (POST) route with params = " + 
+              JSON.stringify(req.params) + " and body = " + 
+              JSON.stringify(req.body));
+  if (!req.body.hasOwnProperty("name") || 
+      !req.body.hasOwnProperty("numRounds") || 
+      !req.body.hasOwnProperty("numHoles") || 
+      !req.body.hasOwnProperty("course")
+      ) {
+    //Body does not contain correct properties
+    return res.status(400).send("POST request on /divisions formulated incorrectly." +
+      "Body must contain all 4 required fields (name, numRounds, numHoles, course)");
+  }
+  try {
+    let status = await User.updateOne(
+    {id: req.params.userId},
+    {$push: {divisions: req.body}});
+    if (status.nModified != 1) { //Should never happen!
+      res.status(400).send("Unexpected error occurred when adding division to"+
+        " database. Division was not added.");
+    } else {
+      res.status(200).send("Division successfully added to database.");
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send("Unexpected error occurred when adding division" +
+     " to database: " + err);
   } 
 });
 

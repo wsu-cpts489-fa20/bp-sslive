@@ -8,6 +8,9 @@ class DivisionsForm extends React.Component {
             this.state = {
                 faIcon: "fa fa-save",
                 btnLabel: "Save & Add Course to Tournament",
+                numRounds: "1",
+                numHoles: "18",
+                course: "Placeholder"
             }
         }
         else {
@@ -65,9 +68,9 @@ class DivisionsForm extends React.Component {
                         <div style={{ display: "inline-block", fontWeight: "bold", fontSize: "large", float: "left" }}>
                             Number of Rounds in Division: &nbsp;
                         </div>
-                        <select style={{ display: "inline-block", width: "2.2%", float: "left", textAlign: "center" }} value="18">
+                        <select name="numRounds" style={{ display: "inline-block", width: "2.2%", float: "left", textAlign: "center" }} value="18" onChange={(event) => this.handleChange(event)}>
                             <option value="1">1</option>
-                            <option value="2" disabled="true">2</option>
+                            <option value="2" disabled="false">2</option>
                             <option value="3" disabled="true">3</option>
                             <option value="4" disabled="true">4</option>
                         </select>
@@ -76,7 +79,7 @@ class DivisionsForm extends React.Component {
                         <div style={{ display: "inline-block", fontWeight: "bold", fontSize: "large", float: "left" }}>
                             Holes in Round 1: &nbsp;
                         </div>
-                        <select style={{ display: "inline-block", width: "2.2%", float: "left", textAlign: "center" }} value="18">
+                        <select name="numHoles" style={{ display: "inline-block", width: "2.2%", float: "left", textAlign: "center" }} value="18" onChange={(event) => this.handleChange(event)}>
                             <option value="18">18</option>
                             <option value="Front 9" disabled="true">Front 9</option>
                             <option value="Back 9" disabled="true">Back 9</option>
@@ -86,7 +89,7 @@ class DivisionsForm extends React.Component {
                         <div style={{ display: "inline-block", fontWeight: "bold", fontSize: "large", float: "left" }}>
                             Course for Round 1: &nbsp;
                         </div>
-                        <select style={{ display: "inline-block", width: "15%", float: "left", textAlign: "center" }} value="18">
+                        <select name="course" style={{ display: "inline-block", width: "15%", float: "left", textAlign: "center" }} value="18" onChange={(event) => this.handleChange(event)}>
                             <option value="Placeholder">Placeholder</option>
                         </select>
                     </ul>
