@@ -63,7 +63,7 @@ class Config_Logo extends React.Component {
 
     render() {
         return (
-        <div className="padded-page">
+        <div id="logoColorDiv" className="padded-page">
             <center>
             <form id="loginInterface" onSubmit={this.handleLoginSubmit} onChange={this.handleLoginChange}>
                 <div>

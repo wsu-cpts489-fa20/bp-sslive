@@ -54,7 +54,7 @@ class App extends React.Component {
             this.setState({
               userObj: obj.user,
               authenticated: true,
-              mode: AppMode.FEED //We're authenticated so can get into the app. MAIN
+              mode: AppMode.MAIN //We're authenticated so can get into the app. MAIN FEED
             });
           }
         }
@@ -74,7 +74,7 @@ class App extends React.Component {
     }
     this.setState({
       authenticated: true,
-      mode: AppMode.MAIN
+      mode: AppMode.MAIN //MAIN
     });
   }
 

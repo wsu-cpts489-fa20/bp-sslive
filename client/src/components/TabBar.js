@@ -5,11 +5,11 @@ class TabBar extends React.Component {
     render() {
       return(
         <div className="tabbar">
-        <a className={(this.props.mode === ConfigTab.BASIC ? " item-selected" : null)}
+        <a id= "basicTab" className={(this.props.mode === ConfigTab.BASIC ? " item-selected" : null)}
             onClick={()=>this.props.changeMode(ConfigTab.BASIC)}>
           <span className="tabbar-text">Basic Info</span>
         </a>
-        <a className={(this.props.mode === ConfigTab.LOGO ? " item-selected" : null)}
+        <a id= "logoColorTab" className={(this.props.mode === ConfigTab.LOGO ? " item-selected" : null)}
            onClick={()=>this.props.changeMode(ConfigTab.LOGO)}>
           <span className="tabbar-text">Logo + Colors</span>
         </a>

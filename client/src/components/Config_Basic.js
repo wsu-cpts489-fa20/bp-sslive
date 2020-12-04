@@ -4,9 +4,9 @@ class Config_Basic extends React.Component {
 
     render() {
         return (
-        <div className="padded-page">
+        <div id="basicDiv" className="padded-page">
             <center>
-            <form id="loginInterface" onSubmit={this.handleLoginSubmit} onChange={this.handleLoginChange}>
+            <form onSubmit={this.handleLoginSubmit} onChange={this.handleLoginChange}>
             <label className="form-inline" htmlFor="emailInput" style={{ padding: 0, fontSize: 24 }}>
                 Tornament Name:  
                 <input
