@@ -16,7 +16,7 @@
 - Config_Rounds.js
 - Config_Scorers.js
 
-#Week 3 Summary
+# Week 3 Summary  
 This week we have worked on the backend routes for all of the major tabs on the page so the application can save all of its data to the MongoDB server. We finished the POST and PUT routes for all of the major tabs on the webpage so far. Some functionality on the page is not yet finished due to interdependencies between tabs.
 
 # How to Run App
