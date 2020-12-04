@@ -4,10 +4,23 @@ import DivisionsAppMode from './../DivisionsAppMode.js';
 class DivisionsForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            faIcon: "fa fa-save",
-            btnLabel: "Save & Add Course to Tournament"
+        if (!this.props.editDivisionFlag) {
+            this.state = {
+                faIcon: "fa fa-save",
+                btnLabel: "Save & Add Course to Tournament",
+                numRounds: "1",
+                numHoles: "18",
+                course: "Placeholder"
+            }
         }
+        else {
+            let thisDivision = { ...this.props.startData }
+            thisDivision.faIcon = "fa fa-edit";
+            thisDivision.btnLabel = "Update Division"
+            delete thisDivision.id;
+            this.state = thisDivision;
+        }
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange = (event) => {
@@ -20,7 +33,6 @@ class DivisionsForm extends React.Component {
     //method to do the actual work. Note that saveCourse is set to the correct
     //parent method based on whether the user is logging a new course or editing
     //an existing round.
-    /*
     handleSubmit = (event) => {
         event.preventDefault();
         //start spinner
@@ -30,17 +42,34 @@ class DivisionsForm extends React.Component {
         });
         //Prepare current round data to be saved
         let divisionData = this.state;
-        delete courseData.btnLabel;
-        delete courseData.faIcon;
+        delete divisionData.btnLabel;
+        delete divisionData.faIcon;
         //call saveCourse on 1 second delay to show spinning icon
-        setTimeout(this.props.saveDivision, 1000, divisionData);
+        if (!this.props.editDivisionFlag) {
+            setTimeout(this.props.saveDivision, 1000, divisionData);
+        }
+        else {
+            delete divisionData._id;
+            setTimeout(this.props.editDivision, 1000, divisionData);
+        }
         event.preventDefault();
     }
-    */
 
     handleCancel = (event) => {
         event.preventDefault();
         this.props.handleChangeDivisionsMode(DivisionsAppMode.DIVISIONLIST);
+    }
+
+    //renderTable -- render an HTML5 table displaying the courses logged 
+    //by the director and updates the options of courses to pick from on the form
+    renderTable = () => {
+        let table = [];
+        for (let i = 0; i < this.props.courses.length; i++) {
+            table.push(
+                <option value={this.props.courses[i].name}>{this.props.courses[i].name}</option>
+            );
+        }
+        return table;
     }
 
     render() {
@@ -57,9 +86,9 @@ class DivisionsForm extends React.Component {
                         <div style={{ display: "inline-block", fontWeight: "bold", fontSize: "large", float: "left" }}>
                             Number of Rounds in Division: &nbsp;
                         </div>
-                        <select style={{ display: "inline-block", width: "2.2%", float: "left", textAlign: "center" }} value="18">
+                        <select name="numRounds" style={{ display: "inline-block", width: "2.2%", float: "left", textAlign: "center" }} value="18" onChange={(event) => this.handleChange(event)}>
                             <option value="1">1</option>
-                            <option value="2" disabled="true">2</option>
+                            <option value="2" disabled="false">2</option>
                             <option value="3" disabled="true">3</option>
                             <option value="4" disabled="true">4</option>
                         </select>
@@ -68,7 +97,7 @@ class DivisionsForm extends React.Component {
                         <div style={{ display: "inline-block", fontWeight: "bold", fontSize: "large", float: "left" }}>
                             Holes in Round 1: &nbsp;
                         </div>
-                        <select style={{ display: "inline-block", width: "2.2%", float: "left", textAlign: "center" }} value="18">
+                        <select name="numHoles" style={{ display: "inline-block", width: "2.2%", float: "left", textAlign: "center" }} value="18" onChange={(event) => this.handleChange(event)}>
                             <option value="18">18</option>
                             <option value="Front 9" disabled="true">Front 9</option>
                             <option value="Back 9" disabled="true">Back 9</option>
@@ -78,8 +107,13 @@ class DivisionsForm extends React.Component {
                         <div style={{ display: "inline-block", fontWeight: "bold", fontSize: "large", float: "left" }}>
                             Course for Round 1: &nbsp;
                         </div>
-                        <select style={{ display: "inline-block", width: "15%", float: "left", textAlign: "center" }} value="18">
-                            <option value="Placeholder">Placeholder</option>
+                        <select name="course" style={{ display: "inline-block", width: "15%", float: "left", textAlign: "center" }} value="18" onChange={(event) => this.handleChange(event)}>
+                            {
+                                this.props.courses == undefined || Object.keys(this.props.courses).length == 0 ?
+                                null
+                                :
+                                this.renderTable()
+                            }
                         </select>
                     </ul>
                     <button id="submitDivisionBtn" type="submit" style={{ width: "70%", fontSize: "36px", marginBottom: "10px" }}

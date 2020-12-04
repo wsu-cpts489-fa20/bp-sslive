@@ -12,11 +12,9 @@ class DivisionList extends React.Component {
     //of the round to be edited and then switch the flag editDivision to true so the PUT route will be
     //used rather than the POST route.
     editDivision = (id) => {
-        //this.props.setStateCallback("disabled", true);
-        //this.props.setStateCallback("courseInList", false);
-        //this.props.setStateCallback("editId", id);
-        //this.props.setStateCallback("editDivisionFlag", true);
-        //this.props.handleChangeCoursesMode(CoursesAppMode.COURSESFORM);
+        this.props.setStateCallback("editId", id);
+        this.props.setStateCallback("editDivisionFlag", true);
+        this.props.handleChangeDivisionsMode(DivisionsAppMode.DIVISIONSFORM);
     }
 
     //renderTable -- render an HTML5 table displaying the divisions logged 
