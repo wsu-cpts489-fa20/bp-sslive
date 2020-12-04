@@ -14,7 +14,7 @@ class DivisionList extends React.Component {
     editDivision = (id) => {
         this.props.setStateCallback("editId", id);
         this.props.setStateCallback("editDivisionFlag", true);
-        this.props.handleChangeCoursesMode(DivisionsAppMode.DIVISIONSFORM);
+        this.props.handleChangeDivisionsMode(DivisionsAppMode.DIVISIONSFORM);
     }
 
     //renderTable -- render an HTML5 table displaying the divisions logged 

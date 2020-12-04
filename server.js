@@ -575,3 +575,39 @@ app.post('/divisions/:userId', async (req, res, next) => {
   } 
 });
 
+//UPDATE division route: Updates a specific division 
+//for a given user in the users collection (PUT)
+app.put('/divisions/:userId/:divisionId', async (req, res, next) => {
+  console.log("in /rounds (PUT) route with params = " + 
+              JSON.stringify(req.params) + " and body = " + 
+              JSON.stringify(req.body));
+  const validProps = ['name', 'numRounds', 'numHoles', 'course' ];
+  let bodyObj = {...req.body};
+  delete bodyObj._id; //Not needed for update
+  for (const bodyProp in bodyObj) {
+    if (!validProps.includes(bodyProp)) {
+      return res.status(400).send("courses/ PUT request formulated incorrectly." +
+        "It includes " + bodyProp + ". However, only the following props are allowed: " +
+        "'name', 'numRounds', 'numHoles', 'course'");
+    } else {
+      bodyObj["divisions.$." + bodyProp] = bodyObj[bodyProp];
+      delete bodyObj[bodyProp];
+    }
+  }
+  try {
+    let status = await User.updateOne(
+      {"id": req.params.userId,
+       "divisions._id": mongoose.Types.ObjectId(req.params.divisionId)}
+      ,{"$set" : bodyObj}
+    );
+    if (status.nModified != 1) {
+      res.status(400).send("Unexpected error occurred when updating round in database. Round was not updated.");
+    } else {
+      res.status(200).send("Round successfully updated in database.");
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send("Unexpected error occurred when updating round in database: " + err);
+  } 
+});
+

@@ -1105,4 +1105,83 @@ app.post('/divisions/:userId', /*#__PURE__*/function () {
   return function (_x34, _x35, _x36) {
     return _ref12.apply(this, arguments);
   };
+}()); //UPDATE division route: Updates a specific division 
+//for a given user in the users collection (PUT)
+
+app.put('/divisions/:userId/:divisionId', /*#__PURE__*/function () {
+  var _ref13 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime["default"].mark(function _callee13(req, res, next) {
+    var validProps, bodyObj, bodyProp, status;
+    return _regeneratorRuntime["default"].wrap(function _callee13$(_context13) {
+      while (1) {
+        switch (_context13.prev = _context13.next) {
+          case 0:
+            console.log("in /rounds (PUT) route with params = " + JSON.stringify(req.params) + " and body = " + JSON.stringify(req.body));
+            validProps = ['name', 'numRounds', 'numHoles', 'course'];
+            bodyObj = _objectSpread({}, req.body);
+            delete bodyObj._id; //Not needed for update
+
+            _context13.t0 = _regeneratorRuntime["default"].keys(bodyObj);
+
+          case 5:
+            if ((_context13.t1 = _context13.t0()).done) {
+              _context13.next = 15;
+              break;
+            }
+
+            bodyProp = _context13.t1.value;
+
+            if (validProps.includes(bodyProp)) {
+              _context13.next = 11;
+              break;
+            }
+
+            return _context13.abrupt("return", res.status(400).send("courses/ PUT request formulated incorrectly." + "It includes " + bodyProp + ". However, only the following props are allowed: " + "'name', 'numRounds', 'numHoles', 'course'"));
+
+          case 11:
+            bodyObj["divisions.$." + bodyProp] = bodyObj[bodyProp];
+            delete bodyObj[bodyProp];
+
+          case 13:
+            _context13.next = 5;
+            break;
+
+          case 15:
+            _context13.prev = 15;
+            _context13.next = 18;
+            return User.updateOne({
+              "id": req.params.userId,
+              "divisions._id": _mongoose["default"].Types.ObjectId(req.params.divisionId)
+            }, {
+              "$set": bodyObj
+            });
+
+          case 18:
+            status = _context13.sent;
+
+            if (status.nModified != 1) {
+              res.status(400).send("Unexpected error occurred when updating round in database. Round was not updated.");
+            } else {
+              res.status(200).send("Round successfully updated in database.");
+            }
+
+            _context13.next = 26;
+            break;
+
+          case 22:
+            _context13.prev = 22;
+            _context13.t2 = _context13["catch"](15);
+            console.log(_context13.t2);
+            return _context13.abrupt("return", res.status(400).send("Unexpected error occurred when updating round in database: " + _context13.t2));
+
+          case 26:
+          case "end":
+            return _context13.stop();
+        }
+      }
+    }, _callee13, null, [[15, 22]]);
+  }));
+
+  return function (_x37, _x38, _x39) {
+    return _ref13.apply(this, arguments);
+  };
 }());

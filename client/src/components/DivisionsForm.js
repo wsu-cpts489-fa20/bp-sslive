@@ -14,7 +14,7 @@ class DivisionsForm extends React.Component {
             }
         }
         else {
-            let thisDivision = {...this.props.startData}
+            let thisDivision = { ...this.props.startData }
             thisDivision.faIcon = "fa fa-edit";
             thisDivision.btnLabel = "Update Division"
             delete thisDivision.id;
@@ -45,7 +45,13 @@ class DivisionsForm extends React.Component {
         delete divisionData.btnLabel;
         delete divisionData.faIcon;
         //call saveCourse on 1 second delay to show spinning icon
-        setTimeout(this.props.saveDivision, 1000, divisionData);
+        if (!this.props.editDivisionFlag) {
+            setTimeout(this.props.saveDivision, 1000, divisionData);
+        }
+        else {
+            delete divisionData._id;
+            setTimeout(this.props.editDivision, 1000, divisionData);
+        }
         event.preventDefault();
     }
 

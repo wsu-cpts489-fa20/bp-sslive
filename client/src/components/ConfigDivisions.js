@@ -70,7 +70,7 @@ class ConfigDivisions extends React.Component {
     });
     const msg = await res.text();
     if (res.status != 200) {
-      alert("An error occurred when attempting to add new round to database: "
+      alert("An error occurred when attempting to update the division in the database: "
         + msg);
       this.handleChangeDivisionsMode(DivisionsAppMode.DIVISIONLIST);
     } else {
@@ -92,6 +92,7 @@ class ConfigDivisions extends React.Component {
         setStateCallback={this.setStateCallback}
         saveDivision={this.addDivision}
         editDivision={this.editDivision}
+        editDivisionFlag={this.state.editDivisionFlag}
         startData={thisDivision}
       />
     );
