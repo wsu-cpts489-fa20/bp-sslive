@@ -53,7 +53,8 @@ _mongoose["default"].connect(connectStr, {
   console.error("Error connecting to ".concat(connectStr, ": ").concat(err));
 });
 
-var Schema = _mongoose["default"].Schema;
+var Schema = _mongoose["default"].Schema; //New Schema that defines how courses are stored in the DB
+
 var courseSchema = new Schema({
   name: {
     type: String,
@@ -219,6 +220,34 @@ var courseSchema = new Schema({
   toJSON: {
     virtuals: true
   }
+}); //New Schema that defines how divisions are stored in the DB
+
+var divisionsSchema = new Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  numRounds: {
+    type: Number,
+    required: true,
+    "enum": [1, 2, 3, 4]
+  },
+  numHoles: {
+    type: String,
+    required: true,
+    "enum": ["18", "Front 9", "Back 9"]
+  },
+  course: {
+    type: String,
+    required: true
+  }
+}, {
+  toObject: {
+    virtuals: true
+  },
+  toJSON: {
+    virtuals: true
+  }
 }); //Define schema that maps to a document in the Users collection in the appdb
 //database.
 
@@ -239,7 +268,8 @@ var userSchema = new Schema({
       return this.securityQuestion ? true : false;
     }
   },
-  courses: [courseSchema]
+  courses: [courseSchema],
+  divisions: [divisionsSchema]
 });
 
 var User = _mongoose["default"].model("User", userSchema); //////////////////////////////////////////////////////////////////////////
@@ -767,7 +797,7 @@ app["delete"]('/users/:userId', /*#__PURE__*/function () {
     return _ref7.apply(this, arguments);
   };
 }()); /////////////////////////////////
-//ROUNDS ROUTES
+//COURSES ROUTES
 ////////////////////////////////
 //CREATE course route: Adds a new course as a subdocument to 
 //a document in the users collection (POST)
@@ -829,7 +859,7 @@ app.post('/courses/:userId', /*#__PURE__*/function () {
   return function (_x23, _x24, _x25) {
     return _ref8.apply(this, arguments);
   };
-}()); //READ round route: Returns all rounds associated 
+}()); //READ course route: Returns all courses associated 
 //with a given user in the users collection (GET)
 
 app.get('/rounds/:userId', /*#__PURE__*/function () {
@@ -880,7 +910,7 @@ app.get('/rounds/:userId', /*#__PURE__*/function () {
   return function (_x26, _x27) {
     return _ref9.apply(this, arguments);
   };
-}()); //UPDATE round route: Updates a specific round 
+}()); //UPDATE course route: Updates a specific course 
 //for a given user in the users collection (PUT)
 
 app.put('/courses/:userId/:courseId', /*#__PURE__*/function () {
@@ -910,7 +940,7 @@ app.put('/courses/:userId/:courseId', /*#__PURE__*/function () {
               break;
             }
 
-            return _context10.abrupt("return", res.status(400).send("rounds/ PUT request formulated incorrectly." + "It includes " + bodyProp + ". However, only the following props are allowed: " + "'name', 'location', 's0', 's1', 's2'," + " 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10', 's11', 's12', 's13', 's14', 's15', 's16', 's17', 't0', 't1'," + " 't2', 't3', 't4', 't5', 't6', 't7', 't8', 't9', 't10', 't11', 't12', 't13', 't14', 't15', 't16', 't17'"));
+            return _context10.abrupt("return", res.status(400).send("courses/ PUT request formulated incorrectly." + "It includes " + bodyProp + ". However, only the following props are allowed: " + "'name', 'location', 's0', 's1', 's2'," + " 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10', 's11', 's12', 's13', 's14', 's15', 's16', 's17', 't0', 't1'," + " 't2', 't3', 't4', 't5', 't6', 't7', 't8', 't9', 't10', 't11', 't12', 't13', 't14', 't15', 't16', 't17'"));
 
           case 11:
             bodyObj["courses.$." + bodyProp] = bodyObj[bodyProp];
@@ -1011,5 +1041,147 @@ app["delete"]('/rounds/:userId/:roundId', /*#__PURE__*/function () {
 
   return function (_x31, _x32, _x33) {
     return _ref11.apply(this, arguments);
+  };
+}()); ///////////////////////
+////DIVISIONS ROUTES///
+///////////////////////
+//CREATE course route: Adds a new course as a subdocument to 
+//a document in the users collection (POST)
+
+app.post('/divisions/:userId', /*#__PURE__*/function () {
+  var _ref12 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime["default"].mark(function _callee12(req, res, next) {
+    var status;
+    return _regeneratorRuntime["default"].wrap(function _callee12$(_context12) {
+      while (1) {
+        switch (_context12.prev = _context12.next) {
+          case 0:
+            console.log("in /divisions (POST) route with params = " + JSON.stringify(req.params) + " and body = " + JSON.stringify(req.body));
+
+            if (!(!req.body.hasOwnProperty("name") || !req.body.hasOwnProperty("numRounds") || !req.body.hasOwnProperty("numHoles") || !req.body.hasOwnProperty("course"))) {
+              _context12.next = 3;
+              break;
+            }
+
+            return _context12.abrupt("return", res.status(400).send("POST request on /divisions formulated incorrectly." + "Body must contain all 4 required fields (name, numRounds, numHoles, course)"));
+
+          case 3:
+            _context12.prev = 3;
+            _context12.next = 6;
+            return User.updateOne({
+              id: req.params.userId
+            }, {
+              $push: {
+                divisions: req.body
+              }
+            });
+
+          case 6:
+            status = _context12.sent;
+
+            if (status.nModified != 1) {
+              //Should never happen!
+              res.status(400).send("Unexpected error occurred when adding division to" + " database. Division was not added.");
+            } else {
+              res.status(200).send("Division successfully added to database.");
+            }
+
+            _context12.next = 14;
+            break;
+
+          case 10:
+            _context12.prev = 10;
+            _context12.t0 = _context12["catch"](3);
+            console.log(_context12.t0);
+            return _context12.abrupt("return", res.status(400).send("Unexpected error occurred when adding division" + " to database: " + _context12.t0));
+
+          case 14:
+          case "end":
+            return _context12.stop();
+        }
+      }
+    }, _callee12, null, [[3, 10]]);
+  }));
+
+  return function (_x34, _x35, _x36) {
+    return _ref12.apply(this, arguments);
+  };
+}()); //UPDATE division route: Updates a specific division 
+//for a given user in the users collection (PUT)
+
+app.put('/divisions/:userId/:divisionId', /*#__PURE__*/function () {
+  var _ref13 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime["default"].mark(function _callee13(req, res, next) {
+    var validProps, bodyObj, bodyProp, status;
+    return _regeneratorRuntime["default"].wrap(function _callee13$(_context13) {
+      while (1) {
+        switch (_context13.prev = _context13.next) {
+          case 0:
+            console.log("in /rounds (PUT) route with params = " + JSON.stringify(req.params) + " and body = " + JSON.stringify(req.body));
+            validProps = ['name', 'numRounds', 'numHoles', 'course'];
+            bodyObj = _objectSpread({}, req.body);
+            delete bodyObj._id; //Not needed for update
+
+            _context13.t0 = _regeneratorRuntime["default"].keys(bodyObj);
+
+          case 5:
+            if ((_context13.t1 = _context13.t0()).done) {
+              _context13.next = 15;
+              break;
+            }
+
+            bodyProp = _context13.t1.value;
+
+            if (validProps.includes(bodyProp)) {
+              _context13.next = 11;
+              break;
+            }
+
+            return _context13.abrupt("return", res.status(400).send("courses/ PUT request formulated incorrectly." + "It includes " + bodyProp + ". However, only the following props are allowed: " + "'name', 'numRounds', 'numHoles', 'course'"));
+
+          case 11:
+            bodyObj["divisions.$." + bodyProp] = bodyObj[bodyProp];
+            delete bodyObj[bodyProp];
+
+          case 13:
+            _context13.next = 5;
+            break;
+
+          case 15:
+            _context13.prev = 15;
+            _context13.next = 18;
+            return User.updateOne({
+              "id": req.params.userId,
+              "divisions._id": _mongoose["default"].Types.ObjectId(req.params.divisionId)
+            }, {
+              "$set": bodyObj
+            });
+
+          case 18:
+            status = _context13.sent;
+
+            if (status.nModified != 1) {
+              res.status(400).send("Unexpected error occurred when updating round in database. Round was not updated.");
+            } else {
+              res.status(200).send("Round successfully updated in database.");
+            }
+
+            _context13.next = 26;
+            break;
+
+          case 22:
+            _context13.prev = 22;
+            _context13.t2 = _context13["catch"](15);
+            console.log(_context13.t2);
+            return _context13.abrupt("return", res.status(400).send("Unexpected error occurred when updating round in database: " + _context13.t2));
+
+          case 26:
+          case "end":
+            return _context13.stop();
+        }
+      }
+    }, _callee13, null, [[15, 22]]);
+  }));
+
+  return function (_x37, _x38, _x39) {
+    return _ref13.apply(this, arguments);
   };
 }());
