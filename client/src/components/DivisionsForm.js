@@ -4,10 +4,20 @@ import DivisionsAppMode from './../DivisionsAppMode.js';
 class DivisionsForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            faIcon: "fa fa-save",
-            btnLabel: "Save & Add Course to Tournament"
+        if (!this.props.editDivisionFlag) {
+            this.state = {
+                faIcon: "fa fa-save",
+                btnLabel: "Save & Add Course to Tournament",
+            }
         }
+        else {
+            let thisDivision = {...this.props.startData}
+            thisDivision.faIcon = "fa fa-edit";
+            thisDivision.btnLabel = "Update Division"
+            delete thisDivision.id;
+            this.state = thisDivision;
+        }
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange = (event) => {
@@ -20,7 +30,6 @@ class DivisionsForm extends React.Component {
     //method to do the actual work. Note that saveCourse is set to the correct
     //parent method based on whether the user is logging a new course or editing
     //an existing round.
-    /*
     handleSubmit = (event) => {
         event.preventDefault();
         //start spinner
@@ -30,13 +39,12 @@ class DivisionsForm extends React.Component {
         });
         //Prepare current round data to be saved
         let divisionData = this.state;
-        delete courseData.btnLabel;
-        delete courseData.faIcon;
+        delete divisionData.btnLabel;
+        delete divisionData.faIcon;
         //call saveCourse on 1 second delay to show spinning icon
         setTimeout(this.props.saveDivision, 1000, divisionData);
         event.preventDefault();
     }
-    */
 
     handleCancel = (event) => {
         event.preventDefault();
