@@ -248,6 +248,48 @@ var divisionsSchema = new Schema({
   toJSON: {
     virtuals: true
   }
+}); //New Schema that defines how divisions are stored in the DB
+
+var playerSchema = new Schema({
+  firstName: {
+    type: String,
+    required: true
+  },
+  lastName: {
+    type: String,
+    required: true
+  },
+  BIB: {
+    type: String,
+    required: true
+  },
+  division: {
+    type: String,
+    required: true
+  },
+  hometown: {
+    type: String,
+    required: true
+  },
+  country: {
+    type: String,
+    required: true
+  },
+  imageurl: {
+    type: String,
+    required: true
+  },
+  teeTime: {
+    type: String,
+    required: true
+  }
+}, {
+  toObject: {
+    virtuals: true
+  },
+  toJSON: {
+    virtuals: true
+  }
 }); //Define schema that maps to a document in the Users collection in the appdb
 //database.
 
@@ -269,7 +311,8 @@ var userSchema = new Schema({
     }
   },
   courses: [courseSchema],
-  divisions: [divisionsSchema]
+  divisions: [divisionsSchema],
+  players: [playerSchema]
 });
 
 var User = _mongoose["default"].model("User", userSchema); //////////////////////////////////////////////////////////////////////////
@@ -1108,77 +1151,58 @@ app.post('/divisions/:userId', /*#__PURE__*/function () {
 }()); //UPDATE division route: Updates a specific division 
 //for a given user in the users collection (PUT)
 
-app.put('/divisions/:userId/:divisionId', /*#__PURE__*/function () {
+app.post('/players/:userId', /*#__PURE__*/function () {
   var _ref13 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime["default"].mark(function _callee13(req, res, next) {
-    var validProps, bodyObj, bodyProp, status;
+    var status;
     return _regeneratorRuntime["default"].wrap(function _callee13$(_context13) {
       while (1) {
         switch (_context13.prev = _context13.next) {
           case 0:
-            console.log("in /rounds (PUT) route with params = " + JSON.stringify(req.params) + " and body = " + JSON.stringify(req.body));
-            validProps = ['name', 'numRounds', 'numHoles', 'course'];
-            bodyObj = _objectSpread({}, req.body);
-            delete bodyObj._id; //Not needed for update
+            console.log("in /players (POST) route with params = " + JSON.stringify(req.params) + " and body = " + JSON.stringify(req.body));
 
-            _context13.t0 = _regeneratorRuntime["default"].keys(bodyObj);
-
-          case 5:
-            if ((_context13.t1 = _context13.t0()).done) {
-              _context13.next = 15;
+            if (!(!req.body.hasOwnProperty("firstName") || !req.body.hasOwnProperty("lastName") || !req.body.hasOwnProperty("BIB") || !req.body.hasOwnProperty("division") || !req.body.hasOwnProperty("hometown") || !req.body.hasOwnProperty("country") || !req.body.hasOwnProperty("teeTime"))) {
+              _context13.next = 3;
               break;
             }
 
-            bodyProp = _context13.t1.value;
+            return _context13.abrupt("return", res.status(400).send("POST request on /players formulated incorrectly."));
 
-            if (validProps.includes(bodyProp)) {
-              _context13.next = 11;
-              break;
-            }
-
-            return _context13.abrupt("return", res.status(400).send("courses/ PUT request formulated incorrectly." + "It includes " + bodyProp + ". However, only the following props are allowed: " + "'name', 'numRounds', 'numHoles', 'course'"));
-
-          case 11:
-            bodyObj["divisions.$." + bodyProp] = bodyObj[bodyProp];
-            delete bodyObj[bodyProp];
-
-          case 13:
-            _context13.next = 5;
-            break;
-
-          case 15:
-            _context13.prev = 15;
-            _context13.next = 18;
+          case 3:
+            _context13.prev = 3;
+            _context13.next = 6;
             return User.updateOne({
-              "id": req.params.userId,
-              "divisions._id": _mongoose["default"].Types.ObjectId(req.params.divisionId)
+              id: req.params.userId
             }, {
-              "$set": bodyObj
+              $push: {
+                players: req.body
+              }
             });
 
-          case 18:
+          case 6:
             status = _context13.sent;
 
             if (status.nModified != 1) {
-              res.status(400).send("Unexpected error occurred when updating round in database. Round was not updated.");
+              //Should never happen!
+              res.status(400).send("Unexpected error occurred when adding players to" + " database. players was not added.");
             } else {
-              res.status(200).send("Round successfully updated in database.");
+              res.status(200).send("Players successfully added to database.");
             }
 
-            _context13.next = 26;
+            _context13.next = 14;
             break;
 
-          case 22:
-            _context13.prev = 22;
-            _context13.t2 = _context13["catch"](15);
-            console.log(_context13.t2);
-            return _context13.abrupt("return", res.status(400).send("Unexpected error occurred when updating round in database: " + _context13.t2));
+          case 10:
+            _context13.prev = 10;
+            _context13.t0 = _context13["catch"](3);
+            console.log(_context13.t0);
+            return _context13.abrupt("return", res.status(400).send("Unexpected error occurred when adding players" + " to database: " + _context13.t0));
 
-          case 26:
+          case 14:
           case "end":
             return _context13.stop();
         }
       }
-    }, _callee13, null, [[15, 22]]);
+    }, _callee13, null, [[3, 10]]);
   }));
 
   return function (_x37, _x38, _x39) {
