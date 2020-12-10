@@ -290,6 +290,32 @@ var playerSchema = new Schema({
   toJSON: {
     virtuals: true
   }
+}); //New Schema that defines how divisions are stored in the DB
+
+var scorersSchema = new Schema({
+  scorerFirstName: {
+    type: String,
+    required: true
+  },
+  scorerLastName: {
+    type: String,
+    required: true
+  },
+  scorerLoginCode: {
+    type: String,
+    required: true
+  },
+  scoringAssignment: {
+    type: String,
+    required: true
+  }
+}, {
+  toObject: {
+    virtuals: true
+  },
+  toJSON: {
+    virtuals: true
+  }
 }); //Define schema that maps to a document in the Users collection in the appdb
 //database.
 
@@ -312,7 +338,8 @@ var userSchema = new Schema({
   },
   courses: [courseSchema],
   divisions: [divisionsSchema],
-  players: [playerSchema]
+  players: [playerSchema],
+  scorers: [scorersSchema]
 });
 
 var User = _mongoose["default"].model("User", userSchema); //////////////////////////////////////////////////////////////////////////
@@ -1207,5 +1234,122 @@ app.post('/players/:userId', /*#__PURE__*/function () {
 
   return function (_x37, _x38, _x39) {
     return _ref13.apply(this, arguments);
+  };
+}()); // Put players into tournament.
+
+app.post('/players/:userId', /*#__PURE__*/function () {
+  var _ref14 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime["default"].mark(function _callee14(req, res, next) {
+    var status;
+    return _regeneratorRuntime["default"].wrap(function _callee14$(_context14) {
+      while (1) {
+        switch (_context14.prev = _context14.next) {
+          case 0:
+            console.log("in /players (POST) route with params = " + JSON.stringify(req.params) + " and body = " + JSON.stringify(req.body));
+
+            if (!(!req.body.hasOwnProperty("firstName") || !req.body.hasOwnProperty("lastName") || !req.body.hasOwnProperty("BIB") || !req.body.hasOwnProperty("division") || !req.body.hasOwnProperty("hometown") || !req.body.hasOwnProperty("country") || !req.body.hasOwnProperty("teeTime"))) {
+              _context14.next = 3;
+              break;
+            }
+
+            return _context14.abrupt("return", res.status(400).send("POST request on /players formulated incorrectly."));
+
+          case 3:
+            _context14.prev = 3;
+            _context14.next = 6;
+            return User.updateOne({
+              id: req.params.userId
+            }, {
+              $push: {
+                players: req.body
+              }
+            });
+
+          case 6:
+            status = _context14.sent;
+
+            if (status.nModified != 1) {
+              //Should never happen!
+              res.status(400).send("Unexpected error occurred when adding players to" + " database. players was not added.");
+            } else {
+              res.status(200).send("Players successfully added to database.");
+            }
+
+            _context14.next = 14;
+            break;
+
+          case 10:
+            _context14.prev = 10;
+            _context14.t0 = _context14["catch"](3);
+            console.log(_context14.t0);
+            return _context14.abrupt("return", res.status(400).send("Unexpected error occurred when adding players" + " to database: " + _context14.t0));
+
+          case 14:
+          case "end":
+            return _context14.stop();
+        }
+      }
+    }, _callee14, null, [[3, 10]]);
+  }));
+
+  return function (_x40, _x41, _x42) {
+    return _ref14.apply(this, arguments);
+  };
+}());
+app.post('/scorers/:userId', /*#__PURE__*/function () {
+  var _ref15 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime["default"].mark(function _callee15(req, res, next) {
+    var status;
+    return _regeneratorRuntime["default"].wrap(function _callee15$(_context15) {
+      while (1) {
+        switch (_context15.prev = _context15.next) {
+          case 0:
+            console.log("in /scorers (POST) route with params = " + JSON.stringify(req.params) + " and body = " + JSON.stringify(req.body));
+
+            if (!(!req.body.hasOwnProperty("scorerFirstName") || !req.body.hasOwnProperty("scorerLastName") || !req.body.hasOwnProperty("scorerLoginCode") || !req.body.hasOwnProperty("scoringAssignment"))) {
+              _context15.next = 3;
+              break;
+            }
+
+            return _context15.abrupt("return", res.status(400).send("POST request on /scorers formulated incorrectly."));
+
+          case 3:
+            _context15.prev = 3;
+            _context15.next = 6;
+            return User.updateOne({
+              id: req.params.userId
+            }, {
+              $push: {
+                scorers: req.body
+              }
+            });
+
+          case 6:
+            status = _context15.sent;
+
+            if (status.nModified != 1) {
+              //Should never happen!
+              res.status(400).send("Unexpected error occurred when adding scorers to" + " database. scorers was not added.");
+            } else {
+              res.status(200).send("Scorers successfully added to database.");
+            }
+
+            _context15.next = 14;
+            break;
+
+          case 10:
+            _context15.prev = 10;
+            _context15.t0 = _context15["catch"](3);
+            console.log(_context15.t0);
+            return _context15.abrupt("return", res.status(400).send("Unexpected error occurred when adding scorers" + " to database: " + _context15.t0));
+
+          case 14:
+          case "end":
+            return _context15.stop();
+        }
+      }
+    }, _callee15, null, [[3, 10]]);
+  }));
+
+  return function (_x43, _x44, _x45) {
+    return _ref15.apply(this, arguments);
   };
 }());

@@ -1,4 +1,5 @@
 import React from 'react';
+import AppMode from './../AppMode.js';
 
 class Config_Scorers extends React.Component {
     constructor(props) {
@@ -6,25 +7,32 @@ class Config_Scorers extends React.Component {
 
           this.state = {
             customize: false,
-            rounds : [ ]
+            scorers : [                 {
+                "scorerFirstName" : "Tiger",
+                "scorerLastName" : "Woods",
+                "scorerLoginCode" : "Starter",
+                "scoringAssignment" : "Starter for Round 1"
+            }]
           };
+        
     }
+    
     
     handleChange = (event) => {
         const name = event.target.name;
         console.log(name);
         if (name === "scorerFirstName") {
-            this.setState({[this.state.rounds[0].scorerFirstName]: event.target.value});
-            this.state.rounds[0].scorerFirstName = event.target.value;
+            this.setState({[this.state.scorers[0].scorerFirstName]: event.target.value});
+            this.state.scorers[0].scorerFirstName = event.target.value;
         } else if (name === "scorerLastName") {
-            this.setState({[this.state.rounds[0].scorerLastName]: event.target.value});
-            this.state.rounds[0].scorerLastName = event.target.value;
+            this.setState({[this.state.scorers[0].scorerLastName]: event.target.value});
+            this.state.scorers[0].scorerLastName = event.target.value;
         } else if (name === "scorerLoginCode") {
-            this.setState({[this.state.rounds[0].scorerLoginCode]: event.target.value});
-            this.state.rounds[0].scorerLoginCode = event.target.value;
+            this.setState({[this.state.scorers[0].scorerLoginCode]: event.target.value});
+            this.state.scorers[0].scorerLoginCode = event.target.value;
         } else if (name === "scoringAssignment") {
-            this.setState({[this.state.rounds[0].scoringAssignment]: event.target.value});
-            this.state.rounds[0].scoringAssignment = event.target.value;
+            this.setState({[this.state.scorers[0].scoringAssignment]: event.target.value});
+            this.state.scorers[0].scoringAssignment = event.target.value;
         }
         else if(name === "customize") {
             this.setState({[name]: event.target.value});
@@ -35,23 +43,31 @@ class Config_Scorers extends React.Component {
         }
     }
 
-    handleSubmit = (event) => {
-        console.log("Submit");
-        localStorage.setItem("scorers", JSON.stringify(this.state.rounds));
-        let data = JSON.parse(localStorage.getItem("scorers"));
-        console.log(data);
-        //start spinner
-        // this.setState({faIcon: "fa fa-spin fa-spinner",
-                        // btnLabel: (this.props.mode === AppMode.ROUNDS_LOGROUND ? 
-                        //             "Saving..." : "Updating...")});
-        //Prepare current round data to be saved
-        // let roundData = this.state;
-        // delete roundData.faIcon;
-        // delete roundData.btnLabel;
-        //call saveRound on 1 second delay to show spinning icon
-        // setTimeout(this.props.saveRound,1000,roundData); 
-        // event.preventDefault(); 
+    handleSubmit = async () => {
+        if (this.state.scorers.length === 0) {
+            window.alert("No scorers are available to add.");
         }
+        else {
+            const url = '/scorers/' + "director@email.com";
+            for (var j = 0; j < this.state.scorers.length; j++) {
+                const res = await fetch(url, {
+                    headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json'
+                    },
+                    method: 'POST',
+                    body: JSON.stringify(this.state.scorers[j])
+                  });
+                  const msg = await res.text();
+                  if (res.status != 200) {
+                    alert("An error occurred when attempting to add new scorers to database: "
+                      + msg);
+                  } else {
+                    this.props.refreshOnUpdate(AppMode.FEED);
+                  }
+            }
+        }
+    }
 
     render() {
         return (
@@ -77,7 +93,7 @@ class Config_Scorers extends React.Component {
             </tr>
             </thead>
              <TableList
-                rounds={this.state.rounds}
+                rounds={this.state.scorers}
                 custom={this.state.customize}
                 handleChange={this.handleChange}
                 />

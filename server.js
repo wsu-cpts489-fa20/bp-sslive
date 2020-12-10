@@ -121,6 +121,24 @@ const playerSchema = new Schema({
   }
 });
 
+
+//New Schema that defines how divisions are stored in the DB
+const scorersSchema = new Schema({
+  scorerFirstName: {type: String, required: true},
+  scorerLastName: {type: String, required: true},
+  scorerLoginCode: {type: String, required: true},
+  scoringAssignment: {type: String, required: true},
+
+},
+{
+  toObject: {
+  virtuals: true
+  },
+  toJSON: {
+  virtuals: true 
+  }
+});
+
 //Define schema that maps to a document in the Users collection in the appdb
 //database.
 const userSchema = new Schema({
@@ -134,7 +152,8 @@ const userSchema = new Schema({
     {return this.securityQuestion ? true: false}},
   courses: [courseSchema],
   divisions: [divisionsSchema],
-  players: [playerSchema]
+  players: [playerSchema],
+  scorers: [scorersSchema]
 });
 const User = mongoose.model("User",userSchema); 
 
@@ -628,3 +647,61 @@ app.post('/players/:userId', async (req, res, next) => {
     }
 });
 
+// Put players into tournament.
+app.post('/players/:userId', async (req, res, next) => {
+  console.log("in /players (POST) route with params = " + 
+              JSON.stringify(req.params) + " and body = " + 
+              JSON.stringify(req.body));
+  if(!req.body.hasOwnProperty("firstName") ||
+     !req.body.hasOwnProperty("lastName") ||
+     !req.body.hasOwnProperty("BIB") ||
+     !req.body.hasOwnProperty("division") ||
+     !req.body.hasOwnProperty("hometown") ||
+     !req.body.hasOwnProperty("country") ||
+     !req.body.hasOwnProperty("teeTime")) {
+      return res.status(400).send("POST request on /players formulated incorrectly.");
+     }
+     try {
+      let status = await User.updateOne(
+      {id: req.params.userId},
+      {$push: {players: req.body}});
+      if (status.nModified != 1) { //Should never happen!
+        res.status(400).send("Unexpected error occurred when adding players to"+
+          " database. players was not added.");
+      } else {
+        res.status(200).send("Players successfully added to database.");
+      }
+    } catch (err) {
+      console.log(err);
+      return res.status(400).send("Unexpected error occurred when adding players" +
+       " to database: " + err);
+    }
+});
+
+
+app.post('/scorers/:userId', async (req, res, next) => {
+  console.log("in /scorers (POST) route with params = " + 
+              JSON.stringify(req.params) + " and body = " + 
+              JSON.stringify(req.body));
+  if(!req.body.hasOwnProperty("scorerFirstName") ||
+     !req.body.hasOwnProperty("scorerLastName") ||
+     !req.body.hasOwnProperty("scorerLoginCode") ||
+     !req.body.hasOwnProperty("scoringAssignment")) {
+      return res.status(400).send("POST request on /scorers formulated incorrectly.");
+     }
+     try {
+      let status = await User.updateOne(
+      {id: req.params.userId},
+      {$push: {scorers: req.body}});
+      if (status.nModified != 1) { //Should never happen!
+        res.status(400).send("Unexpected error occurred when adding scorers to"+
+          " database. scorers was not added.");
+      } else {
+        res.status(200).send("Scorers successfully added to database.");
+      }
+    } catch (err) {
+      console.log(err);
+      return res.status(400).send("Unexpected error occurred when adding scorers" +
+       " to database: " + err);
+    }
+});
