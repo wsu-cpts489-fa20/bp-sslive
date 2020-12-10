@@ -34,7 +34,7 @@ class App extends React.Component {
 
   constructor() {
     super();
-    this.state = {mode: AppMode.LOGIN,
+    this.state = {mode: AppMode.FEED,
                   menuOpen: false,
                   authenticated: false,
                   userObj: {displayName: "", profilePicURL: ""},
@@ -143,6 +143,7 @@ class App extends React.Component {
             toggleMenuOpen={this.toggleMenuOpen}
             displayName={this.state.userObj.displayName}
             profilePicURL={this.state.userObj.profilePicURL}
+            changeMode={this.handleChangeMode}
             logOut={() => this.handleChangeMode(AppMode.LOGIN)}/>
           <ModePage 
             newTournament={this.handleNewTournament}
