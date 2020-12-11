@@ -121,7 +121,50 @@ const playerSchema = new Schema({
   }
 });
 
+/*
+//Need to add schema her for the basic Info
+const basicInfoSchema = new Schema({
+  tournamentName: {type: String, required: true},
+  tournamentShortName: {type: String, required: true},
+  tournamentDirectorsName: {type: String, required: true},
+  tournamentDirectorCode: {type: String, required: true}
+},
+{
+  toObject: {
+  virtuals: true
+  },
+  toJSON: {
+  virtuals: true 
+  }
+});
 
+//Defining Schema for logoColor
+const logoColorSchema = new Schema({
+  loginBackgroundColor: {type: String, required: true},
+  loginBtnTextColor: {type: String, required: true},
+  titleTextColor: {type: String, required: true},
+  headerRowBackgroundColor: {type: String, required: true},
+  headerRowTextColor: {type: String, required: true},
+  updateBtnBackgroundColor: {type: String, required: true},
+  updateBtnTextColor: {type: String, required: true},
+  tournamentNameBannerBackgroundColor: {type: String, required: true},
+  tournamentNameBannerTextColor: {type: String, required: true},
+  strokeParColumnBackgroundColor: {type: String, required: true},
+  strokeParColumnTextColor: {type: String, required: true},
+  timeParColumnBackgroundColor: {type: String, required: true},
+  timeParColumnTextColor: {type: String, required: true},
+  sgParColumnBackgroundColor: {type: String, required: true},
+  sgParColumnTextColor: {type: String, required: true},
+},
+
+{
+  toObject: {
+  virtuals: true
+  },
+  toJSON: {
+  virtuals: true 
+  }
+});*/
 //New Schema that defines how divisions are stored in the DB
 const scorersSchema = new Schema({
   scorerFirstName: {type: String, required: true},
@@ -705,3 +748,225 @@ app.post('/scorers/:userId', async (req, res, next) => {
        " to database: " + err);
     }
 });
+
+/*
+/////////////////////////////////
+//BASIC INFO                  //
+////////////////////////////////
+
+app.post('/basicInfo/:userId', async (req, res, next) => {
+  console.log("in /basicInfo (POST) route with params = " + 
+              JSON.stringify(req.params) + " and body = " + 
+              JSON.stringify(req.body));
+  if (
+      !req.body.hasOwnProperty("tournamentName") ||
+      !req.body.hasOwnProperty("tournamentShortName") ||
+      !req.body.hasOwnProperty("tournamentDirectorName") ||
+      !req.body.hasOwnProperty("tournamentDirectorCode")
+      ) {
+    //Body does not contain correct properties
+    return res.status(400).send("POST request on /courses formulated incorrectly." +
+      "Body must contain all 36 required fields");
+  }
+  try {
+    let status = await User.updateOne(
+    {id: req.params.userId},
+    {$push: {courses: req.body}});
+    if (status.nModified != 1) { //Should never happen!
+      res.status(400).send("Unexpected error occurred when adding Info to"+
+        " database. Basic Info was not added.");
+    } else {
+      res.status(200).send("Basic Info successfully added to database.");
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send("Unexpected error occurred when adding Basic Info" +
+     " to database: " + err);
+  } 
+});
+
+app.get('/basicInfo/:userId', async(req, res) => {
+  console.log("in /basicInfo route (GET) with userId = " + 
+    JSON.stringify(req.params.userId));
+  try {
+    let thisUser = await User.findOne({id: req.params.userId});
+    if (!thisUser) {
+      return res.status(400).message("No user account with specified userId was found in database.");
+    } else {
+      return res.status(200).json(JSON.stringify(thisUser.basicInfoSchema));
+    }
+  } catch (err) {
+    console.log()
+    return res.status(400).message("Unexpected error occurred when looking up user in database: " + err);
+  }
+});
+
+app.put('/basicInfo/:userId/', async (req, res, next) => {
+  console.log("in /basicInfo (PUT) route with params = " + 
+              JSON.stringify(req.params) + " and body = " + 
+              JSON.stringify(req.body));
+  const validProps = [];
+  let bodyObj = {...req.body};
+  delete bodyObj._id; //Not needed for update
+  for (const bodyProp in bodyObj) {
+    if (!validProps.includes(bodyProp)) {
+      return res.status(400).send("courses/ PUT request formulated incorrectly." +
+        "It includes " + bodyProp + ". However, only the following props are allowed: " +
+        "'tournamentName', 'tournamentShortName', 'tournamentDirectorName', 'tournamentDirectorCode'");
+    } else {
+      bodyObj["basicInfo.$." + bodyProp] = bodyObj[bodyProp];
+      delete bodyObj[bodyProp];
+    }
+  }
+  try {
+    let status = await User.updateOne(
+      {"id": req.params.userId,
+       "basicInfo._id": mongoose.Types.ObjectId(req.params.basicInfo)}
+      ,{"$set" : bodyObj}
+    );
+    if (status.nModified != 1) {
+      res.status(400).send("Unexpected error occurred when updating round in database. Basic Info was not updated.");
+    } else {
+      res.status(200).send("Round successfully updated in database.");
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send("Unexpected error occurred when updating round in database: " + err);
+  } 
+});
+
+//DELETE round route: Deletes a specific round 
+//for a given user in the users collection (DELETE)
+app.delete('/basicInfo/:userId', async (req, res, next) => {
+  console.log("in /basicInfo (DELETE) route with params = " + 
+              JSON.stringify(req.params)); 
+  try {
+    let status = await User.updateOne(
+      {id: req.params.userId},
+      {$pull: {rounds: {_id: mongoose.Types.ObjectId(req.params.roundId)}}});
+    if (status.nModified != 1) { //Should never happen!
+      res.status(400).send("Unexpected error occurred when deleting info from database. Basic Info was not deleted.");
+    } else {
+      res.status(200).send("Round successfully deleted from database.");
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send("Unexpected error occurred when deleting info from database: " + err);
+  } 
+});
+
+
+/////////////////////////////////
+//LogoColor INFO                  //
+////////////////////////////////
+
+app.post('/logoColor/:userId', async (req, res, next) => {
+  console.log("in /logoColor (POST) route with params = " + 
+              JSON.stringify(req.params) + " and body = " + 
+              JSON.stringify(req.body));
+  if (
+      !req.body.hasOwnProperty("loginBackgroundColor") ||
+      !req.body.hasOwnProperty("loginBtnTextColor") ||
+      !req.body.hasOwnProperty("titleTextColor") ||
+      !req.body.hasOwnProperty("headerRowBackgroundColor") ||
+      !req.body.hasOwnProperty("headerRowTextColor") ||
+      !req.body.hasOwnProperty("updateBtnBackgroundColor") ||
+      !req.body.hasOwnProperty("updateBtnTextColor") ||
+      !req.body.hasOwnProperty("tournamentNameBannerBackgroundColor") ||
+      !req.body.hasOwnProperty("tournamentNameBannerTextColor") ||
+      !req.body.hasOwnProperty("strokeParColumnBackgroundColor") ||
+      !req.body.hasOwnProperty("strokeParColumnTextColor") ||
+      !req.body.hasOwnProperty("timeParColumnBackgroundColor") ||
+      !req.body.hasOwnProperty("timeParColumnTextColor") ||
+      !req.body.hasOwnProperty(" sgParColumnBackgroundColor") ||
+      !req.body.hasOwnProperty("sgParColumnTextColor")
+      
+      ) {
+    //Body does not contain correct properties
+    return res.status(400).send("POST request on /logoColor formulated incorrectly." +
+      "Body must contain all 15 required fields");
+  }
+  try {
+    let status = await User.updateOne(
+    {id: req.params.userId},
+    {$push: {courses: req.body}});
+    if (status.nModified != 1) { //Should never happen!
+      res.status(400).send("Unexpected error occurred when adding Info to"+
+        " database. Logo and Colors were not added.");
+    } else {
+      res.status(200).send("Logo and Colors successfully added to database.");
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send("Unexpected error occurred when adding Logo and Colors" +
+     " to database: " + err);
+  } 
+});
+
+app.get('/logoColor/:userId', async(req, res) => {
+  console.log("in /logoColor route (GET) with userId = " + 
+    JSON.stringify(req.params.userId));
+  try {
+    let thisUser = await User.findOne({id: req.params.userId});
+    if (!thisUser) {
+      return res.status(400).message("No user account with specified userId was found in database.");
+    } else {
+      return res.status(200).json(JSON.stringify(thisUser.basicInfoSchema));
+    }
+  } catch (err) {
+    console.log()
+    return res.status(400).message("Unexpected error occurred when looking up user in database: " + err);
+  }
+});
+
+app.put('/logoColor/:userId/', async (req, res, next) => {
+  console.log("in /logoColor (PUT) route with params = " + 
+              JSON.stringify(req.params) + " and body = " + 
+              JSON.stringify(req.body));
+  const validProps = [];
+  let bodyObj = {...req.body};
+  delete bodyObj._id; //Not needed for update
+  for (const bodyProp in bodyObj) {
+    if (!validProps.includes(bodyProp)) {
+      return res.status(400).send("logoColor/ PUT request formulated incorrectly." +
+        "It includes " + bodyProp + ". However, only the following props are allowed: " +
+        //enter the parameters here
+    } else {
+      bodyObj["courses.$." + bodyProp] = bodyObj[bodyProp];
+      delete bodyObj[bodyProp];
+    }
+  }
+  try {
+    let status = await User.updateOne(
+      {"id": req.params.userId,
+       "courses._id": mongoose.Types.ObjectId(req.params.courseId)}
+      ,{"$set" : bodyObj}
+    );
+    if (status.nModified != 1) {
+      res.status(400).send("Unexpected error occurred when updating round in database. Round was not updated.");
+    } else {
+      res.status(200).send("Round successfully updated in database.");
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send("Unexpected error occurred when updating round in database: " + err);
+  } 
+});
+
+app.delete('/basicInfo/:userId', async (req, res, next) => {
+  console.log("in /rounds (DELETE) route with params = " + 
+              JSON.stringify(req.params)); 
+  try {
+    let status = await User.updateOne(
+      {id: req.params.userId},
+      {$pull: {rounds: {_id: mongoose.Types.ObjectId(req.params.roundId)}}});
+    if (status.nModified != 1) { //Should never happen!
+      res.status(400).send("Unexpected error occurred when deleting round from database. Round was not deleted.");
+    } else {
+      res.status(200).send("Round successfully deleted from database.");
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send("Unexpected error occurred when deleting round from database: " + err);
+  } 
+});*/

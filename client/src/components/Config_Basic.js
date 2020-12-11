@@ -1,31 +1,74 @@
 import React from 'react';
 
 class Config_Basic extends React.Component {
+    //pretty straight forward
+    constructor(props){
+        super(props);
+        this.state = {
+            tournamentName: "New Tournament",
+            tournamentShortName: "NT",
+            faIcon: "fa fa-save",
+            btnLabel: "Save The Basic Info",
+            tournamentDirectorsName:"aa b",
+            tournamentDirectorCode: "Director"
+        }
+    }
+    //adds basic info to mongodb
+    addBasicInfo = async (newData) => {
+        const url = '/basicInfo/' + this.props.userObj.id;
+        const res = await fetch(url, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(newData)
+        });
+        const msg = await res.text();
+    }
+    //handles submit and applies all of the state/adding to mongo db
+    handleSubmit = (event) => {
+        event.preventDefault();
+        //start spinner
+        this.setState({
+            faIcon: "fa fa-spin fa-spinner",
+            btnLabel: "Saving..."
+        });
+        //Prepare current round data to be saved
+        let basicInfoData = this.state;
+        delete basicInfoData.btnLabel;
+        delete basicInfoData.faIcon;
+        setTimeout(this.addBasicInfo, 1000, basicInfoData);
+        
+        event.preventDefault();
+    }
+    //updates the value automatically
+    handleChange = (event) => {
+        const name = event.target.name;
+        this.setState({ [name]: event.target.value });
+    }
 
+    //borrowed from the speedscore app developed in class thus the email names, I only changed what I had to
     render() {
         return (
         <div id="basicDiv" className="padded-page">
             <center>
             <form onSubmit={this.handleLoginSubmit} onChange={this.handleLoginChange}>
             <label className="form-inline" htmlFor="emailInput" style={{ padding: 0, fontSize: 24 }}>
-                Tornament Name:  
+                Tournament Name:  
                 <input
-                ref={this.emailInputRef}
                 className="form-control login-text"
-                type="email"
                 defaultValue="New Tournament"
-                id="emailInput"
-                //pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}"
+                id="tournamentName"
                 required={true}
                 />
             </label>
             <p />
             <label className="form-inline" htmlFor="emailInput" style={{ padding: 0, fontSize: 24 }}>
-                Tornament Short Name:
+                Tournament Short Name:
                 <input
                 ref={this.emailInputRef}
                 className="form-control login-text"
-                type="email"
                 defaultValue="NT"
                 id="emailInput"
                 //pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}"
@@ -38,7 +81,6 @@ class Config_Basic extends React.Component {
                 <input
                 ref={this.emailInputRef}
                 className="form-control login-text"
-                type="email"
                 defaultValue="aa b"
                 id="emailInput"
                 //pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}"
@@ -47,11 +89,10 @@ class Config_Basic extends React.Component {
             </label>
             <p />
             <label className="form-inline" htmlFor="emailInput" style={{ padding: 0, fontSize: 24 }}>
-                Tornament Director Code:
+                Tournament Director Code:
                 <input
                 ref={this.emailInputRef}
                 className="form-control login-text"
-                type="email"
                 defaultValue="Director"
                 id="emailInput"
                 //pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}"
@@ -62,9 +103,10 @@ class Config_Basic extends React.Component {
             <p></p>
             <p className="bg-danger" id="feedback" style={{ fontSize: 16 }} />
             <button
+                id="submitBasicInfo"
                 type="submit"
                 className="btn-color-theme btn btn-primary btn-block login-btn">
-                <span id="login-btn-icon" className="fa fa-sign-in"/> 
+                <span className="fa fa-sign-in"/> 
                 Update Basic Info
             </button>
             <p></p>

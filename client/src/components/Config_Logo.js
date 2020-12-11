@@ -4,6 +4,7 @@ class Config_Logo extends React.Component {
 
     constructor(props){
         super(props);
+        //all of these refs used to track what is entered in the code, though this was the easiest way to do
         this.loginBackgroundColorRef = React.createRef();
         this.loginBtnTextColorRef = React.createRef();
         this.titleTextColorRef = React.createRef();
@@ -38,11 +39,12 @@ class Config_Logo extends React.Component {
         };
 
     }
-
+    //state automatically called because of refs, use this to call mongodb
     handleLoginSubmit = () => {
         //pass for now
     }
 
+    // asically just updates the state easiest way of doing this
     handleLoginChange = () => {
         this.setState({loginBackgroundColor:this.loginBackgroundColorRef.current.value});
         this.setState({loginBtnTextColor:this.loginBtnTextColorRef.current.value});
@@ -62,6 +64,8 @@ class Config_Logo extends React.Component {
     }
 
     render() {
+        //used the speedscore we developed in class as a reference, hence the email input default stuff
+        //box container just used as thing to hold stuff in css
         return (
         <div id="logoColorDiv" className="padded-page">
             <center>
@@ -72,7 +76,6 @@ class Config_Logo extends React.Component {
                     <input
                     ref={this.emailInputRef}
                     className="form-control login-text"
-                    type="email"
                     defaultValue="https://drive.google.com/uc?export=view&id=1wTrk-WeAiZ2Man33KzKsLpp_tGXw1Cp0"
                     id="emailInput"
                     required={true}
@@ -87,9 +90,8 @@ class Config_Logo extends React.Component {
                     <input
                     ref={this.loginBackgroundColorRef}
                     className="form-control login-text"
-                    type="email"
                     defaultValue="#13294e"
-                    id="emailInput"
+                    id="loginScreenColoring"
                     required={true}
                     />
                     </label>
@@ -100,7 +102,6 @@ class Config_Logo extends React.Component {
                     <input
                     ref={this.loginBtnTextColorRef}
                     className="form-control login-text"
-                    type="email"
                     defaultValue="#ffffff"
                     id="emailInput"
                     required={true}
@@ -117,7 +118,6 @@ class Config_Logo extends React.Component {
                     <input
                     ref={this.titleTextColorRef}
                     className="form-control login-text"
-                    type="email"
                     defaultValue="#000000"
                     id="emailInput"
                     required={true}
@@ -130,7 +130,6 @@ class Config_Logo extends React.Component {
                     <input
                     ref={this.headerRowBackgroundColorRef}
                     className="form-control login-text"
-                    type="email"
                     defaultValue="#cc2127"
                     id="emailInput"
                     required={true}
@@ -143,7 +142,6 @@ class Config_Logo extends React.Component {
                     <input
                     ref={this.headerRowTextColorRef}
                     className="form-control login-text"
-                    type="email"
                     defaultValue="#ffffff"
                     id="emailInput"
                     required={true}
@@ -156,7 +154,6 @@ class Config_Logo extends React.Component {
                     <input
                     ref={this.updateBtnBackgroundColorRef}
                     className="form-control login-text"
-                    type="email"
                     defaultValue="#13294e"
                     id="emailInput"
                     required={true}
@@ -169,7 +166,6 @@ class Config_Logo extends React.Component {
                     <input
                     ref={this.updateBtnTextColorRef}
                     className="form-control login-text"
-                    type="email"
                     defaultValue="#ffffff"
                     id="emailInput"
                     required={true}
@@ -185,7 +181,6 @@ class Config_Logo extends React.Component {
                     <input
                     ref={this.tournamentNameBannerBackgroundColorRef}
                     className="form-control login-text"
-                    type="email"
                     defaultValue="#13294e"
                     id="emailInput"
                     required={true}
@@ -198,7 +193,6 @@ class Config_Logo extends React.Component {
                     <input
                     ref={this.tournamentNameBannerTextColorRef}
                     className="form-control login-text"
-                    type="email"
                     defaultValue="#ffffff"
                     id="emailInput"
                     required={true}
@@ -211,7 +205,6 @@ class Config_Logo extends React.Component {
                     <input
                     ref={this.strokeParColumnBackgroundColorRef}
                     className="form-control login-text"
-                    type="email"
                     defaultValue="#13294e"
                     id="emailInput"
                     required={true}
@@ -224,7 +217,6 @@ class Config_Logo extends React.Component {
                     <input
                     ref={this.strokeParColumnTextColorRef}
                     className="form-control login-text"
-                    type="email"
                     defaultValue="#ffffff"
                     id="emailInput"
                     required={true}
@@ -237,7 +229,6 @@ class Config_Logo extends React.Component {
                     <input
                     ref={this.timeParColumnBackgroundColorRef}
                     className="form-control login-text"
-                    type="email"
                     defaultValue="#13294e"
                     id="emailInput"
                     required={true}
@@ -250,7 +241,6 @@ class Config_Logo extends React.Component {
                     <input
                     ref={this.timeParColumnTextColorRef}
                     className="form-control login-text"
-                    type="email"
                     defaultValue="#ffffff"
                     id="emailInput"
                     required={true}
@@ -263,7 +253,6 @@ class Config_Logo extends React.Component {
                     <input
                     ref={this.sgParColumnBackgroundColorRef}
                     className="form-control login-text"
-                    type="email"
                     defaultValue="#000000"
                     id="emailInput"
                     required={true}
@@ -276,7 +265,6 @@ class Config_Logo extends React.Component {
                     <input
                     ref={this.sgParColumnTextColorRef}
                     className="form-control login-text"
-                    type="email"
                     defaultValue="#ffffff"
                     id="emailInput"
                     required={true}
@@ -286,6 +274,7 @@ class Config_Logo extends React.Component {
                 </div>
                 <p className="bg-danger" id="feedback" style={{ fontSize: 16 }} />
             <button
+                id="submitLogoColor"
                 type="submit"
                 className="btn-color-theme btn btn-primary btn-block login-btn">
                 <span id="login-btn-icon" className="fa fa-sign-in"/>
