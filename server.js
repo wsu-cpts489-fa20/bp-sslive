@@ -101,6 +101,44 @@ const divisionsSchema = new Schema({
   }
 });
 
+//New Schema that defines how divisions are stored in the DB
+const playerSchema = new Schema({
+  firstName: {type: String, required: true},
+  lastName: {type: String, required: true},
+  BIB: {type: String, required: true},
+  division: {type: String, required: true},
+  hometown: {type: String, required: true},
+  country: {type: String, required: true},
+  imageurl: {type: String, required: true},
+  teeTime: {type: String, required: true}
+},
+{
+  toObject: {
+  virtuals: true
+  },
+  toJSON: {
+  virtuals: true 
+  }
+});
+
+
+//New Schema that defines how divisions are stored in the DB
+const scorersSchema = new Schema({
+  scorerFirstName: {type: String, required: true},
+  scorerLastName: {type: String, required: true},
+  scorerLoginCode: {type: String, required: true},
+  scoringAssignment: {type: String, required: true},
+
+},
+{
+  toObject: {
+  virtuals: true
+  },
+  toJSON: {
+  virtuals: true 
+  }
+});
+
 //Define schema that maps to a document in the Users collection in the appdb
 //database.
 const userSchema = new Schema({
@@ -113,7 +151,9 @@ const userSchema = new Schema({
   securityAnswer: {type: String, required: function() 
     {return this.securityQuestion ? true: false}},
   courses: [courseSchema],
-  divisions: [divisionsSchema]
+  divisions: [divisionsSchema],
+  players: [playerSchema],
+  scorers: [scorersSchema]
 });
 const User = mongoose.model("User",userSchema); 
 
@@ -577,37 +617,91 @@ app.post('/divisions/:userId', async (req, res, next) => {
 
 //UPDATE division route: Updates a specific division 
 //for a given user in the users collection (PUT)
-app.put('/divisions/:userId/:divisionId', async (req, res, next) => {
-  console.log("in /rounds (PUT) route with params = " + 
+app.post('/players/:userId', async (req, res, next) => {
+  console.log("in /players (POST) route with params = " + 
               JSON.stringify(req.params) + " and body = " + 
               JSON.stringify(req.body));
-  const validProps = ['name', 'numRounds', 'numHoles', 'course' ];
-  let bodyObj = {...req.body};
-  delete bodyObj._id; //Not needed for update
-  for (const bodyProp in bodyObj) {
-    if (!validProps.includes(bodyProp)) {
-      return res.status(400).send("courses/ PUT request formulated incorrectly." +
-        "It includes " + bodyProp + ". However, only the following props are allowed: " +
-        "'name', 'numRounds', 'numHoles', 'course'");
-    } else {
-      bodyObj["divisions.$." + bodyProp] = bodyObj[bodyProp];
-      delete bodyObj[bodyProp];
+  if(!req.body.hasOwnProperty("firstName") ||
+     !req.body.hasOwnProperty("lastName") ||
+     !req.body.hasOwnProperty("BIB") ||
+     !req.body.hasOwnProperty("division") ||
+     !req.body.hasOwnProperty("hometown") ||
+     !req.body.hasOwnProperty("country") ||
+     !req.body.hasOwnProperty("teeTime")) {
+      return res.status(400).send("POST request on /players formulated incorrectly.");
+     }
+     try {
+      let status = await User.updateOne(
+      {id: req.params.userId},
+      {$push: {players: req.body}});
+      if (status.nModified != 1) { //Should never happen!
+        res.status(400).send("Unexpected error occurred when adding players to"+
+          " database. players was not added.");
+      } else {
+        res.status(200).send("Players successfully added to database.");
+      }
+    } catch (err) {
+      console.log(err);
+      return res.status(400).send("Unexpected error occurred when adding players" +
+       " to database: " + err);
     }
-  }
-  try {
-    let status = await User.updateOne(
-      {"id": req.params.userId,
-       "divisions._id": mongoose.Types.ObjectId(req.params.divisionId)}
-      ,{"$set" : bodyObj}
-    );
-    if (status.nModified != 1) {
-      res.status(400).send("Unexpected error occurred when updating round in database. Round was not updated.");
-    } else {
-      res.status(200).send("Round successfully updated in database.");
-    }
-  } catch (err) {
-    console.log(err);
-    return res.status(400).send("Unexpected error occurred when updating round in database: " + err);
-  } 
 });
 
+// Put players into tournament.
+app.post('/players/:userId', async (req, res, next) => {
+  console.log("in /players (POST) route with params = " + 
+              JSON.stringify(req.params) + " and body = " + 
+              JSON.stringify(req.body));
+  if(!req.body.hasOwnProperty("firstName") ||
+     !req.body.hasOwnProperty("lastName") ||
+     !req.body.hasOwnProperty("BIB") ||
+     !req.body.hasOwnProperty("division") ||
+     !req.body.hasOwnProperty("hometown") ||
+     !req.body.hasOwnProperty("country") ||
+     !req.body.hasOwnProperty("teeTime")) {
+      return res.status(400).send("POST request on /players formulated incorrectly.");
+     }
+     try {
+      let status = await User.updateOne(
+      {id: req.params.userId},
+      {$push: {players: req.body}});
+      if (status.nModified != 1) { //Should never happen!
+        res.status(400).send("Unexpected error occurred when adding players to"+
+          " database. players was not added.");
+      } else {
+        res.status(200).send("Players successfully added to database.");
+      }
+    } catch (err) {
+      console.log(err);
+      return res.status(400).send("Unexpected error occurred when adding players" +
+       " to database: " + err);
+    }
+});
+
+
+app.post('/scorers/:userId', async (req, res, next) => {
+  console.log("in /scorers (POST) route with params = " + 
+              JSON.stringify(req.params) + " and body = " + 
+              JSON.stringify(req.body));
+  if(!req.body.hasOwnProperty("scorerFirstName") ||
+     !req.body.hasOwnProperty("scorerLastName") ||
+     !req.body.hasOwnProperty("scorerLoginCode") ||
+     !req.body.hasOwnProperty("scoringAssignment")) {
+      return res.status(400).send("POST request on /scorers formulated incorrectly.");
+     }
+     try {
+      let status = await User.updateOne(
+      {id: req.params.userId},
+      {$push: {scorers: req.body}});
+      if (status.nModified != 1) { //Should never happen!
+        res.status(400).send("Unexpected error occurred when adding scorers to"+
+          " database. scorers was not added.");
+      } else {
+        res.status(200).send("Scorers successfully added to database.");
+      }
+    } catch (err) {
+      console.log(err);
+      return res.status(400).send("Unexpected error occurred when adding scorers" +
+       " to database: " + err);
+    }
+});
