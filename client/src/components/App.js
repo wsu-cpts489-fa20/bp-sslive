@@ -34,7 +34,7 @@ class App extends React.Component {
 
   constructor() {
     super();
-    this.state = {mode: AppMode.FEED,
+    this.state = {mode: AppMode.LOGIN,
                   menuOpen: false,
                   authenticated: false,
                   userObj: {displayName: "", profilePicURL: ""},
@@ -151,6 +151,8 @@ class App extends React.Component {
             mode={this.state.mode}
             changeMode={this.handleChangeMode}
             userObj={this.state.userObj}
+            divisions={this.state.userObj.divisions}
+            players={this.state.userObj.players}
             refreshOnUpdate={this.refreshOnUpdate}
             coursesMode={this.state.coursesMode}
             setCoursesMode={this.setCoursesMode}
