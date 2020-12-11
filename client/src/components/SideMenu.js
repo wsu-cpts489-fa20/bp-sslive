@@ -1,5 +1,6 @@
 import React from 'react';
 import AppMode from './../AppMode.js'
+import App from './App.js';
 
 class SideMenu extends React.Component {
 
@@ -13,11 +14,18 @@ renderModeMenuItems = () => {
         <div>
         <a className="sidemenu-item">
             <span className="fa fa-users"></span>&nbsp;Main Page</a>
-        <a className="sidemenu-item ">
-            <span className="fa fa-search"></span>&nbsp;LeaderBoard</a>
+        <a className="sidemenu-item " onClick={() => this.props.changeMode(AppMode.LEADERBOARD)}>
+            <span id="leaderboardBtn" className="fa fa-list"></span>&nbsp;LeaderBoard</a>
         </div>
       );
     break;
+    case AppMode.LEADERBOARD:
+      return(
+        <div>
+        <a className="sidemenu-item " onClick={() => this.props.changeMode(AppMode.FEED)}>
+            <span className="fa fa-gear"></span>&nbsp;Tournament Settings</a>
+        </div>
+      );
     case AppMode.ROUNDS:
       return(
         <div>

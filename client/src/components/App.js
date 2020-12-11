@@ -143,6 +143,7 @@ class App extends React.Component {
             toggleMenuOpen={this.toggleMenuOpen}
             displayName={this.state.userObj.displayName}
             profilePicURL={this.state.userObj.profilePicURL}
+            changeMode={this.handleChangeMode}
             logOut={() => this.handleChangeMode(AppMode.LOGIN)}/>
           <ModePage 
             newTournament={this.handleNewTournament}
@@ -150,6 +151,8 @@ class App extends React.Component {
             mode={this.state.mode}
             changeMode={this.handleChangeMode}
             userObj={this.state.userObj}
+            divisions={this.state.userObj.divisions}
+            players={this.state.userObj.players}
             refreshOnUpdate={this.refreshOnUpdate}
             coursesMode={this.state.coursesMode}
             setCoursesMode={this.setCoursesMode}
