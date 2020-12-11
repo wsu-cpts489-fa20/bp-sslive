@@ -1,11 +1,20 @@
 import React from 'react';
+import AppMode from './../AppMode.js';
+import App from './App.js';
 
 class Config_Rounds extends React.Component {
   
   constructor(props) {
     super(props);
-    this.state={numofrounds:"1",one:false,int:0}
+    this.state={numofrounds:"1",
+    one:false,
+    int:0, 
+    faIcon: "fa fa-save",
+    btnLabel: "Save & Add Rounds to Tournament"
+
+  }
 }
+//handeles the change on number of rounds, 
   handleChange = (e) => {
     if (e.target.value=="1"){
       this.setState({numofrounds:"1"});
@@ -15,6 +24,7 @@ class Config_Rounds extends React.Component {
       this.setState({numofrounds:"2"});
       this.setState({one:true});
       this.setState({int:2});
+      
     }
     if (e.target.value=="3"){
       this.setState({numofrounds:"3"});
@@ -27,7 +37,50 @@ class Config_Rounds extends React.Component {
       this.setState({int:4});
     }
   }
+  
+  
 
+  addRound = async (newData) => {
+    const url = '/rounds/' + this.props.userObj.id;
+    const res = await fetch(url, {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(newData)
+    });
+    const msg = await res.text();
+    if (res.status != 200) {
+        alert("An error occurred when attempting to add new round to database: "
+            + msg);
+        
+    } else {
+        this.props.refreshOnUpdate(AppMode.FEED);
+    }
+}
+  // handles backend saving
+handleSubmite = (event) => {
+  event.preventDefault();
+  //start spinner
+  this.setState({
+      faIcon: "fa fa-spin fa-spinner",
+      btnLabel: "Saving..."
+  });
+
+  //Prepare current round data to be saved
+  let RoundData = this.state;
+  delete RoundData.btnLabel;
+  delete RoundData.faIcon;
+  delete RoundData.int;
+  delete RoundData.one;
+
+  setTimeout(this.addRound, 1000, RoundData);
+
+  
+  event.preventDefault();
+}
+ 
     render() {
       let numofrounds=null;
       let round3=null;
@@ -370,7 +423,7 @@ class Config_Rounds extends React.Component {
         return (
          
           <div className="page">
-            <form > 
+            <form onSubmit={this.handleSubmite}> 
             <div style={{ display: "inline-block", fontWeight: "bold", fontSize: "large", float: "left" }}>
           Number of Rounds in Tournamnet: &nbsp;</div> 
           <select id="numOfRounds" name="type" 
@@ -441,13 +494,13 @@ class Config_Rounds extends React.Component {
        {round4}
        <p></p>
 
-       <button type="submit" style={{width: "90%",fontSize: "36px"}} 
-         className="btn btn-primary btn-color-theme">
-          Save And next
-       </button>
      </div> 
     
-     </form>
+     <button type="submit" style={{width: "90%",fontSize: "36px"}} 
+         className="btn btn-primary btn-color-theme">
+         <span className={this.state.faIcon} />&nbsp;{this.state.btnLabel}
+       </button>
+       </form>
      </div>
         );
     }   
