@@ -45,7 +45,7 @@ class Config_Divions extends React.Component {
         return (
             <div>
                 <center>
-                    <img class="img-display" src="https://drive.google.com/uc?export=view&id=1wTrk-WeAiZ2Man33KzKsLpp_tGXw1Cp0" alt="Tournament Logo"></img>
+                    <img id="speedScoreLogo" class="img-display" src="https://drive.google.com/uc?export=view&id=1wTrk-WeAiZ2Man33KzKsLpp_tGXw1Cp0" alt="Tournament Logo"></img>
                 </center>
                 <div id="leaderboardListDiv" className="leaderboardListDiv">
                     <label id="divisionsListLabel" className="divisionsListLabel">

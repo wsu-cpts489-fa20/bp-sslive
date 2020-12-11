@@ -15,7 +15,7 @@ renderModeMenuItems = () => {
         <a className="sidemenu-item">
             <span className="fa fa-users"></span>&nbsp;Main Page</a>
         <a className="sidemenu-item " onClick={() => this.props.changeMode(AppMode.LEADERBOARD)}>
-            <span className="fa fa-list"></span>&nbsp;LeaderBoard</a>
+            <span id="leaderboardBtn" className="fa fa-list"></span>&nbsp;LeaderBoard</a>
         </div>
       );
     break;
